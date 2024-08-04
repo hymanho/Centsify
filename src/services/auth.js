@@ -1,6 +1,6 @@
 // src/auth.js
 import { auth } from './firebase';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 
 // Sign up function
 export const signUp = async (email, password) => {
@@ -32,15 +32,4 @@ export const logOff = async () => {
     console.error('Error logging off:', error);
     throw error;
   }
-};
-
-// Function to monitor authentication state
-export const authStateListener = (setUser) => {
-  return onAuthStateChanged(auth, (user) => {
-    if (user) {
-      setUser(user);
-    } else {
-      setUser(null);
-    }
-  });
 };
