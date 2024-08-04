@@ -1,8 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import SignUp from './components/SignUp';
-import Login from './components/Login';
-import Account from './components/Account';
+import Login from './components/auth/Login';
+import SignUp from './components/auth/SignUp';
+import Logout from './components/auth/LogOff';
+import Account from './components/user/Account';
+import firebase from './services/firebase';
+
 
 function App() {
   return (
