@@ -1,6 +1,6 @@
 // src/dbFunctions.js
 import { collection, addDoc } from 'firebase/firestore';
-import { db } from './firebase'; // Import Firestore instance
+import { db } from '../../firebase'; // Import Firestore instance
 
 export const addUser = async (userData) => {
   try {

@@ -4,7 +4,7 @@ import Login from './components/auth/Login';
 import SignUp from './components/auth/SignUp';
 import Logout from './components/auth/LogOff';
 import Account from './components/user/Account';
-import firebase from './services/firebase';
+import firebase from './firebase';
 
 
 function App() {

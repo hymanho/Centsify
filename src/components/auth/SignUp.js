@@ -1,8 +1,8 @@
 // src/components/SignUp.js
 import React, { useState } from 'react';
-import { auth } from '../firebase'; // Ensure correct path
+import { auth } from '../../firebase'; // Ensure correct path
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { addUser } from '../dbFunctions'; // Ensure correct path
+import { addUser } from '../../services/dbFunctions'; // Ensure correct path
 
 const SignUp = () => {
   const [email, setEmail] = useState('');

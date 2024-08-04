@@ -1,6 +1,6 @@
 // src/components/LogOff.js
 import React from 'react';
-import { logOff } from '../auth';
+import { logOff } from '../../auth';
 
 const LogOff = () => {
   const handleLogOff = async () => {
