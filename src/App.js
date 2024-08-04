@@ -1,18 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
+// src/App.js
 import React from 'react';
-import SignUp from './components/SignUp';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import SignUp from './components/signup';
 import Login from './components/Login';
-import LogOff from './components/LogOff';
+import Account from './components/Account';
 
 function App() {
   return (
-    <div>
-      <h1>Firebase Authentication Example</h1>
-      <SignUp />
-      <Login />
-      <LogOff />
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/account" element={<Account />} />
+      </Routes>
+    </Router>
   );
 }
 
