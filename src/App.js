@@ -1,4 +1,3 @@
-// src/App.js
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import SignUp from './components/SignUp';
@@ -12,6 +11,7 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
         <Route path="/account" element={<Account />} />
+        <Route path="/" element={<SignUp />} /> {/* Default route */}
       </Routes>
     </Router>
   );
