@@ -1,6 +1,8 @@
 // src/components/SignUp.js
 import React, { useState } from 'react';
-import { signUp } from '../auth'; // Make sure this path is correct
+import { auth } from '../firebase'; // Ensure correct path
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { addUser } from '../dbFunctions'; // Ensure correct path
 
 const SignUp = () => {
   const [email, setEmail] = useState('');
@@ -10,7 +12,9 @@ const SignUp = () => {
   const handleSignUp = async (e) => {
     e.preventDefault();
     try {
-      await signUp(email, password);
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+      await addUser({ email: user.email, uid: user.uid }); // Add user to Firestore
       alert('Sign up successful');
     } catch (error) {
       setError(error.message);
