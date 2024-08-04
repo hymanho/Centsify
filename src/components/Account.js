@@ -8,9 +8,14 @@ const Account = () => {
   const [user] = useAuthState(auth);
   const navigate = useNavigate();
 
+  React.useEffect(() => {
+    if (!user) {
+      navigate('/login'); // Redirect to login if not authenticated
+    }
+  }, [user, navigate]);
+
   if (!user) {
-    navigate('/login'); // Redirect to login if not authenticated
-    return null;
+    return null; // or a loading spinner, if desired
   }
 
   return (
