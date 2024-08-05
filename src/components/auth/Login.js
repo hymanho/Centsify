@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { logIn } from '../../backend/login'; // route back to auth.js
 import { auth } from '../../firebase';
+import '../../styles/Login.css'
 
 const Login = () => {
   const [email, setEmail] = useState('');
