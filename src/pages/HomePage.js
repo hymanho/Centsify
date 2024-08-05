@@ -2,7 +2,7 @@
 import React from 'react';
 import Login from '../components/auth/Login';
 import SignUp from '../components/auth/SignUp';
-import './HomePage.css'; // Create this CSS file for home page specific styles
+import '../styles/HomePage.css'; // Create this CSS file for home page specific styles
 
 const HomePage = () => {
   return (

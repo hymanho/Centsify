@@ -1,7 +1,7 @@
 // src/components/auth/Login.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { logIn } from '../../backend/auth'; // route back to auth.js
+import { logIn } from '../../backend/login'; // route back to auth.js
 
 const Login = () => {
   const [email, setEmail] = useState('');
