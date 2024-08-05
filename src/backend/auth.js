@@ -1,5 +1,7 @@
 // src/auth.js
-import { auth } from './firebase';
+// serves as backend functionality for pages in components
+// move into seperate backend folder -- split these functions into different files (signUp.js)
+import { auth } from '../firebase';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 
 export const signUp = async (email, password) => {

@@ -1,8 +1,7 @@
-// src/components/Login.js
+// src/components/auth/Login.js
 import React, { useState } from 'react';
-import { auth } from '../../firebase';
-import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
+import { logIn } from '../../backend/auth'; // route back to auth.js
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -12,16 +11,16 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
+    const errorMessage = await logIn(email, password);
+    if (errorMessage) {
+      setError(errorMessage);
+    } else {
       navigate('/account'); // Redirect to account page
-    } catch (error) {
-      setError(error.message);
     }
   };
 
   return (
-    <div>
+    <div className="login-form">
       <h2>Login</h2>
       <form onSubmit={handleLogin}>
         <input

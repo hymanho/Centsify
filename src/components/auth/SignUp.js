@@ -1,28 +1,28 @@
 // src/components/SignUp.js
+// src/components/auth/SignUp.js
 import React, { useState } from 'react';
-import { auth } from '../../firebase'; // Ensure correct path
+import { useNavigate } from 'react-router-dom';
+import { auth } from '../../firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { addUser } from '../../services/dbFunctions'; // Ensure correct path
 
 const SignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   const handleSignUp = async (e) => {
     e.preventDefault();
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
-      await addUser({ email: user.email, uid: user.uid }); // Add user to Firestore
-      alert('Sign up successful');
+      await createUserWithEmailAndPassword(auth, email, password);
+      navigate('/account'); // Redirect to account page
     } catch (error) {
       setError(error.message);
     }
   };
 
   return (
-    <div>
+    <div className="signup-form">
       <h2>Sign Up</h2>
       <form onSubmit={handleSignUp}>
         <input
