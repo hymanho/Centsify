@@ -7,7 +7,7 @@ import '../styles/HomePage.css'; // Create this CSS file for home page specific 
 const HomePage = () => {
   return (
     <div className="home-page">
-      <h1>Welcome to Our App</h1>
+      <h1>Moneytracker</h1>
       <div className="auth-forms">
         <Login />
         <SignUp />

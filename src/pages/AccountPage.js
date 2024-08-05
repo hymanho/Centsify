@@ -20,7 +20,7 @@ const Account = () => {
 
   return (
     <div>
-      <h2>Account Page</h2>
+      <h2>{user.email}'s Page</h2>
       <p>Welcome, {user.email}!</p>
     </div>
   );

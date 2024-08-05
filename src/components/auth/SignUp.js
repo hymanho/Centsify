@@ -15,6 +15,7 @@ const SignUp = () => {
     e.preventDefault();
     try {
       await createUserWithEmailAndPassword(auth, email, password);
+      console.log('Account was successfully signed up');
       navigate('/account'); // Redirect to account page
     } catch (error) {
       setError(error.message);

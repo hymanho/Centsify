@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { logIn } from '../../backend/login'; // route back to auth.js
+import { auth } from '../../firebase';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -11,11 +12,13 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    const errorMessage = await logIn(email, password);
-    if (errorMessage) {
-      setError(errorMessage);
-    } else {
+    try {
+      await logIn(email, password);
+      console.log('Successfully logged in'); // Log message after successful login
       navigate('/account'); // Redirect to account page
+    } catch (error) {
+      console.log('Login failed:', error.message); // Log error message for debugging
+      setError('Wrong username or password, please try again.'); // Display user-friendly error message
     }
   };
 
