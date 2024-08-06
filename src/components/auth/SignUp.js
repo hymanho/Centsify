@@ -1,7 +1,10 @@
+// src/pages/SignUp.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../firebase';
+import { storeAccount } from '../../backend/Account/Account'; // Import the storeAccount function
+import Account from '../../models/Account'; // Import the Account class
 import '../../styles/AuthForms.css';
 
 const SignUp = () => {
@@ -13,8 +16,21 @@ const SignUp = () => {
     const handleSignUp = async (e) => {
         e.preventDefault();
         try {
+            // Create user with Firebase Authentication
             const userCredential = await createUserWithEmailAndPassword(auth, username, password);
-            console.log('Account successfully created:', userCredential.user);
+            const user = userCredential.user;
+
+            // Create an Account object
+            const account = new Account(
+                user.displayName || username, // Use displayName if available, otherwise use username
+                user.email,
+                username
+            );
+
+            // Store the Account object in Firestore
+            await storeAccount(account);
+
+            console.log('Account successfully created:', user);
             navigate('/account');
         } catch (error) {
             setError(error.message);
