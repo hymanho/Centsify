@@ -1,0 +1,106 @@
+/* General body and background styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Card styling */
+.card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    overflow: hidden;
+    display: flex;
+    width: 700px;
+}
+
+/* Form container styling */
+.form-container {
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Input fields styling */
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+    width: 100%;
+    padding: 15px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+/* Button styling */
+button {
+    padding: 12px;
+    margin-top: 10px;
+    background-image: linear-gradient(to right, #32be8f, #38d39f);
+    border: none;
+    color: white;
+    text-transform: uppercase;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background-image: linear-gradient(to right, #32be8f, #3cffab);
+}
+
+/* Splitting Login and Signup into two columns */
+.card {
+    flex-direction: row;
+}
+
+/* Header with logo and application name */
+.header {
+    padding: 20px;
+    background: #32be8f;
+    color: white;
+    text-align: center;
+    font-size: 24px;
+}
+
+/* Enhancing the visual separation */
+.form-section {
+    border-right: 1px solid #eee;
+    flex: 1;
+}
+
+/* Last section should not have a border */
+.form-section:last-child {
+    border-right: none;
+}
+
+/* Additional styling for alignment and aesthetics */
+.form-section h2 {
+    text-align: center;
+    color: #333;
+}
+
+/* Responsive design adjustments */
+@media (max-width: 768px) {
+    .card {
+        flex-direction: column;
+        width: 90%;
+    }
+
+    .form-section {
+        border-right: none;
+        border-bottom: 1px solid #eee;
+    }
+
+    .form-section:last-child {
+        border-bottom: none;
+    }
+}

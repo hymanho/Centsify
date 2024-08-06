@@ -1,55 +1,51 @@
-// src/components/auth/SignUp.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { auth } from '../../firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import Account from '../../backend/Account';
-import '../../styles/SignUp.css'
+import { auth } from '../../firebase';
+import '../../styles/AuthForms.css';
 
 const SignUp = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState(null);
-  const navigate = useNavigate();
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState(null);
+    const navigate = useNavigate();
 
-  const handleSignUp = async (e) => {
-    e.preventDefault();
-    try {
-      const userCredential = await createUserWithEmailAndPassword(auth, username, password);
-      const user = userCredential.user;
+    const handleSignUp = async (e) => {
+        e.preventDefault();
+        try {
+            const userCredential = await createUserWithEmailAndPassword(auth, username, password);
+            console.log('Account successfully created:', userCredential.user);
+            navigate('/account');
+        } catch (error) {
+            setError(error.message);
+        }
+    };
 
-      // Create a new account instance and save it to Firestore
-      const newAccount = new Account(username, password);
-      await newAccount.save();
-
-      console.log('Account was successfully signed up:', newAccount);
-      navigate('/account'); // Redirect to account page
-    } catch (error) {
-      setError(error.message);
-    }
-  };
-
-  return (
-    <div className="signup-form">
-      <h2>Sign Up</h2>
-      <form onSubmit={handleSignUp}>
-        <input
-          type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button type="submit">Sign Up</button>
-      </form>
-      {error && <p>{error}</p>}
-    </div>
-  );
+    return (
+        <div className="card">
+            <div className="form-section">
+                <div className="header">Sign Up</div>
+                <div className="form-container">
+                    <form onSubmit={handleSignUp}>
+                        <input
+                            type="text"
+                            placeholder="Username"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                        />
+                        <input
+                            type="password"
+                            placeholder="Password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                        <button type="submit">Sign Up</button>
+                    </form>
+                    {error && <p>{error}</p>}
+                </div>
+            </div>
+        </div>
+    );
 };
 
 export default SignUp;
