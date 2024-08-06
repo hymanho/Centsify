@@ -4,7 +4,7 @@ import { getAuth } from 'firebase/auth'; // Import auth functions if needed
 import { getFirestore } from 'firebase/firestore'; // Import firestore functions if needed
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDwlifNvruX1aNiD7NTY0JEvgzzB320grk",
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: "moneytracker-19a89.firebaseapp.com",
   projectId: "moneytracker-19a89",
   storageBucket: "moneytracker-19a89.appspot.com",
