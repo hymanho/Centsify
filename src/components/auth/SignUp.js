@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { auth } from '../../firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import Account from '../../backend/Account';
+import '../../styles/SignUp.css'
 
 const SignUp = () => {
   const [username, setUsername] = useState('');

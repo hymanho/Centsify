@@ -1,4 +1,4 @@
-.login-container {
+.signup-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -6,7 +6,7 @@
     background-color: #f4f4f4;
   }
   
-  .login-form {
+  .signup-form {
     padding: 20px;
     background: white;
     border-radius: 8px;
@@ -14,9 +14,9 @@
     width: 300px;
   }
   
-  .login-form input[type="text"],
-  .login-form input[type="password"],
-  .login-form input[type="email"]{
+  .signup-form input[type="text"],
+  .signup-form input[type="password"],
+  .signup-form input[type="email"] {
     width: 100%;
     padding: 10px;
     margin: 10px 0;
@@ -24,7 +24,7 @@
     border-radius: 4px;
   }
   
-  .login-form button {
+  .signup-form button {
     width: 100%;
     padding: 10px;
     background-color: #85BB65;
