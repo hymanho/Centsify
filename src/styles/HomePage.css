@@ -1,14 +1,25 @@
-/* src/pages/HomePage.css */
+.page-header {
+  width: 100%;
+  padding: 20px 40px; /* Adjust padding as needed */
+  background-color: #32be8f; /* A soothing green background, adjust the color as needed */
+  color: white; /* White text color */
+  font-size: 24px; /* Large font size for visibility */
+  font-weight: bold; /* Bold text for the title */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  text-align: left; /* Align the text to the left */
+}
+
 .home-page {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-  }
-  
-  .auth-forms {
-    display: flex;
-    justify-content: space-around;
-    width: 100%;
-    max-width: 600px;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  width: 100%; /* Ensures the div takes full width */
+}
+
+.auth-forms {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  max-width: 600px; /* Adjust based on your preference */
+}
