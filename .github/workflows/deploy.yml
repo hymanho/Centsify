@@ -23,3 +23,5 @@ jobs:
 
       - name: Build the project
         run: npm run build
+
+      # Add deployment steps here
