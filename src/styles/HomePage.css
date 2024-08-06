@@ -1,25 +1,43 @@
+/* Styles for the header */
 .page-header {
-  width: 100%;
-  padding: 20px 40px; /* Adjust padding as needed */
-  background-color: #32be8f; /* A soothing green background, adjust the color as needed */
-  color: white; /* White text color */
-  font-size: 24px; /* Large font size for visibility */
-  font-weight: bold; /* Bold text for the title */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-  text-align: left; /* Align the text to the left */
+  position: fixed; /* Fix the header at the top */
+  top: 0;
+  left: 0;
+  width: 100%; /* Ensure full width */
+  padding: 20px 40px; /* Padding for the header content */
+  background-color: #32be8f; /* Background color */
+  color: white; /* Text color */
+  font-size: 24px; /* Font size */
+  font-weight: bold; /* Bold font */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+  text-align: left; /* Align text to the left */
+  z-index: 10; /* Ensure it stays above other elements */
 }
 
+/* Main container for the home page */
 .home-page {
+  margin-top: 80px; /* Add top margin to account for the fixed header */
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
   padding: 20px;
-  width: 100%; /* Ensures the div takes full width */
+  box-sizing: border-box; /* Include padding in the element's total width and height */
 }
 
+/* Container for the login and sign-up forms */
 .auth-forms {
   display: flex;
   justify-content: space-around;
   width: 100%;
-  max-width: 600px; /* Adjust based on your preference */
+  max-width: 900px; /* Increased max width for better form display */
+  margin-top: 20px; /* Add some space below the header */
+}
+
+@media (max-width: 768px) {
+  /* Adjustments for smaller screens */
+  .auth-forms {
+    flex-direction: column; /* Stack forms on smaller screens */
+    align-items: center; /* Center align forms */
+  }
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import Login from '../components/auth/Login';
 import SignUp from '../components/auth/SignUp';
-import '../styles/HomePage.css'; // Ensure this is correctly linked
+import '../styles/HomePage.css';
 
 const HomePage = () => {
   return (
