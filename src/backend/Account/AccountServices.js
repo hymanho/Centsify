@@ -1,6 +1,14 @@
-// src/backend/accountService.js
+// src/backend/createAccount.js
+
+/*
+
+creates an account upon signup and stores it into firestore
+
+*/
+
 import { firestore } from '../../firebase'; // Import your Firestore instance
-import Account from '../../models/Account'; // Import the Account class
+import { doc, setDoc } from 'firebase/firestore';
+import Account from '../../models/AccountDataModel'; // Import the Account class
 
 // Function to store an Account object in Firestore
 const storeAccount = async (account) => {
@@ -20,7 +28,8 @@ const storeAccount = async (account) => {
     };
 
     // Store the Account object in Firestore using the email as the document ID
-    await firestore.collection('accounts').doc(account.email).set(accountData);
+    const accountRef = doc(firestore, 'Accounts', account.email); // Update for modular API
+    await setDoc(accountRef, accountData);
     console.log('Account stored successfully');
   } catch (error) {
     console.error('Error storing account:', error);

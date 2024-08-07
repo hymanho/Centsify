@@ -2,9 +2,9 @@ import React from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../firebase';  // Adjusted from '../../firebase'
 import { useNavigate, NavLink, Route, Routes } from 'react-router-dom';
-import ExpenseSummary from '../components/auth/ExpenseSummary';
-import Reports from '../components/auth/Reports';
-import Alerts from '../components/auth/Alerts';
+import ExpenseSummary from '../components/user/ExpenseSummary';
+import Reports from '../components/user/Reports';
+import Alerts from '../components/user/Alerts';
 
 const AccountPage = () => {
   const [user] = useAuthState(auth);

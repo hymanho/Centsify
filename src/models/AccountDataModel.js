@@ -1,4 +1,11 @@
 // src/backend/Account.js
+
+/*
+
+Data strucuture for Account -- Account class
+
+*/
+
 class Account {
     constructor(name, email, username, balance = 0, currency = 'USD', preferences = {}, transactions = [], security = {}, settings = {}, backup = {}) {
       this.name = name;
