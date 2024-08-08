@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { logIn } from '../../backend/login'; 
+import { logIn } from '../../backend/auth/login'; 
 import '../../styles/AuthForms.css';  // Ensure correct path
 
 const Login = () => {

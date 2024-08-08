@@ -21,10 +21,11 @@ const storeAccount = async (account) => {
       balance: account.balance,
       currency: account.currency,
       preferences: account.preferences,
-      transactions: account.transactions,
-      security: account.security,
+      alerts: account.alerts,
+      expenses: account.expenses,
       settings: account.settings,
-      backup: account.backup
+      reports: account.reports,
+      
     };
 
     // Store the Account object in Firestore using the email as the document ID
@@ -39,7 +40,7 @@ const storeAccount = async (account) => {
 // Function to retrieve an Account object from Firestore
 const getAccount = async (email) => {
   try {
-    const doc = await firestore.collection('accounts').doc(email).get();
+    const doc = await firestore.collection('Accounts').doc(email).get();
     if (doc.exists) {
       const data = doc.data();
       return new Account(
@@ -49,10 +50,11 @@ const getAccount = async (email) => {
         data.balance,
         data.currency,
         data.preferences,
-        data.transactions,
-        data.security,
+        data.expenses,
+        data.alerts,
         data.settings,
-        data.backup
+        data.reports,
+        
       );
     } else {
       console.log('No such document!');

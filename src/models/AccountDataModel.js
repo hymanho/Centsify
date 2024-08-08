@@ -7,17 +7,18 @@ Data strucuture for Account -- Account class
 */
 
 class Account {
-    constructor(name, email, username, balance = 0, currency = 'USD', preferences = {}, transactions = [], security = {}, settings = {}, backup = {}) {
+    constructor(name, email, username, balance = 0, currency = 'USD', preferences = {}, expenses = {}, alerts = {}, settings = {}, reports = {}) {
       this.name = name;
       this.email = email;
       this.username = username;
       this.balance = balance;
       this.currency = currency;
       this.preferences = preferences;
-      this.transactions = transactions;
-      this.security = security;
+      this.alerts = alerts;
+      this.expenses = expenses;
+      this.reports = reports;
       this.settings = settings;
-      this.backup = backup;
+      
     }
   
     // Method to update balance
@@ -26,8 +27,8 @@ class Account {
     }
   
     // Method to add a transaction
-    addTransaction(transaction) {
-      this.transactions.push(transaction);
+    addTransaction(expenses) {
+      this.transactions.push(expenses);
     }
   
     // Additional methods as needed
