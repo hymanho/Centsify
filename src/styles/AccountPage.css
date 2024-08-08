@@ -1,0 +1,39 @@
+/* src/styles/AccountPage.css */
+
+.account-page {
+    display: flex;
+  }
+  
+  .sidebar {
+    width: 200px;
+    background-color: #f8f9fa;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+  }
+  
+  .sidebar h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .sidebar a {
+    display: block;
+    color: #333;
+    text-decoration: none;
+    padding: 10px 0;
+    font-size: 18px;
+  }
+  
+  .sidebar a.active {
+    font-weight: bold;
+    color: #007bff;
+  }
+  
+  .sidebar a:hover {
+    text-decoration: underline;
+  }
+  
+  .main-content {
+    flex: 1;
+    padding: 20px;
+  }
