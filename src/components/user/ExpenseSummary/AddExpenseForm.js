@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../../firebase';
-import { addExpense } from '../../../backend/ExpenseSummary/ExpenseServices';
+import { addExpense } from '../../../backend/Account/ExpenseManagement/ExpenseService';
 import Expense from '../../../models/ExpensesDataModel';
 
 const AddExpenseForm = () => {
