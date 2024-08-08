@@ -1,30 +1,32 @@
-// src/components/Reports.js
 import React, { useEffect, useState } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import ReportDisplay from './ReportDisplay'; // Import the new component
 
 const Reports = () => {
   const [data, setData] = useState([]);
+  const [reportType, setReportType] = useState('monthly');
+  const [startDate, setStartDate] = useState('2023-01-01');
+  const [endDate, setEndDate] = useState('2023-12-31');
 
   useEffect(() => {
-    // Fetch data for reports
-    fetch('/api/reportData')
+    const url = `/api/reportData?reportType=${reportType}&startDate=${startDate}&endDate=${endDate}`;
+    
+    fetch(url)
       .then(response => response.json())
       .then(data => setData(data))
       .catch(error => console.error('Error fetching report data:', error));
-  }, []);
+  }, [reportType, startDate, endDate]);
 
   return (
     <div>
       <h2>Financial Reports</h2>
-      <BarChart width={600} height={300} data={data}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        <Bar dataKey="pv" fill="#8884d8" />
-        <Bar dataKey="uv" fill="#82ca9d" />
-      </BarChart>
+      <select value={reportType} onChange={e => setReportType(e.target.value)}>
+        <option value="monthly">Monthly</option>
+        <option value="yearly">Yearly</option>
+        <option value="category">Category</option>
+      </select>
+      <input type="date" value={startDate} onChange={e => setStartDate(e.target.value)} />
+      <input type="date" value={endDate} onChange={e => setEndDate(e.target.value)} />
+      <ReportDisplay data={data} /> {/* Use the ReportDisplay component */}
     </div>
   );
 };
