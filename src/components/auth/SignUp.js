@@ -29,10 +29,10 @@ const SignUp = () => {
                 0, // Default balance
                 'USD', // Default currency
                 {}, // Default preferences
-                [], // Default transactions
+                {}, // Default transactions
                 {}, // Default security settings
                 {}, // Default settings
-                {}  // Default backup
+                
             );
 
             // Store the Account object in Firestore
