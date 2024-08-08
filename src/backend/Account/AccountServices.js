@@ -28,7 +28,7 @@ const storeAccount = async (account) => {
     };
 
     // Store the Account object in Firestore using the email as the document ID
-    const accountRef = doc(firestore, 'Accounts', account.email); // Update for modular API
+    const accountRef = doc(firestore, 'Accounts', account.email);
     await setDoc(accountRef, accountData);
     console.log('Account stored successfully');
   } catch (error) {
@@ -39,7 +39,7 @@ const storeAccount = async (account) => {
 // Function to retrieve an Account object from Firestore
 const getAccount = async (email) => {
   try {
-    const doc = await firestore.collection('accounts').doc(email).get();
+    const doc = await firestore.collection('Accounts').doc(email).get();
     if (doc.exists) {
       const data = doc.data();
       return new Account(

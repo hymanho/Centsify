@@ -1,7 +1,7 @@
 // src/backend/ExpenseManagement.js
 
 import { firestore } from '../../firebase'; // Import your Firestore instance
-import Expense from '../../models/Expense'; // Import the Expense class
+import Expense from '../../models/ExpensesDataModel'; // Import the Expense class
 
 // Function to add a new expense
 const addExpense = async (userEmail, expense) => {

@@ -1,7 +1,7 @@
 // src/firebase.js
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth'; // Import auth functions if needed
-import { getFirestore } from 'firebase/firestore'; // Import firestore functions if needed
+import { getFirestore, doc, setDoc } from 'firebase/firestore'; // Import firestore functions if needed
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,

@@ -2,9 +2,9 @@
 
 import React, { useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth } from '../firebase';
-import { addExpense } from '../backend/ExpenseManagement';
-import Expense from '../models/Expense';
+import { auth } from '../../../firebase';
+import { addExpense } from '../../../backend/ExpenseSummary/ExpenseServices';
+import Expense from '../../../models/ExpensesDataModel';
 
 const AddExpenseForm = () => {
   const [title, setTitle] = useState('');

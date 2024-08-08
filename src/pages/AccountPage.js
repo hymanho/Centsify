@@ -2,7 +2,7 @@ import React from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../firebase';  // Adjusted from '../../firebase'
 import { useNavigate, NavLink, Route, Routes } from 'react-router-dom';
-import ExpenseSummary from '../components/user/ExpenseSummary';
+import ExpenseSummary from '../components/user/ExpenseSummaryField';
 import Reports from '../components/user/Reports';
 import Alerts from '../components/user/Alerts';
 import '../styles/AccountPage.css'; // Import the CSS file
