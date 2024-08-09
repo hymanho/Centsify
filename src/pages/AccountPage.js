@@ -1,11 +1,11 @@
 import React from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth } from '../firebase';  // Adjusted from '../../firebase'
+import { auth } from '../firebase';  // Ensure this path correctly points to your Firebase configuration
 import { useNavigate, NavLink, Route, Routes } from 'react-router-dom';
-import ExpenseSummary from '../components/user/ExpenseSummaryField';
+import ExpenseSummaryField from '../components/user/ExpenseSummaryField';  // Corrected import path
 import Reports from '../components/user/Reports';
 import Alerts from '../components/user/Alerts';
-import '../styles/AccountPage.css'; // Import the CSS file
+import '../styles/AccountPage.css';  // Ensure the CSS path is correct
 
 const AccountPage = () => {
   const [user] = useAuthState(auth);
@@ -13,12 +13,12 @@ const AccountPage = () => {
 
   React.useEffect(() => {
     if (!user) {
-      navigate('/login'); // Redirect to login if not authenticated
+      navigate('/login');  // Redirect to login if not authenticated
     }
   }, [user, navigate]);
 
   if (!user) {
-    return null; // or a loading spinner, if desired
+    return null;  // Optionally, consider adding a loading spinner here
   }
 
   return (
@@ -31,7 +31,7 @@ const AccountPage = () => {
       </nav>
       <div className="main-content">
         <Routes>
-          <Route path="expenses" element={<ExpenseSummary />} />
+          <Route path="expenses" element={<ExpenseSummaryField />} />  // Updated component reference
           <Route path="reports" element={<Reports />} />
           <Route path="alerts" element={<Alerts />} />
         </Routes>

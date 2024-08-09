@@ -1,39 +1,63 @@
 /* src/styles/AccountPage.css */
 
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Arial', sans-serif;
+}
+
 .account-page {
   display: flex;
+  height: 100vh; /* Use the full viewport height */
+  color: #333;
 }
 
 .sidebar {
-  width: 200px;
-  background-color: #f8faf9;
+  width: 20%; /* Dynamic width */
+  min-width: 200px;
+  background: linear-gradient(to bottom, #3498db, #2980b9); /* Subtle gradient */
+  color: white;
   padding: 20px;
-  box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+  box-shadow: 4px 0 10px rgba(0, 0, 0, 0.2);
 }
 
 .sidebar h1 {
-  font-size: 24px;
-  margin-bottom: 20px;
+  font-size: 28px;
+  margin-bottom: 40px;
 }
 
 .sidebar a {
   display: block;
-  color: #333;
-  text-decoration: none;
-  padding: 10px 0;
+  padding: 10px;
   font-size: 18px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  border-radius: 4px;
+  margin: 5px 0;
 }
 
-.sidebar a.active {
-  font-weight: bold;
-  color: #007bff;
-}
-
-.sidebar a:hover {
-  text-decoration: underline;
+.sidebar a.active, .sidebar a:hover {
+  background-color: #1abc9c;
+  color: #ffffff;
+  text-decoration: none;
 }
 
 .main-content {
-  flex: 1;
+  flex-grow: 1;
+  padding: 40px;
+  background: #ecf0f1;
+  overflow-y: auto;
+}
+
+.chart-container {
+  background: white;
   padding: 20px;
+  margin-top: 20px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  border-radius: 8px;
+}
+
+.chart-title {
+  margin-bottom: 20px;
+  color: #2c3e50;
 }
