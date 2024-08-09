@@ -5,13 +5,13 @@ import AddExpenseForm from './ExpenseSummary/AddExpenseForm';
 
 const ExpenseSummary = () => {
     const [expenses, setExpenses] = useState([
-        { id: 1, category: 'Food', amount: 120, date: '2023-08-01' },
-        { id: 2, category: 'Utilities', amount: 80, date: '2023-08-05' }
+        
     ]);
     const [showForm, setShowForm] = useState(false);
 
     const handleAddExpense = (newExpense) => {
         setExpenses([...expenses, newExpense]);
+        setShowForm(false); // Hide the form after adding the expense
     };
 
     return (
