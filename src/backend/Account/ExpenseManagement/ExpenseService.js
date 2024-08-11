@@ -1,8 +1,8 @@
 // src/backend/ExpenseManagement/ExpenseService.js
 
-import { firestore } from '../../firebase'; // Correct path based on src directory structure
-import Expense from '../../models/ExpensesDataModel'; // Correct path based on src directory structure
-import ExpenseContainer from '../../models/ExpenseContainer'; // Correct path based on src directory structure
+import { firestore } from '../../../firebase'; // Correct path based on src directory structure
+import Expense from '../../../models/ExpensesDataModel'; // Correct path based on src directory structure
+import ExpenseContainer from '../../../models/ExpenseContainer'; // Correct path based on src directory structure
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 
 // Function to add a new expense

@@ -1,8 +1,8 @@
 // src/components/user/ExpenseSummaryField.js
 
 import React, { useState, useEffect } from 'react';
-import AddExpenseForm from '../AddExpenseForm'; // Update this path if the location is different
-import { getExpenses } from '../../backend/ExpenseManagement/ExpenseService'; // Correct import for ExpenseService functions
+import AddExpenseForm from './ExpenseSummary/AddExpenseForm'; // Update this path if the location is different
+import { getExpenses } from '../../backend/Account/ExpenseManagement/ExpenseService'; // Correct import for ExpenseService functions
 
 const ExpenseSummaryField = () => {
   const [expenses, setExpenses] = useState([]);
