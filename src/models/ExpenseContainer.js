@@ -31,3 +31,5 @@ class ExpenseContainer {
       return this.expenses.find(expense => expense.id === expenseId);
     }
   }
+
+  export default ExpenseContainer;

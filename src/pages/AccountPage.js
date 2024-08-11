@@ -31,7 +31,7 @@ const AccountPage = () => {
       </nav>
       <div className="main-content">
         <Routes>
-          <Route path="expenses" element={<ExpenseSummaryField />} />  // Updated component reference
+          <Route path="expenses" element={<ExpenseSummaryField />} />  
           <Route path="reports" element={<Reports />} />
           <Route path="alerts" element={<Alerts />} />
         </Routes>
