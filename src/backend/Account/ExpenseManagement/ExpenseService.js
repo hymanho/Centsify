@@ -1,21 +1,22 @@
-// src/backend/ExpenseManagement.js
+// src/backend/ExpenseManagement/ExpenseService.js
 
-import { firestore } from '../../../firebase'; // Import your Firestore instance
-import Expense from '../../../models/ExpensesDataModel'; // Import the Expense class
-import ExpenseContainer from '../../../models/ExpenseContainer'; // Adjust the path as needed
+import { firestore } from '../../firebase'; // Correct path based on src directory structure
+import Expense from '../../models/ExpensesDataModel'; // Correct path based on src directory structure
+import ExpenseContainer from '../../models/ExpenseContainer'; // Correct path based on src directory structure
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 
 // Function to add a new expense
 const addExpense = async (userEmail, expenseData) => {
   try {
-    // Fetch the existing ExpenseContainer from Firestore
-    const containerRef = firestore.collection('Accounts').doc(userEmail).collection('expenses').doc('expenseContainer');
-    const containerDoc = await containerRef.get();
+    // Reference to the ExpenseContainer document in Firestore
+    const containerRef = doc(firestore, 'Accounts', userEmail, 'expenses', 'expenseContainer');
+    const containerDoc = await getDoc(containerRef);
 
     let expenseContainer;
 
-    if (containerDoc.exists) {
+    if (containerDoc.exists()) {
       // If the container exists, create a new instance from the data
-      expenseContainer = new ExpenseContainer(containerDoc.data().expenses);
+      expenseContainer = new ExpenseContainer(containerDoc.data().expenses || []);
     } else {
       // If the container does not exist, create a new one
       expenseContainer = new ExpenseContainer();
@@ -23,6 +24,7 @@ const addExpense = async (userEmail, expenseData) => {
 
     // Create an instance of the Expense class
     const expense = new Expense(
+      Date.now().toString(), // Generate a unique ID for the expense
       expenseData.title,
       expenseData.amount,
       expenseData.date,
@@ -34,7 +36,7 @@ const addExpense = async (userEmail, expenseData) => {
     expenseContainer.addExpense(expense);
 
     // Save the updated container back to Firestore
-    await containerRef.set({
+    await setDoc(containerRef, {
       expenses: expenseContainer.getExpenses()
     });
 
@@ -47,11 +49,11 @@ const addExpense = async (userEmail, expenseData) => {
 // Function to edit an existing expense
 const editExpense = async (userEmail, expenseId, updatedFields) => {
   try {
-    // Fetch the existing ExpenseContainer from Firestore
-    const containerRef = firestore.collection('Accounts').doc(userEmail).collection('expenses').doc('expenseContainer');
-    const containerDoc = await containerRef.get();
+    // Reference to the ExpenseContainer document in Firestore
+    const containerRef = doc(firestore, 'Accounts', userEmail, 'expenses', 'expenseContainer');
+    const containerDoc = await getDoc(containerRef);
 
-    if (!containerDoc.exists) {
+    if (!containerDoc.exists()) {
       console.error('Expense container not found');
       return;
     }
@@ -60,10 +62,15 @@ const editExpense = async (userEmail, expenseId, updatedFields) => {
     const expenseContainer = new ExpenseContainer(containerDoc.data().expenses);
 
     // Update the specific expense
-    expenseContainer.editExpense(expenseId, updatedFields);
+    const updatedExpense = expenseContainer.editExpense(expenseId, updatedFields);
+
+    if (!updatedExpense) {
+      console.error('Expense not found for update');
+      return;
+    }
 
     // Save the updated container back to Firestore
-    await containerRef.set({
+    await setDoc(containerRef, {
       expenses: expenseContainer.getExpenses()
     });
 
@@ -76,11 +83,11 @@ const editExpense = async (userEmail, expenseId, updatedFields) => {
 // Function to delete an expense
 const deleteExpense = async (userEmail, expenseId) => {
   try {
-    // Fetch the existing ExpenseContainer from Firestore
-    const containerRef = firestore.collection('Accounts').doc(userEmail).collection('expenses').doc('expenseContainer');
-    const containerDoc = await containerRef.get();
+    // Reference to the ExpenseContainer document in Firestore
+    const containerRef = doc(firestore, 'Accounts', userEmail, 'expenses', 'expenseContainer');
+    const containerDoc = await getDoc(containerRef);
 
-    if (!containerDoc.exists) {
+    if (!containerDoc.exists()) {
       console.error('Expense container not found');
       return;
     }
@@ -89,10 +96,15 @@ const deleteExpense = async (userEmail, expenseId) => {
     const expenseContainer = new ExpenseContainer(containerDoc.data().expenses);
 
     // Delete the specific expense
-    expenseContainer.deleteExpense(expenseId);
+    const deleted = expenseContainer.deleteExpense(expenseId);
+
+    if (!deleted) {
+      console.error('Expense not found for deletion');
+      return;
+    }
 
     // Save the updated container back to Firestore
-    await containerRef.set({
+    await setDoc(containerRef, {
       expenses: expenseContainer.getExpenses()
     });
 
@@ -102,4 +114,23 @@ const deleteExpense = async (userEmail, expenseId) => {
   }
 };
 
-export { addExpense, editExpense, deleteExpense };
+// Function to get all expenses
+const getExpenses = async (userEmail) => {
+  try {
+    const containerRef = doc(firestore, 'Accounts', userEmail, 'expenses', 'expenseContainer');
+    const containerDoc = await getDoc(containerRef);
+
+    if (!containerDoc.exists()) {
+      console.log('No expenses found');
+      return [];
+    }
+
+    const expenseContainer = new ExpenseContainer(containerDoc.data().expenses);
+    return expenseContainer.getExpenses();
+  } catch (error) {
+    console.error('Error fetching expenses:', error);
+    return [];
+  }
+};
+
+export { addExpense, editExpense, deleteExpense, getExpenses };

@@ -26,12 +26,11 @@ const AddExpenseForm = ({ onAddExpense }) => {
       description
     );
 
+    // Add the new expense to Firestore and update the state
     await addExpense(user.email, newExpense);
-
-    // Call the parent function to add the new expense and hide the form
     onAddExpense(newExpense);
 
-    // Optionally, you can reset the form fields here if needed
+    // Reset form fields
     setTitle('');
     setAmount('');
     setDate('');
