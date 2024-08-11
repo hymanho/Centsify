@@ -22,3 +22,4 @@ const firestore = getFirestore(app);
 
 // Export instances to use in other parts of your app
 export { auth, firestore };
+

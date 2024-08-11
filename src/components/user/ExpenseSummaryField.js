@@ -1,35 +1,44 @@
-// src/components/user/ExpenseSummary.js
+// src/components/user/ExpenseSummaryField.js
 
-import React, { useState } from 'react';
-import AddExpenseForm from './ExpenseSummary/AddExpenseForm';
+import React, { useState, useEffect } from 'react';
+import AddExpenseForm from '../AddExpenseForm'; // Update this path if the location is different
+import { getExpenses } from '../../backend/ExpenseManagement/ExpenseService'; // Correct import for ExpenseService functions
 
-const ExpenseSummary = () => {
-    const [expenses, setExpenses] = useState([
-        
-    ]);
-    const [showForm, setShowForm] = useState(false);
+const ExpenseSummaryField = () => {
+  const [expenses, setExpenses] = useState([]);
+  const [showForm, setShowForm] = useState(false);
 
-    const handleAddExpense = (newExpense) => {
-        setExpenses([...expenses, newExpense]);
-        setShowForm(false); // Hide the form after adding the expense
+  useEffect(() => {
+    const fetchExpenses = async () => {
+      const userEmail = "user@example.com"; // Replace with actual email from context or props
+      const userExpenses = await getExpenses(userEmail);
+      setExpenses(userExpenses);
     };
 
-    return (
-        <div>
-            <h2>Expense Summary</h2>
-            <button onClick={() => setShowForm(!showForm)}>
-                {showForm ? 'Cancel' : 'Add Expense'}
-            </button>
-            {showForm && <AddExpenseForm onAddExpense={handleAddExpense} />}
-            <ul>
-                {expenses.map(expense => (
-                    <li key={expense.id}>
-                        {expense.category}: ${expense.amount} on {expense.date}
-                    </li>
-                ))}
-            </ul>
-        </div>
-    );
+    fetchExpenses();
+  }, []);
+
+  const handleAddExpense = (newExpense) => {
+    setExpenses([...expenses, newExpense]);
+    setShowForm(false); // Hide the form after adding the expense
+  };
+
+  return (
+    <div>
+      <h2>Expense Summary</h2>
+      <button onClick={() => setShowForm(!showForm)}>
+        {showForm ? 'Cancel' : 'Add Expense'}
+      </button>
+      {showForm && <AddExpenseForm onAddExpense={handleAddExpense} />}
+      <ul>
+        {expenses.map(expense => (
+          <li key={expense.id}>
+            {expense.title}: ${expense.amount} on {expense.date} in {expense.category}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 };
 
-export default ExpenseSummary;
+export default ExpenseSummaryField;
