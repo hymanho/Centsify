@@ -8,7 +8,8 @@ import ExpenseContainer from '../../../models/ExpenseContainer'; // Adjust the p
 const addExpense = async (userEmail, expenseData) => {
   try {
     // Fetch the existing ExpenseContainer from Firestore
-    const containerRef = firestore.collection('Accounts').doc(userEmail).collection('expenses').doc('expenseContainer');
+    const containerRef = firestore.collection('Accounts').doc(userEmail).collection('expenses')
+    console.log(`Fetching from: ${containerRef.path}`); // Debugging line
     const containerDoc = await containerRef.get();
 
     let expenseContainer;
