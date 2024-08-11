@@ -22,10 +22,9 @@ const storeAccount = async (account) => {
       currency: account.currency,
       preferences: account.preferences,
       alerts: account.alerts,
-      expenses: account.expenses,
+      expenses: account.expenses.toPlainArray(), // Convert ExpenseContainer to plain array
       settings: account.settings,
       reports: account.reports,
-      
     };
 
     // Store the Account object in Firestore using the email as the document ID

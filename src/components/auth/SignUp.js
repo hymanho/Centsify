@@ -1,4 +1,3 @@
-//signup.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
@@ -29,13 +28,15 @@ const SignUp = () => {
                 0, // Default balance
                 'USD', // Default currency
                 {}, // Default preferences
-                {}, // Default transactions
-                {}, // Default security settings
+                {}, // Default alerts
                 {}, // Default settings
-                
+                {}, // Default reports
             );
 
-            // Store the Account object in Firestore
+            // Access the expenses container from the Account object
+            //const expensesContainer = account.expenses; // This is your ExpenseContainer
+
+            // Store the Account object in Firestore, including the expenses
             await storeAccount(account);
 
             console.log('Account successfully created:', user);

@@ -2,6 +2,15 @@ class ExpenseContainer {
     constructor() {
       this.expenses = []; // Array to hold Expense objects
     }
+
+    toPlainArray() {
+      return this.expenses.map(expense => ({
+        id: expense.id,
+        amount: expense.amount,
+        description: expense.description,
+        date: expense.date,
+      }));
+    }
   
     // Method to add a new expense
     addExpense(expense) {
