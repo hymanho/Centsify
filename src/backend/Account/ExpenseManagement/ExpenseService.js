@@ -1,14 +1,13 @@
-// src/backend/ExpenseManagement/ExpenseService.js
-
-import { firestore } from '../../../firebase'; // Correct path based on src directory structure
-import Expense from '../../../models/ExpensesDataModel'; // Correct path based on src directory structure
-import ExpenseContainer from '../../../models/ExpenseContainer'; // Correct path based on src directory structure
+// ExpenseService.js
+import { firestore } from '../../../firebase'; // Adjust the path based on your directory structure
 import { doc, getDoc, setDoc } from 'firebase/firestore';
+import ExpenseContainer from '../../../models/ExpenseContainer'; // Correct path based on your directory structure
 
 // Function to add a new expense
 const addExpense = async (userEmail, expenseData) => {
   try {
-    const containerRef = doc(firestore, 'Accounts', userEmail);
+    // Reference to the user's expense container document in Firestore
+    const containerRef = doc(firestore, 'Accounts', userEmail, 'expenses', 'expenseContainer');
     const containerDoc = await getDoc(containerRef);
 
     let expenseContainer;
@@ -19,20 +18,21 @@ const addExpense = async (userEmail, expenseData) => {
       expenseContainer = new ExpenseContainer();
     }
 
-    const expense = new Expense(
-      Date.now().toString(),
-      expenseData.title,
-      expenseData.amount,
-      expenseData.date,
-      expenseData.category,
-      expenseData.description
-    );
+    // Create a new expense object
+    const expense = {
+      id: Date.now().toString(), // Generate a unique ID for the expense
+      title: expenseData.title,
+      amount: expenseData.amount,
+      date: expenseData.date,
+      category: expenseData.category,
+      description: expenseData.description,
+    };
 
     expenseContainer.addExpense(expense);
 
     await setDoc(containerRef, {
-      expenses: expenseContainer.getExpenses()
-    }, { merge: true });
+      expenses: expenseContainer.toPlainArray()
+    });
 
     console.log('Expense added successfully');
   } catch (error) {
@@ -43,8 +43,8 @@ const addExpense = async (userEmail, expenseData) => {
 // Function to edit an existing expense
 const editExpense = async (userEmail, expenseId, updatedFields) => {
   try {
-    // Reference to the ExpenseContainer document in Firestore
-    const containerRef = doc(firestore, 'Accounts', userEmail);
+    // Reference to the user's expense container document in Firestore
+    const containerRef = doc(firestore, 'Accounts', userEmail, 'expenses', 'expenseContainer');
     const containerDoc = await getDoc(containerRef);
 
     if (!containerDoc.exists()) {
@@ -65,7 +65,7 @@ const editExpense = async (userEmail, expenseId, updatedFields) => {
 
     // Save the updated container back to Firestore
     await setDoc(containerRef, {
-      expenses: expenseContainer.getExpenses()
+      expenses: expenseContainer.toPlainArray()
     });
 
     console.log('Expense updated successfully');
@@ -77,8 +77,8 @@ const editExpense = async (userEmail, expenseId, updatedFields) => {
 // Function to delete an expense
 const deleteExpense = async (userEmail, expenseId) => {
   try {
-    // Reference to the ExpenseContainer document in Firestore
-    const containerRef = doc(firestore, 'Accounts', userEmail);
+    // Reference to the user's expense container document in Firestore
+    const containerRef = doc(firestore, 'Accounts', userEmail, 'expenses', 'expenseContainer');
     const containerDoc = await getDoc(containerRef);
 
     if (!containerDoc.exists()) {
@@ -99,7 +99,7 @@ const deleteExpense = async (userEmail, expenseId) => {
 
     // Save the updated container back to Firestore
     await setDoc(containerRef, {
-      expenses: expenseContainer.getExpenses()
+      expenses: expenseContainer.toPlainArray()
     });
 
     console.log('Expense deleted successfully');
