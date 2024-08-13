@@ -1,78 +1,53 @@
 // ExpenseContainer.js
-import React, { useEffect, useState } from 'react';
-import { getExpenses, addExpense, editExpense, deleteExpense } from '../backend/Account/ExpenseManagement/ExpenseService'; // Adjust the path as necessary
 
+class ExpenseContainer {
+  constructor(expenses = []) {
+    this.expenses = expenses; // Initialize with given expenses or an empty array
+  }
 
+  // Method to convert expenses to a plain object array for Firestore storage
+  toPlainArray() {
+    return this.expenses.map(expense => ({
+      id: expense.id,
+      title: expense.title,
+      amount: expense.amount,
+      date: expense.date,
+      category: expense.category,
+      description: expense.description,
+    }));
+  }
 
-const ExpenseContainer = ({ userEmail }) => {
-  const [expenses, setExpenses] = useState([]);
+  // Method to add a new expense
+  addExpense(expense) {
+    this.expenses.push(expense);
+  }
 
-  // Fetch expenses when the component mounts
-  useEffect(() => {
-    const fetchExpenses = async () => {
-      try {
-        const expenseList = await getExpenses(userEmail); // Fetch expenses for the specific user
-        setExpenses(expenseList);
-      } catch (error) {
-        console.error("Error fetching expenses: ", error);
-      }
-    };
-
-    fetchExpenses();
-  }, [userEmail]); // Re-fetch if userEmail changes
-
-  // Add an expense
-  const handleAddExpense = async (expenseData) => {
-    try {
-      await addExpense(userEmail, expenseData);
-      setExpenses((prevExpenses) => [...prevExpenses, expenseData]);
-    } catch (error) {
-      console.error("Error adding expense: ", error);
+  // Method to edit an existing expense
+  editExpense(expenseId, updatedFields) {
+    const index = this.expenses.findIndex(expense => expense.id === expenseId);
+    if (index !== -1) {
+      this.expenses[index] = { ...this.expenses[index], ...updatedFields };
+      return true;
     }
-  };
+    return false;
+  }
 
-  // Edit an expense
-  const handleEditExpense = async (expenseId, updatedFields) => {
-    try {
-      await editExpense(userEmail, expenseId, updatedFields);
-      setExpenses((prevExpenses) =>
-        prevExpenses.map((expense) =>
-          expense.id === expenseId ? { ...expense, ...updatedFields } : expense
-        )
-      );
-    } catch (error) {
-      console.error("Error editing expense: ", error);
-    }
-  };
+  // Method to delete an expense by its ID
+  deleteExpense(expenseId) {
+    const initialLength = this.expenses.length;
+    this.expenses = this.expenses.filter(expense => expense.id !== expenseId);
+    return this.expenses.length < initialLength; // Returns true if an expense was deleted
+  }
 
-  // Delete an expense
-  const handleDeleteExpense = async (expenseId) => {
-    try {
-      await deleteExpense(userEmail, expenseId);
-      setExpenses((prevExpenses) =>
-        prevExpenses.filter((expense) => expense.id !== expenseId)
-      );
-    } catch (error) {
-      console.error("Error deleting expense: ", error);
-    }
-  };
+  // Method to get all expenses
+  getExpenses() {
+    return this.expenses;
+  }
 
-  return (
-    <div>
-      <h2>Expenses</h2>
-      <ul>
-        {expenses.map((expense) => (
-          <li key={expense.id}>
-            {expense.title} - ${expense.amount} ({expense.category})
-            <button onClick={() => handleEditExpense(expense.id, { /* updated fields */ })}>Edit</button>
-            <button onClick={() => handleDeleteExpense(expense.id)}>Delete</button>
-          </li>
-        ))}
-      </ul>
-      {/* Example of adding an expense */}
-      <button onClick={() => handleAddExpense({ id: Date.now().toString(), title: 'New Expense', amount: 50, date: new Date().toISOString(), category: 'Food', description: 'Lunch' })}>Add Expense</button>
-    </div>
-  );
-};
+  // Method to find an expense by its ID
+  findExpenseById(expenseId) {
+    return this.expenses.find(expense => expense.id === expenseId);
+  }
+}
 
 export default ExpenseContainer;
