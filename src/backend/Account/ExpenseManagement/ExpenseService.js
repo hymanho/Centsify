@@ -13,10 +13,8 @@ const addExpense = async (userEmail, expenseData) => {
     let expenseContainer;
 
     if (containerDoc.exists()) {
-      // If the container exists, create a new instance from the data
       expenseContainer = new ExpenseContainer(containerDoc.data().expenses || []);
     } else {
-      // If the container does not exist, create a new one
       expenseContainer = new ExpenseContainer();
     }
 
@@ -30,10 +28,8 @@ const addExpense = async (userEmail, expenseData) => {
       description: expenseData.description,
     };
 
-    // Add the new expense to the container
     expenseContainer.addExpense(expense);
 
-    // Save the updated container back to Firestore
     await setDoc(containerRef, {
       expenses: expenseContainer.toPlainArray()
     });
