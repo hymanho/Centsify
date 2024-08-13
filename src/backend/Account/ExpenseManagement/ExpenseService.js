@@ -8,23 +8,19 @@ import { doc, getDoc, setDoc } from 'firebase/firestore';
 // Function to add a new expense
 const addExpense = async (userEmail, expenseData) => {
   try {
-    // Reference to the ExpenseContainer document in Firestore
-    const containerRef = doc(firestore, 'Accounts', userEmail, 'expenses', 'expenseContainer');
+    const containerRef = doc(firestore, 'Accounts', userEmail);
     const containerDoc = await getDoc(containerRef);
 
     let expenseContainer;
 
     if (containerDoc.exists()) {
-      // If the container exists, create a new instance from the data
       expenseContainer = new ExpenseContainer(containerDoc.data().expenses || []);
     } else {
-      // If the container does not exist, create a new one
       expenseContainer = new ExpenseContainer();
     }
 
-    // Create an instance of the Expense class
     const expense = new Expense(
-      Date.now().toString(), // Generate a unique ID for the expense
+      Date.now().toString(),
       expenseData.title,
       expenseData.amount,
       expenseData.date,
@@ -32,13 +28,11 @@ const addExpense = async (userEmail, expenseData) => {
       expenseData.description
     );
 
-    // Add the new expense to the container
     expenseContainer.addExpense(expense);
 
-    // Save the updated container back to Firestore
     await setDoc(containerRef, {
       expenses: expenseContainer.getExpenses()
-    });
+    }, { merge: true });
 
     console.log('Expense added successfully');
   } catch (error) {
@@ -50,7 +44,7 @@ const addExpense = async (userEmail, expenseData) => {
 const editExpense = async (userEmail, expenseId, updatedFields) => {
   try {
     // Reference to the ExpenseContainer document in Firestore
-    const containerRef = doc(firestore, 'Accounts', userEmail, 'expenses', 'expenseContainer');
+    const containerRef = doc(firestore, 'Accounts', userEmail);
     const containerDoc = await getDoc(containerRef);
 
     if (!containerDoc.exists()) {
@@ -84,7 +78,7 @@ const editExpense = async (userEmail, expenseId, updatedFields) => {
 const deleteExpense = async (userEmail, expenseId) => {
   try {
     // Reference to the ExpenseContainer document in Firestore
-    const containerRef = doc(firestore, 'Accounts', userEmail, 'expenses', 'expenseContainer');
+    const containerRef = doc(firestore, 'Accounts', userEmail);
     const containerDoc = await getDoc(containerRef);
 
     if (!containerDoc.exists()) {
