@@ -2,6 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import { getExpenses, addExpense, editExpense, deleteExpense } from '../backend/Account/ExpenseManagement/ExpenseService'; // Adjust the path as necessary
 
+
+
 const ExpenseContainer = ({ userEmail }) => {
   const [expenses, setExpenses] = useState([]);
 
