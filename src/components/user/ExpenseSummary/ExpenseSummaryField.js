@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import AddExpenseForm from './AddExpenseForm';
-import { getExpenseContainer } from '../../../backend/Account/ExpenseManagement/ExpenseService';
+import { getExpenseContainer, addExpense } from '../../../backend/Account/ExpenseManagement/ExpenseService';
 import { auth } from '../../../firebase';
 import '../../../styles/ExpenseSummaryField.css'; // Import the CSS file for styling
-import { addExpense } from '../../../backend/Account/ExpenseManagement/ExpenseService'
 
 const ExpenseSummaryField = () => {
   const [expenses, setExpenses] = useState([]);
@@ -16,20 +15,29 @@ const ExpenseSummaryField = () => {
       if (user) {
         const email = user.email;
         setUserEmail(email);
+        console.log('Fetching expenses for:', email);  // Debugging log
         const expenseContainer = await getExpenseContainer(email);
         if (expenseContainer) {
+          console.log('Expenses fetched:', expenseContainer.expenses);  // Debugging log
           setExpenses(expenseContainer.expenses || []);
         }
       }
     };
 
     fetchExpenses();
-  }, []);
+  }, [userEmail]);  // Fetch data whenever the userEmail changes
 
   const handleAddExpense = async (newExpense) => {
     if (userEmail) {
+      console.log('Adding new expense:', newExpense);  // Debugging log
+      // Add the new expense to Firebase
       await addExpense(userEmail, newExpense);
-      setExpenses([...expenses, newExpense]);
+      
+      // Fetch the updated list of expenses from Firebase
+      const updatedExpenses = await getExpenseContainer(userEmail);
+      console.log('Updated expenses from Firebase:', updatedExpenses.expenses);  // Debugging log
+      
+      setExpenses(updatedExpenses.expenses || []);
       setShowForm(false); // Hide the form after adding the expense
     }
   };
@@ -42,8 +50,8 @@ const ExpenseSummaryField = () => {
       </button>
       {showForm && <AddExpenseForm onAddExpense={handleAddExpense} />}
       <div className="expense-list">
-        {expenses.map((expense, index) => (
-          <div key={index} className="expense-bar">
+        {expenses.map((expense) => (
+          <div key={expense.id} className="expense-bar">
             <span className="expense-title">{expense.title}</span>
             <span className="expense-amount">${expense.amount}</span>
             <span className="expense-date">{expense.date}</span>

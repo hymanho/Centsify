@@ -14,6 +14,7 @@ const Reports = () => {
         
         // Transform the expenses data to match the chart format
         const transformedData = expenses.map(expense => ({
+          id: expense.id,  // Include an ID to uniquely identify each expense
           category: expense.category,
           totalExpenses: expense.amount,
           savings: expense.savings || 0, // Assuming savings is part of the data structure
@@ -24,7 +25,7 @@ const Reports = () => {
     };
 
     fetchExpenses();
-  }, []);
+  }, []); // The empty dependency array ensures this runs only once on mount
 
   return (
     <div className="chart-container">

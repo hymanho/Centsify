@@ -17,6 +17,19 @@ const addExpense = async (userEmail, expenseData) => {
       expenseContainer = new ExpenseContainer();
     }
 
+    // Check if the expense already exists
+    const existingExpense = expenseContainer.getExpenses().find(expense => 
+      expense.title === expenseData.title &&
+      expense.amount === expenseData.amount &&
+      expense.date === expenseData.date &&
+      expense.category === expenseData.category
+    );
+
+    if (existingExpense) {
+      console.log('Expense already exists:', existingExpense);
+      return existingExpense.id;
+    }
+
     // Create a new expense object
     const expense = {
       id: Date.now().toString(), // Generate a unique ID for the expense
@@ -29,11 +42,13 @@ const addExpense = async (userEmail, expenseData) => {
 
     expenseContainer.addExpense(expense);
 
+    // Save the updated container back to Firestore
     await setDoc(containerRef, {
       expenses: expenseContainer.toPlainArray()
     });
 
     console.log('Expense added successfully');
+    return expense.id; // Return the unique ID of the added expense
   } catch (error) {
     console.error('Error adding expense:', error);
   }
@@ -126,8 +141,7 @@ const getExpenses = async (userEmail) => {
   }
 };
 
-// Example of getExpenseContainer function in ExpenseService.js
-
+// Function to get the expense container for a user
 const getExpenseContainer = async (userEmail) => {
   const expenseContainerRef = doc(firestore, 'Accounts', userEmail, 'expenses', 'expenseContainer');
   const expenseContainerDoc = await getDoc(expenseContainerRef);
