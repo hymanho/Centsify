@@ -1,4 +1,3 @@
-// ExpenseService.js
 import { firestore } from '../../../firebase'; // Adjust the path based on your directory structure
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import ExpenseContainer from '../../../models/ExpenseContainer'; // Correct path based on your directory structure

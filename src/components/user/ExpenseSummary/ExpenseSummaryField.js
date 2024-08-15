@@ -1,8 +1,6 @@
-// src/components/user/ExpenseSummaryField.js
-
 import React, { useState, useEffect } from 'react';
 import AddExpenseForm from './AddExpenseForm'; // Ensure this path is correct
-import { getExpenseContainer } from '../../../backend/Account/ExpenseManagement/ExpenseService'; // Adjust to the correct import path for your service
+import { getExpenseContainer, addExpense } from '../../../backend/Account/ExpenseManagement/ExpenseService'; // Adjust to the correct import path for your service
 import { auth } from '../../../firebase'; // Ensure you have Firebase auth imported
 
 const ExpenseSummaryField = () => {
@@ -26,9 +24,12 @@ const ExpenseSummaryField = () => {
     fetchExpenses();
   }, []);
 
-  const handleAddExpense = (newExpense) => {
-    setExpenses([...expenses, newExpense]);
-    setShowForm(false); // Hide the form after adding the expense
+  const handleAddExpense = async (newExpense) => {
+    if (userEmail) {
+      await addExpense(userEmail, newExpense);
+      setExpenses([...expenses, newExpense]);
+      setShowForm(false); // Hide the form after adding the expense
+    }
   };
 
   return (
@@ -41,7 +42,7 @@ const ExpenseSummaryField = () => {
       <ul>
         {expenses.map((expense, index) => (
           <li key={index}>
-            {expense.title}: ${expense.amount} on {expense.date} in {expense.category}
+            {expense.title}: ${expense.amount} on {new Date(expense.date).toLocaleDateString()} in {expense.category}
           </li>
         ))}
       </ul>
