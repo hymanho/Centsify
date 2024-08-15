@@ -3,6 +3,7 @@ import AddExpenseForm from './AddExpenseForm';
 import { getExpenseContainer } from '../../../backend/Account/ExpenseManagement/ExpenseService';
 import { auth } from '../../../firebase';
 import '../../../styles/ExpenseSummaryField.css'; // Import the CSS file for styling
+import { addExpense } from '../../../backend/Account/ExpenseManagement/ExpenseService'
 
 const ExpenseSummaryField = () => {
   const [expenses, setExpenses] = useState([]);

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { getExpenses } from '../../../backend/Account/ExpenseManagement/ExpenseService'; // Adjust to your correct import path
-import { auth } from '../../../firebase'; // Ensure you have Firebase auth imported
+import { getExpenses } from '../../backend/Account/ExpenseManagement/ExpenseService'; // Adjust to your correct import path
+import { auth } from '../../firebase'; // Ensure you have Firebase auth imported
 import ReportDisplay from './ReportDisplay'; // Ensure this path is correct
 
 const Reports = () => {
