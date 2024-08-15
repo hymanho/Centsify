@@ -127,4 +127,12 @@ const getExpenses = async (userEmail) => {
   }
 };
 
-export { addExpense, editExpense, deleteExpense, getExpenses };
+// Example of getExpenseContainer function in ExpenseService.js
+
+const getExpenseContainer = async (userEmail) => {
+  const expenseContainerRef = doc(firestore, 'Accounts', userEmail, 'expenses', 'expenseContainer');
+  const expenseContainerDoc = await getDoc(expenseContainerRef);
+  return expenseContainerDoc.exists() ? expenseContainerDoc.data() : null;
+};
+
+export { addExpense, editExpense, deleteExpense, getExpenses, getExpenseContainer };
