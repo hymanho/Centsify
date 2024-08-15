@@ -1,0 +1,43 @@
+/* ExpenseSummaryField.css */
+
+.expense-summary {
+    padding: 20px;
+  }
+  
+  .expense-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .expense-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .expense-title {
+    font-weight: bold;
+    flex: 2;
+  }
+  
+  .expense-amount {
+    color: green;
+    flex: 1;
+  }
+  
+  .expense-date,
+  .expense-category,
+  .expense-description {
+    flex: 1;
+    color: #555;
+  }
+  
+  .expense-description {
+    flex: 2;
+  }

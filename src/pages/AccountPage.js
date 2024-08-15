@@ -4,7 +4,7 @@ import { auth } from '../firebase';  // Ensure this path correctly points to you
 import { useNavigate, NavLink, Route, Routes } from 'react-router-dom';
 import ExpenseSummaryField from '../components/user/ExpenseSummary/ExpenseSummaryField';  // Corrected import path
 import Reports from '../components/user/Reports';
-import Alerts from '../components/user/Alerts';
+import Alerts from '../components/user/Alerts/Alerts';
 import '../styles/AccountPage.css';  // Ensure the CSS path is correct
 
 const AccountPage = () => {
