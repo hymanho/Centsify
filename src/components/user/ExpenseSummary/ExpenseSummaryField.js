@@ -25,9 +25,12 @@ const ExpenseSummaryField = () => {
     fetchExpenses();
   }, []);
 
-  const handleAddExpense = (newExpense) => {
-    setExpenses([...expenses, newExpense]);
-    setShowForm(false);
+  const handleAddExpense = async (newExpense) => {
+    if (userEmail) {
+      await addExpense(userEmail, newExpense);
+      setExpenses([...expenses, newExpense]);
+      setShowForm(false); // Hide the form after adding the expense
+    }
   };
 
   return (
