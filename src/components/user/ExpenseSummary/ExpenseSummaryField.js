@@ -1,9 +1,9 @@
 // src/components/user/ExpenseSummaryField.js
 
 import React, { useState, useEffect } from 'react';
-import AddExpenseForm from './ExpenseSummary/AddExpenseForm'; // Ensure this path is correct
-import { getExpenseContainer } from '../../backend/Account/ExpenseManagement/ExpenseService'; // Adjust to the correct import path for your service
-import { auth } from '../../firebase'; // Ensure you have Firebase auth imported
+import AddExpenseForm from './AddExpenseForm'; // Ensure this path is correct
+import { getExpenseContainer } from '../../../backend/Account/ExpenseManagement/ExpenseService'; // Adjust to the correct import path for your service
+import { auth } from '../../../firebase'; // Ensure you have Firebase auth imported
 
 const ExpenseSummaryField = () => {
   const [expenses, setExpenses] = useState([]);

@@ -2,7 +2,7 @@ import React from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../firebase';  // Ensure this path correctly points to your Firebase configuration
 import { useNavigate, NavLink, Route, Routes } from 'react-router-dom';
-import ExpenseSummaryField from '../components/user/ExpenseSummaryField';  // Corrected import path
+import ExpenseSummaryField from '../components/user/ExpenseSummary/ExpenseSummaryField';  // Corrected import path
 import Reports from '../components/user/Reports';
 import Alerts from '../components/user/Alerts';
 import '../styles/AccountPage.css';  // Ensure the CSS path is correct
