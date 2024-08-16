@@ -1,20 +1,21 @@
 /* ExpenseSummaryField.css */
 
 .expense-summary {
-    padding: 20px;
+    padding: 20px; /* Padding around the content */
+    box-sizing: border-box; /* Include padding in the total width and height */
   }
   
   .expense-list {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 20px; /* Space between items in the list */
   }
   
   .expense-bar {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    padding: 10px;
+    align-items: left;
+    padding: 20px;
     border: 1px solid #ccc;
     border-radius: 8px;
     background-color: #f9f9f9;
@@ -41,3 +42,14 @@
   .expense-description {
     flex: 2;
   }
+
+  /* Assuming .main-container is the class for the full white background section */
+.main-container {
+  width: 80%; /* Increase this percentage to make the white background wider */
+  max-width: 1200px; /* Set a maximum width to control how wide it can get */
+  margin: 0 auto; /* Center the white background horizontally */
+  padding: 20px; /* Padding inside the white background */
+  background-color: white; /* Ensure the background is white */
+  border-radius: 10px; /* Optional: Add rounded corners */
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow */
+}

@@ -148,4 +148,33 @@ const getExpenseContainer = async (userEmail) => {
   return expenseContainerDoc.exists() ? expenseContainerDoc.data() : null;
 };
 
-export { addExpense, editExpense, deleteExpense, getExpenses, getExpenseContainer };
+const getExpense = async (userEmail, expenseId) => {
+  try {
+    // Reference to the user's expense container document in Firestore
+    const containerRef = doc(firestore, 'Accounts', userEmail, 'expenses', 'expenseContainer');
+    const containerDoc = await getDoc(containerRef);
+
+    if (!containerDoc.exists()) {
+      console.error('Expense container not found');
+      return null;
+    }
+
+    // Create an instance of ExpenseContainer from the data
+    const expenseContainer = new ExpenseContainer(containerDoc.data().expenses);
+
+    // Retrieve the specific expense by ID
+    const expense = expenseContainer.getExpenses().find(exp => exp.id === expenseId);
+
+    if (!expense) {
+      console.error('Expense not found for ID:', expenseId);
+      return null;
+    }
+
+    return expense;
+  } catch (error) {
+    console.error('Error fetching expense:', error);
+    return null;
+  }
+};
+
+export { addExpense, editExpense, deleteExpense, getExpenses, getExpenseContainer, getExpense };
