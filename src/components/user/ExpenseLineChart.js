@@ -1,8 +1,21 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Line } from 'react-chartjs-2';
-import PropTypes from 'prop-types';  // Import PropTypes for type checking
+import {
+  Chart as ChartJS,
+  LineElement,
+  PointElement,
+  LinearScale,
+  CategoryScale,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+import PropTypes from 'prop-types';
 
-const ExpenseLineChart = ({ data = [] }) => {  // Default to an empty array if data is undefined
+ChartJS.register(LineElement, PointElement, LinearScale, CategoryScale, Tooltip, Legend);
+
+const ExpenseLineChart = ({ data = [] }) => {
+  const chartRef = useRef(null);
+
   const chartData = {
     labels: data.map(expense => expense.date || ''), // Assuming 'date' is in 'YYYY-MM-DD' format
     datasets: [
@@ -26,10 +39,18 @@ const ExpenseLineChart = ({ data = [] }) => {  // Default to an empty array if d
     ],
   };
 
+  useEffect(() => {
+    return () => {
+      if (chartRef.current) {
+        chartRef.current.destroy();
+      }
+    };
+  }, []);
+
   return (
     <div>
       <h2>Expenses Over Time</h2>
-      <Line data={chartData} />
+      <Line ref={chartRef} data={chartData} />
     </div>
   );
 };

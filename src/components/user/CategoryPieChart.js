@@ -4,9 +4,9 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const CategoryPieChart = ({ data }) => {
+const CategoryPieChart = ({ data = [] }) => {
   const chartData = {
-    labels: [...new Set(data.map(expense => expense.category))], // Unique categories
+    labels: [...new Set(data.map(expense => expense.category || ''))], // Unique categories
     datasets: [
       {
         data: data.reduce((acc, expense) => {
@@ -17,7 +17,7 @@ const CategoryPieChart = ({ data }) => {
             acc.push({ category: expense.category, value: expense.amount });
           }
           return acc;
-        }, []).map(item => item.value),
+        }, []).map(item => item.value || 0),
         backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'],
         hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'],
       },
