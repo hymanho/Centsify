@@ -1,10 +1,10 @@
-// src/components/user/ExpenseLineChart.js
 import React from 'react';
 import { Line } from 'react-chartjs-2';
+import PropTypes from 'prop-types';  // Import PropTypes for type checking
 
-const ExpenseLineChart = ({ data }) => {
+const ExpenseLineChart = ({ data = [] }) => {  // Default to an empty array if data is undefined
   const chartData = {
-    labels: data.map(expense => expense.date), // Assuming 'date' is the format 'YYYY-MM-DD'
+    labels: data.map(expense => expense.date || ''), // Assuming 'date' is in 'YYYY-MM-DD' format
     datasets: [
       {
         label: 'Total Expenses',
@@ -21,7 +21,7 @@ const ExpenseLineChart = ({ data }) => {
         pointHoverBorderWidth: 2,
         pointRadius: 1,
         pointHitRadius: 10,
-        data: data.map(expense => expense.amount), // Assuming 'amount' is the expense value
+        data: data.map(expense => expense.amount || 0), // Assuming 'amount' is the expense value
       },
     ],
   };
@@ -32,6 +32,13 @@ const ExpenseLineChart = ({ data }) => {
       <Line data={chartData} />
     </div>
   );
+};
+
+ExpenseLineChart.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.shape({
+    date: PropTypes.string,
+    amount: PropTypes.number,
+  })),
 };
 
 export default ExpenseLineChart;

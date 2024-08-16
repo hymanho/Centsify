@@ -6,7 +6,6 @@ import ExpenseLineChart from './ExpenseLineChart';
 import CategoryPieChart from './CategoryPieChart';
 import '../../styles/Charts.css';
 
-
 const Reports = () => {
   const [data, setData] = useState([]);
 
@@ -21,6 +20,7 @@ const Reports = () => {
           id: expense.id,  // Include an ID to uniquely identify each expense
           category: expense.category,
           totalExpenses: expense.amount,
+          date: expense.date, // Make sure 'date' is included
           savings: expense.savings || 0, // Assuming savings is part of the data structure
         }));
         
@@ -34,6 +34,14 @@ const Reports = () => {
   return (
     <div className="chart-container">
       <h2 className="chart-title">Financial Reports</h2>
+
+      {/* Display the Expense Line Chart */}
+      <ExpenseLineChart data={data} />
+
+      {/* Display the Category Pie Chart */}
+      <CategoryPieChart data={data} />
+
+      {/* Display the original ReportDisplay component */}
       <ReportDisplay data={data} />
     </div>
   );
