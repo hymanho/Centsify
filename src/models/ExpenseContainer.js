@@ -1,5 +1,3 @@
-// ExpenseContainer.js
-
 class ExpenseContainer {
   constructor(expenses = []) {
     this.expenses = expenses; // Initialize with given expenses or an empty array
