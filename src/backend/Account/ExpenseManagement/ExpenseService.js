@@ -186,4 +186,26 @@ const detectAnomalies = (expenses, newExpense) => {
   return newExpense.amount > threshold;
 };
 
-export { addExpense, editExpense, deleteExpense, getExpenses, getExpenseContainer, getExpense };
+// Function to analyze spending patterns
+const analyzeSpendingPatterns = (expenses) => {
+  const patternAnalysis = {}; 
+  expenses.forEach(expense => {
+    if (!patternAnalysis[expense.category]) {
+      patternAnalysis[expense.category] = {
+        total: 0,
+        count: 0
+      };
+    }
+    patternAnalysis[expense.category].total += expense.amount;
+    patternAnalysis[expense.category].count += 1;
+  });
+
+  const averageSpending = {};
+  for (const category in patternAnalysis) {
+    averageSpending[category] = patternAnalysis[category].total / patternAnalysis[category].count;
+  }
+
+  return averageSpending;
+};
+
+export { addExpense, editExpense, deleteExpense, getExpenses, getExpenseContainer, getExpense, analyzeSpendingPatterns, detectAnomalies };
