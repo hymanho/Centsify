@@ -31,13 +31,16 @@ const Reports = () => {
         }, {});
 
         // Convert the aggregated data into an array format that the chart can use
-        const transformedData = Object.keys(aggregatedData).flatMap(date => 
+        let transformedData = Object.keys(aggregatedData).flatMap(date => 
           Object.keys(aggregatedData[date]).map(category => ({
             date,
             category,
             totalExpenses: aggregatedData[date][category],
           }))
         );
+
+        // Sort the data by date in ascending order
+        transformedData.sort((a, b) => new Date(a.date) - new Date(b.date));
 
         console.log("Aggregated and transformed data for reports:", transformedData); // Debugging log
         setData(transformedData);
