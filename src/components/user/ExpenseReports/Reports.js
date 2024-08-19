@@ -34,11 +34,17 @@ const Reports = () => {
   return (
     <div className="chart-container">
       <h2 className="chart-title">Financial Reports</h2>
-      <ExpenseLineChart data={data} />
-      <ExpenseBarChart data={data} /> 
-      <CategoryPieChart data={data} />
+      {data.length > 0 ? (
+        <>
+          <ExpenseLineChart data={data} />
+          <ExpenseBarChart data={data} />
+          <CategoryPieChart data={data} />
+        </>
+      ) : (
+        <p>Loading data...</p>
+      )}
     </div>
-  );
+  );  
 };
 
 export default Reports;
