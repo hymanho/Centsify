@@ -15,15 +15,23 @@ const Reports = () => {
       if (user) {
         const expenses = await getExpenses(user.email);
 
-        const transformedData = expenses.map(expense => ({
-          id: expense.id, 
-          date: expense.date, 
-          category: expense.category,
-          totalExpenses: expense.amount || 0,
-          savings: expense.savings || 0,
+        // Aggregate expenses by date
+        const aggregatedData = expenses.reduce((acc, expense) => {
+          const date = expense.date;
+          if (!acc[date]) {
+            acc[date] = 0;
+          }
+          acc[date] += expense.amount;
+          return acc;
+        }, {});
+
+        // Convert the aggregated data into an array format that the chart can use
+        const transformedData = Object.keys(aggregatedData).map(date => ({
+          date,
+          totalExpenses: aggregatedData[date],
         }));
-        
-        console.log("Transformed data for reports:", transformedData); // Debugging log
+
+        console.log("Aggregated and transformed data for reports:", transformedData); // Debugging log
         setData(transformedData);
       }
     };
@@ -34,17 +42,11 @@ const Reports = () => {
   return (
     <div className="chart-container">
       <h2 className="chart-title">Financial Reports</h2>
-      {data.length > 0 ? (
-        <>
-          <ExpenseLineChart data={data} />
-          <ExpenseBarChart data={data} />
-          <CategoryPieChart data={data} />
-        </>
-      ) : (
-        <p>Loading data...</p>
-      )}
+      <ExpenseLineChart data={data} />
+      <ExpenseBarChart data={data} /> 
+      <CategoryPieChart data={data} />
     </div>
-  );  
+  );
 };
 
 export default Reports;
