@@ -5,6 +5,7 @@ import { useNavigate, NavLink, Route, Routes } from 'react-router-dom';
 import ExpenseSummaryField from '../components/user/ExpenseSummary/ExpenseSummaryField';  // Corrected import path
 import Reports from '../components/user/ExpenseReports/Reports';
 import Alerts from '../components/user/Alerts/Alerts';
+import LogOff from '../components/auth/LogOff';  // Import the LogOff component
 import '../styles/AccountPage.css';  // Ensure the CSS path is correct
 
 const AccountPage = () => {
@@ -28,6 +29,9 @@ const AccountPage = () => {
         <NavLink to="expenses" className={({ isActive }) => isActive ? 'active' : ''}>Expense Summary</NavLink>
         <NavLink to="reports" className={({ isActive }) => isActive ? 'active' : ''}>Reports</NavLink>
         <NavLink to="alerts" className={({ isActive }) => isActive ? 'active' : ''}>Alerts</NavLink>
+        <div className="logoff-container">
+          <LogOff />  {/* Add LogOff button here */}
+        </div>
       </nav>
       <div className="main-content">
         <Routes>

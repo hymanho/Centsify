@@ -25,6 +25,14 @@ body {
   color: white;
   padding: 20px;
   box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;  /* Space between to push log-off button to the bottom */
+}
+
+.logoff-container {
+  margin-top: auto;
+  margin-bottom: 40px;
 }
 
 .sidebar h1 {
