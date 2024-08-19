@@ -1,11 +1,10 @@
-import { firestore } from '../../../firebase'; // Adjust the path based on your directory structure
+import { firestore } from '../../../firebase';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
-import ExpenseContainer from '../../../models/ExpenseContainer'; // Correct path based on your directory structure
+import ExpenseContainer from '../../../models/ExpenseContainer';
 
 // Function to add a new expense
 const addExpense = async (userEmail, expenseData) => {
   try {
-    // Reference to the user's expense container document in Firestore
     const containerRef = doc(firestore, 'Accounts', userEmail, 'expenses', 'expenseContainer');
     const containerDoc = await getDoc(containerRef);
 
@@ -17,7 +16,6 @@ const addExpense = async (userEmail, expenseData) => {
       expenseContainer = new ExpenseContainer();
     }
 
-    // Check if the expense already exists
     const existingExpense = expenseContainer.getExpenses().find(expense => 
       expense.title === expenseData.title &&
       expense.amount === expenseData.amount &&
@@ -30,9 +28,8 @@ const addExpense = async (userEmail, expenseData) => {
       return existingExpense.id;
     }
 
-    // Create a new expense object
     const expense = {
-      id: Date.now().toString(), // Generate a unique ID for the expense
+      id: Date.now().toString(),
       title: expenseData.title,
       amount: expenseData.amount,
       date: expenseData.date,
@@ -40,15 +37,24 @@ const addExpense = async (userEmail, expenseData) => {
       description: expenseData.description,
     };
 
+    // Budget recommendation logic
+    const recommendedBudget = recommendBudget(expenseContainer.getExpenses(), expense.category);
+    console.log(`Recommended budget for ${expense.category}: ${recommendedBudget}`);
+
+    // Anomaly detection logic
+    const isAnomaly = detectAnomalies(expenseContainer.getExpenses(), expense);
+    if (isAnomaly) {
+      console.log('Anomaly detected in the expense:', expense);
+    }
+
     expenseContainer.addExpense(expense);
 
-    // Save the updated container back to Firestore
     await setDoc(containerRef, {
       expenses: expenseContainer.toPlainArray()
     });
 
     console.log('Expense added successfully');
-    return expense.id; // Return the unique ID of the added expense
+    return expense.id;
   } catch (error) {
     console.error('Error adding expense:', error);
   }
@@ -57,7 +63,6 @@ const addExpense = async (userEmail, expenseData) => {
 // Function to edit an existing expense
 const editExpense = async (userEmail, expenseId, updatedFields) => {
   try {
-    // Reference to the user's expense container document in Firestore
     const containerRef = doc(firestore, 'Accounts', userEmail, 'expenses', 'expenseContainer');
     const containerDoc = await getDoc(containerRef);
 
@@ -66,10 +71,8 @@ const editExpense = async (userEmail, expenseId, updatedFields) => {
       return;
     }
 
-    // Create an instance of ExpenseContainer from the data
     const expenseContainer = new ExpenseContainer(containerDoc.data().expenses);
 
-    // Update the specific expense
     const updatedExpense = expenseContainer.editExpense(expenseId, updatedFields);
 
     if (!updatedExpense) {
@@ -77,7 +80,6 @@ const editExpense = async (userEmail, expenseId, updatedFields) => {
       return;
     }
 
-    // Save the updated container back to Firestore
     await setDoc(containerRef, {
       expenses: expenseContainer.toPlainArray()
     });
@@ -91,7 +93,6 @@ const editExpense = async (userEmail, expenseId, updatedFields) => {
 // Function to delete an expense
 const deleteExpense = async (userEmail, expenseId) => {
   try {
-    // Reference to the user's expense container document in Firestore
     const containerRef = doc(firestore, 'Accounts', userEmail, 'expenses', 'expenseContainer');
     const containerDoc = await getDoc(containerRef);
 
@@ -100,10 +101,8 @@ const deleteExpense = async (userEmail, expenseId) => {
       return;
     }
 
-    // Create an instance of ExpenseContainer from the data
     const expenseContainer = new ExpenseContainer(containerDoc.data().expenses);
 
-    // Delete the specific expense
     const deleted = expenseContainer.deleteExpense(expenseId);
 
     if (!deleted) {
@@ -111,7 +110,6 @@ const deleteExpense = async (userEmail, expenseId) => {
       return;
     }
 
-    // Save the updated container back to Firestore
     await setDoc(containerRef, {
       expenses: expenseContainer.toPlainArray()
     });
@@ -150,7 +148,6 @@ const getExpenseContainer = async (userEmail) => {
 
 const getExpense = async (userEmail, expenseId) => {
   try {
-    // Reference to the user's expense container document in Firestore
     const containerRef = doc(firestore, 'Accounts', userEmail, 'expenses', 'expenseContainer');
     const containerDoc = await getDoc(containerRef);
 
@@ -159,10 +156,8 @@ const getExpense = async (userEmail, expenseId) => {
       return null;
     }
 
-    // Create an instance of ExpenseContainer from the data
     const expenseContainer = new ExpenseContainer(containerDoc.data().expenses);
 
-    // Retrieve the specific expense by ID
     const expense = expenseContainer.getExpenses().find(exp => exp.id === expenseId);
 
     if (!expense) {
@@ -175,6 +170,20 @@ const getExpense = async (userEmail, expenseId) => {
     console.error('Error fetching expense:', error);
     return null;
   }
+};
+
+// Budget recommendation function
+const recommendBudget = (expenses, category) => {
+  const categoryExpenses = expenses.filter(exp => exp.category === category);
+  const total = categoryExpenses.reduce((sum, exp) => sum + exp.amount, 0);
+  return total / categoryExpenses.length || 100; // Default budget if no previous data
+};
+
+// Anomaly detection function
+const detectAnomalies = (expenses, newExpense) => {
+  const average = expenses.reduce((sum, exp) => sum + exp.amount, 0) / expenses.length;
+  const threshold = 1.5 * average;
+  return newExpense.amount > threshold;
 };
 
 export { addExpense, editExpense, deleteExpense, getExpenses, getExpenseContainer, getExpense };

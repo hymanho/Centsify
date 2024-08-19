@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { getExpenses } from '../../../backend/Account/ExpenseManagement/ExpenseService'; 
-import { auth } from '../../../firebase'; 
+import { getExpenses } from '../../../backend/Account/ExpenseManagement/ExpenseService';
+import { auth } from '../../../firebase';
 import ExpenseLineChart from './ExpenseLineChart';
 import CategoryPieChart from './CategoryPieChart';
-import ExpenseBarChart from './ExpenseBarChart'; 
+import ExpenseBarChart from './ExpenseBarChart';
 import '../../../styles/Charts.css';
 
 const Reports = () => {
@@ -54,7 +54,7 @@ const Reports = () => {
     <div className="chart-container">
       <h2 className="chart-title">Financial Reports</h2>
       <ExpenseLineChart data={data} />
-      <ExpenseBarChart data={data} /> 
+      <ExpenseBarChart data={data} />
       <CategoryPieChart data={data} />
     </div>
   );
