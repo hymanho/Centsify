@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { getExpenses } from '../../backend/Account/ExpenseManagement/ExpenseService'; 
-import { auth } from '../../firebase'; 
+import { getExpenses } from '../../../backend/Account/ExpenseManagement/ExpenseService'; 
+import { auth } from '../../../firebase'; 
 import ExpenseLineChart from './ExpenseLineChart';
 import CategoryPieChart from './CategoryPieChart';
 import ExpenseBarChart from './ExpenseBarChart'; 
-import '../../styles/Charts.css';
+import '../../../styles/Charts.css';
 
 const Reports = () => {
   const [data, setData] = useState([]);
