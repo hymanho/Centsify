@@ -17,13 +17,20 @@ const ExpenseLineChart = ({ data = [] }) => {
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    setIsMounted(true); // Set the state to true after the component has mounted
+    setIsMounted(true);
   }, []);
 
-  if (!isMounted) return null; // Don't render the chart until the component has mounted
+  if (!isMounted) return null;
+
+  const forecastExpenses = () => {
+    if (data.length === 0) return [];
+    const lastExpense = data[data.length - 1].totalExpenses || 0;
+    const forecast = Array(6).fill(lastExpense); // Simple forecast based on last known value
+    return forecast;
+  };
 
   const chartData = {
-    labels: data.map(expense => expense.date || ''), // Assuming 'date' is in 'YYYY-MM-DD' format
+    labels: [...data.map(expense => expense.date || ''), 'Forecast'],
     datasets: [
       {
         label: 'Total Expenses',
@@ -40,7 +47,7 @@ const ExpenseLineChart = ({ data = [] }) => {
         pointHoverBorderWidth: 2,
         pointRadius: 1,
         pointHitRadius: 10,
-        data: data.map(expense => expense.totalExpenses || 0), // Assuming 'totalExpenses' is the expense value
+        data: [...data.map(expense => expense.totalExpenses || 0), ...forecastExpenses()],
       },
     ],
   };
