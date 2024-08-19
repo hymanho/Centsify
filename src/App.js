@@ -3,6 +3,10 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import AccountPage from './pages/AccountPage';
 import './styles/App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './tailwind.css';
+
+
 
 function App() {
   return (
