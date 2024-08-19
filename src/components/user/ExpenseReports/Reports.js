@@ -15,21 +15,29 @@ const Reports = () => {
       if (user) {
         const expenses = await getExpenses(user.email);
 
-        // Aggregate expenses by date
+        // Aggregate expenses by date and category
         const aggregatedData = expenses.reduce((acc, expense) => {
           const date = expense.date;
+          const category = expense.category || 'Unknown';
+
           if (!acc[date]) {
-            acc[date] = 0;
+            acc[date] = {};
           }
-          acc[date] += expense.amount;
+          if (!acc[date][category]) {
+            acc[date][category] = 0;
+          }
+          acc[date][category] += expense.amount;
           return acc;
         }, {});
 
         // Convert the aggregated data into an array format that the chart can use
-        const transformedData = Object.keys(aggregatedData).map(date => ({
-          date,
-          totalExpenses: aggregatedData[date],
-        }));
+        const transformedData = Object.keys(aggregatedData).flatMap(date => 
+          Object.keys(aggregatedData[date]).map(category => ({
+            date,
+            category,
+            totalExpenses: aggregatedData[date][category],
+          }))
+        );
 
         console.log("Aggregated and transformed data for reports:", transformedData); // Debugging log
         setData(transformedData);
