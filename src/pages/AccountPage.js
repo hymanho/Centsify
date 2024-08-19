@@ -4,7 +4,7 @@ import { auth } from '../firebase';  // Ensure this path correctly points to you
 import { useNavigate, NavLink, Route, Routes } from 'react-router-dom';
 import ExpenseSummaryField from '../components/user/ExpenseSummary/ExpenseSummaryField';  // Corrected import path
 import Reports from '../components/user/ExpenseReports/Reports';
-import Alerts from '../components/user/Alerts/Alerts';
+import Alerts from '../components/user/Alerts/Chatbot';
 import LogOff from '../components/auth/LogOff';  // Import the LogOff component
 import '../styles/AccountPage.css';  // Ensure the CSS path is correct
 
