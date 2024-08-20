@@ -34,7 +34,7 @@ const SignUp = () => {
             );
 
             // Access the expenses container from the Account object
-            //const expensesContainer = account.expenses; // This is your ExpenseContainer
+            
 
             // Store the Account object in Firestore, including the expenses
             await storeAccount(account);
