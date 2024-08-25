@@ -1,13 +1,13 @@
 /* src/styles/Charts.css */
 
 .chart-container {
-  @apply flex flex-col items-center p-5;
+  @apply flex flex-col items-center p-8 bg-gray-50 rounded-lg shadow-md;
 }
 
 .chart-title {
-  @apply text-2xl mb-5;
+  @apply text-3xl mb-8 font-semibold text-gray-700;
 }
 
 .pie-chart {
-  @apply mt-10;
+  @apply mt-10 w-full max-w-md;
 }

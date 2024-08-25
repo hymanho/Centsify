@@ -1,13 +1,11 @@
 /* src/styles/AccountPage.css */
 
-/* Tailwind doesn't require defining root variables as it offers utility classes for colors and spacing */
-
 body {
   @apply flex h-screen m-0;
 }
 
 .sidebar {
-  @apply fixed top-0 left-0 w-64 h-full bg-gradient-to-b from-green-500 to-green-700 text-white p-5 shadow-lg flex flex-col justify-between;
+  @apply fixed top-0 left-0 w-64 h-full bg-gradient-to-b from-green-500 to-green-700 text-white p-5 shadow-2xl flex flex-col justify-between;
 }
 
 .logoff-container {
@@ -15,33 +13,25 @@ body {
 }
 
 .sidebar h1 {
-  @apply text-2xl font-bold mb-6;
+  @apply text-3xl font-bold mb-6 tracking-wider;
 }
 
 .sidebar a {
-  @apply flex items-center justify-center p-3 my-2 rounded-lg transition-transform duration-200 text-white bg-white bg-opacity-20 hover:bg-green-800 hover:translate-x-1 no-underline;
+  @apply flex items-center justify-center p-3 my-2 rounded-lg transition-all duration-200 text-white bg-white bg-opacity-20 hover:bg-green-800 hover:translate-x-2 transform hover:scale-105 no-underline;
 }
 
 .main-content {
-  @apply p-5 bg-white min-h-screen box-border w-full ml-64 relative overflow-y-auto;
+  @apply p-6 bg-gray-50 min-h-screen box-border w-full ml-64 relative overflow-y-auto;
 }
 
 .card {
-  @apply bg-white rounded-xl p-5 mt-5 shadow-md hover:shadow-lg transition-transform duration-300;
-}
-
-.card:hover {
-  @apply transform -translate-y-1 shadow-xl;
+  @apply bg-white rounded-xl p-6 mt-5 shadow-md hover:shadow-lg transition-transform duration-300 transform hover:-translate-y-2;
 }
 
 h2 {
-  @apply text-gray-800 text-xl mb-4;
+  @apply text-gray-800 text-2xl mb-4 font-semibold;
 }
 
 .button {
-  @apply bg-orange-500 text-white border-none py-2 px-4 rounded-lg cursor-pointer transition-colors duration-200 inline-flex items-center justify-center;
-}
-
-.button:hover {
-  @apply bg-orange-600;
+  @apply bg-orange-500 text-white border-none py-3 px-6 rounded-lg cursor-pointer transition-colors duration-200 inline-flex items-center justify-center hover:bg-orange-600 transform hover:scale-105;
 }

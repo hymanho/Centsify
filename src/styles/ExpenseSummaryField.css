@@ -1,85 +1,67 @@
-/* ExpenseSummaryField.css */
+/* src/styles/ExpenseSummaryField.css */
 
-/* Main container for the Expense Summary */
 .expense-summary {
-  @apply max-w-4xl mx-auto mt-8 p-4 bg-white shadow-lg rounded-lg;
+  @apply max-w-5xl mx-auto mt-8 p-6 bg-white shadow-xl rounded-lg;
 }
 
-/* List of expenses */
 .expense-list {
   @apply flex flex-col gap-6 mb-8;
 }
 
-/* Each expense item bar */
 .expense-bar {
-  @apply flex justify-between items-center p-6 bg-gray-100 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300;
+  @apply flex justify-between items-center p-6 bg-gray-100 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300;
 }
 
-/* Expense title */
 .expense-title {
-  @apply font-bold text-lg;
+  @apply font-bold text-lg text-gray-800;
 }
 
-/* Expense amount */
 .expense-amount {
-  @apply text-green-500 text-lg font-semibold;
+  @apply text-green-500 text-xl font-semibold;
 }
 
-/* Expense date, category, and description */
 .expense-date,
 .expense-category,
 .expense-description {
-  @apply text-gray-600;
+  @apply text-gray-600 text-sm;
 }
 
-/* Additional styling for description */
 .expense-description {
   @apply flex-grow text-sm;
 }
 
-/* Add Expense button */
 .add-expense-btn {
-  @apply bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition-colors duration-200;
+  @apply bg-blue-500 text-white py-3 px-6 rounded-lg hover:bg-blue-600 transition-colors duration-200;
 }
 
-/* Edit button */
 .edit-btn {
-  @apply bg-teal-500 text-white py-2 px-3 rounded hover:bg-teal-600 transition-colors duration-200;
+  @apply bg-teal-500 text-white py-2 px-4 rounded-lg hover:bg-teal-600 transition-colors duration-200;
 }
 
-/* Card styling for Spending Analysis and Anomaly Detection */
 .card {
-  @apply bg-white p-6 rounded-lg shadow-md mb-6;
+  @apply bg-white p-6 rounded-lg shadow-lg mb-8;
 }
 
-/* Card title styling */
 .card-title {
-  @apply mb-4 text-xl font-semibold text-gray-800 border-b-2 border-gray-300 pb-2;
+  @apply mb-4 text-2xl font-semibold text-gray-800 border-b-2 border-gray-300 pb-2;
 }
 
-/* Spending item styling */
 .spending-item {
   @apply flex flex-col mb-4 pb-4 border-b border-gray-200;
-}
-
-.spending-item > div {
-  @apply flex justify-between items-center mb-2;
 }
 
 .spending-amount {
   @apply text-blue-500 font-semibold text-lg;
 }
 
-/* Anomaly warning styling */
 .anomaly-warning {
-  @apply border-l-4 border-yellow-500 p-4 bg-yellow-100 rounded-md mt-6;
+  @apply border-l-4 border-yellow-500 p-4 bg-yellow-100 rounded-md mt-6 shadow-md;
 }
 
 .warning-icon {
   @apply text-yellow-500 mr-3 text-2xl;
 }
 
-/* Full white background section */
 .main-container {
-  @apply w-4/5 max-w-7xl mx-auto p-8 bg-white rounded-lg shadow-lg;
+  @apply w-4/5 max-w-7xl mx-auto p-8 bg-gray-50 rounded-lg shadow-lg;
 }
