@@ -4,7 +4,7 @@ import { auth } from '../firebase';  // Ensure this path correctly points to you
 import { useNavigate, NavLink, Route, Routes } from 'react-router-dom';
 import ExpenseSummaryField from '../components/user/ExpenseSummary/ExpenseSummaryField';  // Corrected import path
 import Reports from '../components/user/ExpenseReports/Reports';
-import Chatbot from '../components/user/Chatbot/Chatbot';
+import Chatbot from '../components/user/Chatbot/ChatbotScreen';
 import LogOff from '../components/auth/LogOff';  // Import the LogOff component
 import '../styles/AccountPage.css';  // Ensure the CSS path is correct
 
@@ -28,7 +28,7 @@ const AccountPage = () => {
         <h1>Dashboard</h1>
         <NavLink to="expenses" className={({ isActive }) => isActive ? 'active' : ''}>Expense Summary</NavLink>
         <NavLink to="reports" className={({ isActive }) => isActive ? 'active' : ''}>Reports</NavLink>
-        <NavLink to="alerts" className={({ isActive }) => isActive ? 'active' : ''}>Alerts</NavLink>
+        <NavLink to="chatbot" className={({ isActive }) => isActive ? 'active' : ''}>Chatbot</NavLink>
         <div className="logoff-container">
           <LogOff />  {/* Add LogOff button here */}
         </div>

@@ -9,12 +9,15 @@
     "@tensorflow/tfjs-backend-webgl": "^4.20.0",
     "@tensorflow/tfjs-converter": "^4.20.0",
     "@tensorflow/tfjs-core": "^4.20.0",
+    "@tensorflow/tfjs-node": "^4.20.0",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.7.4",
+    "body-parser": "^1.20.2",
     "bootstrap": "^5.3.3",
     "chart.js": "^4.4.3",
+    "cors": "^2.8.5",
     "express": "^4.19.2",
     "firebase": "^10.12.5",
     "firebase-admin": "^12.3.1",
@@ -27,6 +30,7 @@
     "react-router-dom": "^6.26.1",
     "react-scripts": "^5.0.1",
     "recharts": "^2.12.7",
+    "tailwind": "^4.0.0",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

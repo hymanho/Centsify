@@ -44,7 +44,7 @@
 
 /* Edit button */
 .edit-btn {
-  @apply bg-teal-500 text-white py-2 px-3 rounded hover:bg-teal-600 transition-colors duration-200;
+  @apply bg-teal-500 text-white py-2 px-3 rounded hover:bg-teal-500 transition-colors duration-200;
 }
 
 /* Card styling for Spending Analysis and Anomaly Detection */

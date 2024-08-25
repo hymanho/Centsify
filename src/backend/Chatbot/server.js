@@ -1,58 +1,60 @@
+// server.js
+
+// Import necessary modules
 const express = require('express');
-const cors = require('cors');
 const bodyParser = require('body-parser');
-const use = require('@tensorflow-models/universal-sentence-encoder');
-const tf = require('@tensorflow/tfjs-node');
 const admin = require('firebase-admin');
+const { UniversalSentenceEncoder } = require('@tensorflow-models/universal-sentence-encoder');
+const tf = require('@tensorflow/tfjs');
 
-// Load Firebase service account key (replace with your key file)
-const serviceAccount = require("C:\Users\r7-1700\moneytracker\moneytracker-19a89-firebase-adminsdk-y602a-bdb538b409.json");
-
+// Initialize Firebase Admin SDK
+const serviceAccount = require('./firebaseAdminKey.json');
 admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount)
+  credential: admin.credential.cert(serviceAccount),
 });
-
-const db = admin.firestore();
 
 const app = express();
-app.use(cors());
+const port = process.env.PORT || 5000;
+
+// Middleware
 app.use(bodyParser.json());
 
+// Load the Universal Sentence Encoder model
 let model;
+(async () => {
+  model = await UniversalSentenceEncoder.load();
+})();
 
-const loadModel = async () => {
-    model = await use.load();
-    console.log('TensorFlow model loaded');
-};
+// Handle chatbot requests
+app.post('/api/chat', async (req, res) => {
+  const { message } = req.body;
 
-loadModel();
+  if (!message) {
+    return res.status(400).json({ error: 'Message is required' });
+  }
 
-app.post('/api/chatbot', async (req, res) => {
-    const { userMessage, userId } = req.body;
-
-    if (!model) {
-        return res.status(500).json({ error: 'Model not loaded yet' });
-    }
-
-    // Generate a response using TensorFlow model
-    const sentences = [userMessage];
-    const embeddings = await model.embed(sentences);
-    const embeddingArray = embeddings.arraySync();
-
-    // Simple example response
-    const botResponse = `You said: ${userMessage}`;
-
-    // Save the conversation to Firestore
-    await db.collection('users').doc(userId).collection('conversations').add({
-        userMessage: userMessage,
-        botResponse: botResponse,
-        timestamp: admin.firestore.FieldValue.serverTimestamp()
-    });
-
-    res.json({ response: botResponse });
+  try {
+    // Process message using the Universal Sentence Encoder
+    const response = await processMessage(message);
+    return res.json({ reply: response });
+  } catch (error) {
+    console.error('Error processing message:', error);
+    return res.status(500).json({ error: 'Internal Server Error' });
+  }
 });
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+// Function to process the message and generate a response
+const processMessage = async (message) => {
+  const sentences = ['Hello, how can I help you?', 'I am a chatbot.'];
+  const embeddings = await Promise.all(sentences.map(sentence => model.embed(sentence)));
+
+  if (message.toLowerCase().includes('hello')) {
+    return 'Hi there! How can I assist you today?';
+  } else {
+    return 'Sorry, I didn\'t understand that.';
+  }
+};
+
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
 });
