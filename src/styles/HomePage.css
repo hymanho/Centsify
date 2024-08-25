@@ -1,43 +1,23 @@
+/* src/styles/HomePage.css */
+
 /* Styles for the header */
 .page-header {
-  position: fixed; /* Fix the header at the top */
-  top: 0;
-  left: 0;
-  width: 100%; /* Ensure full width */
-  padding: 20px 40px; /* Padding for the header content */
-  background-color: #32be8f; /* Background color */
-  color: white; /* Text color */
-  font-size: 24px; /* Font size */
-  font-weight: bold; /* Bold font */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Shadow for depth */
-  text-align: left; /* Align text to the left */
-  z-index: 10; /* Ensure it stays above other elements */
+  @apply fixed top-0 left-0 w-full p-5 px-10 bg-green-500 text-white text-2xl font-bold shadow-md text-left z-10;
 }
 
 /* Main container for the home page */
 .home-page {
-  margin-top: 80px; /* Add top margin to account for the fixed header */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  padding: 20px;
-  box-sizing: border-box; /* Include padding in the element's total width and height */
+  @apply mt-20 flex flex-col items-center w-full p-5 box-border;
 }
 
 /* Container for the login and sign-up forms */
 .auth-forms {
-  display: flex;
-  justify-content: space-around;
-  width: 100%;
-  max-width: 900px; /* Increased max width for better form display */
-  margin-top: 20px; /* Add some space below the header */
+  @apply flex justify-around w-full max-w-[900px] mt-5;
 }
 
 @media (max-width: 768px) {
   /* Adjustments for smaller screens */
   .auth-forms {
-    flex-direction: column; /* Stack forms on smaller screens */
-    align-items: center; /* Center align forms */
+    @apply flex-col items-center;
   }
 }

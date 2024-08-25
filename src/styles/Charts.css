@@ -1,17 +1,13 @@
 /* src/styles/Charts.css */
+
 .chart-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-  }
-  
-  .chart-title {
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-  
-  .pie-chart {
-    margin-top: 40px;
-  }
-  
+  @apply flex flex-col items-center p-5;
+}
+
+.chart-title {
+  @apply text-2xl mb-5;
+}
+
+.pie-chart {
+  @apply mt-10;
+}

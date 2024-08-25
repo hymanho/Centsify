@@ -1,33 +1,16 @@
+/* src/styles/App.css */
+
+/* The main container of the app, centered text */
 .App {
-  text-align: center;
+  @apply text-center;
 }
 
+/* The logo, with a fixed height and pointer-events disabled */
 .App-logo {
-  height: 40vmin;
-  pointer-events: none;
+  @apply h-[40vmin] pointer-events-none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
+/* The keyframe animation remains unchanged */
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -35,4 +18,21 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+/* Apply the animation conditionally based on the user's motion preference */
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+/* The header of the app, with a dark background, centered content */
+.App-header {
+  @apply bg-gray-800 min-h-screen flex flex-col items-center justify-center text-white text-[calc(10px+2vmin)];
+}
+
+/* The app link, with a custom color */
+.App-link {
+  @apply text-[#61dafb];
 }

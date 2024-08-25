@@ -1,36 +1,23 @@
+/* src/styles/SignupPage.css */
+
+/* Signup container styling */
 .signup-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f4f4f4;
-  }
-  
-  .signup-form {
-    padding: 20px;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    width: 300px;
-  }
-  
-  .signup-form input[type="text"],
-  .signup-form input[type="password"],
-  .signup-form input[type="email"] {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-  }
-  
-  .signup-form button {
-    width: 100%;
-    padding: 10px;
-    background-color: #85BB65;
-    border: none;
-    color: white;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
+  @apply flex justify-center items-center h-screen bg-gray-200;
+}
+
+/* Signup form styling */
+.signup-form {
+  @apply p-5 bg-white rounded-lg shadow-lg w-72;
+}
+
+/* Input fields styling */
+.signup-form input[type="text"],
+.signup-form input[type="password"],
+.signup-form input[type="email"] {
+  @apply w-full p-2 my-2 border border-gray-300 rounded-md;
+}
+
+/* Button styling */
+.signup-form button {
+  @apply w-full p-2 bg-green-500 border-none text-white rounded-md cursor-pointer;
+}

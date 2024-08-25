@@ -1,106 +1,72 @@
+/* src/styles/FormPage.css */
+
 /* General body and background styles */
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f9f9f9;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    @apply font-sans bg-gray-100 m-0 p-0 flex justify-center items-center h-screen;
 }
 
 /* Card styling */
 .card {
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-    overflow: hidden;
-    display: flex;
-    width: 700px;
+    @apply bg-white rounded-xl shadow-lg overflow-hidden flex w-[700px] flex-row;
 }
 
 /* Form container styling */
 .form-container {
-    padding: 40px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    @apply p-10 flex flex-col justify-center;
 }
 
 /* Input fields styling */
 input[type="text"],
 input[type="password"],
 input[type="email"] {
-    width: 100%;
-    padding: 15px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
+    @apply w-full p-4 my-2 border border-gray-300 rounded-lg box-border;
 }
 
 /* Button styling */
 button {
-    padding: 12px;
-    margin-top: 10px;
-    background-image: linear-gradient(to right, #32be8f, #38d39f);
-    border: none;
-    color: white;
-    text-transform: uppercase;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.3s;
-}
+    @apply p-3 mt-2 bg-gradient-to-r from-green-500 to-green-600 border-none text-white uppercase rounded-lg cursor-pointer transition-colors duration-300;
+  }
 
 button:hover {
-    background-image: linear-gradient(to right, #32be8f, #3cffab);
+    @apply bg-gradient-to-r from-green-500 to-green-400;
 }
 
 /* Splitting Login and Signup into two columns */
 .card {
-    flex-direction: row;
+    @apply flex-row;
 }
 
 /* Header with logo and application name */
 .header {
-    padding: 20px;
-    background: #32be8f;
-    color: white;
-    text-align: center;
-    font-size: 24px;
+    @apply p-5 bg-green-500 text-white text-center text-2xl;
 }
 
 /* Enhancing the visual separation */
 .form-section {
-    border-right: 1px solid #eee;
-    flex: 1;
+    @apply border-r border-gray-200 flex-1;
 }
 
 /* Last section should not have a border */
 .form-section:last-child {
-    border-right: none;
+    @apply border-r-0;
 }
 
 /* Additional styling for alignment and aesthetics */
 .form-section h2 {
-    text-align: center;
-    color: #333;
+    @apply text-center text-gray-800;
 }
 
 /* Responsive design adjustments */
 @media (max-width: 768px) {
     .card {
-        flex-direction: column;
-        width: 90%;
+        @apply flex-col w-[90%];
     }
 
     .form-section {
-        border-right: none;
-        border-bottom: 1px solid #eee;
+        @apply border-r-0 border-b border-gray-200;
     }
 
     .form-section:last-child {
-        border-bottom: none;
+        @apply border-b-0;
     }
 }
