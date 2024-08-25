@@ -1,23 +1,28 @@
 /* src/styles/SignupPage.css */
 
-/* Signup container styling */
 .signup-container {
   @apply flex justify-center items-center h-screen bg-gray-200;
 }
 
-/* Signup form styling */
 .signup-form {
-  @apply p-5 bg-white rounded-lg shadow-lg w-72;
+  @apply p-6 bg-white rounded-lg shadow-lg w-80 space-y-4;
 }
 
-/* Input fields styling */
 .signup-form input[type="text"],
 .signup-form input[type="password"],
 .signup-form input[type="email"] {
-  @apply w-full p-2 my-2 border border-gray-300 rounded-md;
+  @apply w-full p-3 my-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500;
 }
 
-/* Button styling */
+/* Button Styling */
 .signup-form button {
-  @apply w-full p-2 bg-green-500 border-none text-white rounded-md cursor-pointer;
+  @apply w-full p-3 rounded-md cursor-pointer transition-transform duration-300 hover:scale-105;
+  background: linear-gradient(to right, #32be8f, #38d39f);
+  color: white;
+  font-weight: bold;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.signup-form button:hover {
+  background: linear-gradient(to right, #28a745, #34d058);
 }

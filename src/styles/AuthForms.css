@@ -1,62 +1,51 @@
-/* src/styles/FormPage.css */
+/* src/styles/AuthForms.css */
 
-/* General body and background styles */
 body {
     @apply font-sans bg-gray-100 m-0 p-0 flex justify-center items-center h-screen;
 }
 
 /* Card styling */
 .card {
-    @apply bg-white rounded-xl shadow-lg overflow-hidden flex w-[700px] flex-row;
+    @apply bg-white rounded-xl shadow-xl overflow-hidden flex w-[700px] flex-row hover:shadow-2xl transition-shadow duration-300;
 }
 
 /* Form container styling */
 .form-container {
-    @apply p-10 flex flex-col justify-center;
+    @apply p-12 flex flex-col justify-center;
 }
 
 /* Input fields styling */
 input[type="text"],
 input[type="password"],
 input[type="email"] {
-    @apply w-full p-4 my-2 border border-gray-300 rounded-lg box-border;
+    @apply w-full p-4 my-2 border border-gray-300 rounded-lg box-border focus:outline-none focus:ring-2 focus:ring-green-500;
 }
 
-/* Button styling */
+/* Button Styling */
 button {
-    @apply p-3 mt-2 bg-gradient-to-r from-green-500 to-green-600 border-none text-white uppercase rounded-lg cursor-pointer transition-colors duration-300;
-  }
+    @apply p-3 mt-2 border-none text-white uppercase rounded-lg cursor-pointer shadow-lg transition-transform duration-300 ease-in-out transform hover:scale-105;
+    background: linear-gradient(to right, #32be8f, #38d39f);
+    font-weight: bold;
+}
 
+/* Hover Effects */
 button:hover {
-    @apply bg-gradient-to-r from-green-500 to-green-400;
+    @apply shadow-xl;
+    background: linear-gradient(to right, #28a745, #34d058);
 }
 
-/* Splitting Login and Signup into two columns */
-.card {
-    @apply flex-row;
-}
-
-/* Header with logo and application name */
 .header {
-    @apply p-5 bg-green-500 text-white text-center text-2xl;
+    @apply p-6 bg-green-500 text-white text-center text-2xl shadow-lg;
 }
 
-/* Enhancing the visual separation */
 .form-section {
     @apply border-r border-gray-200 flex-1;
 }
 
-/* Last section should not have a border */
-.form-section:last-child {
-    @apply border-r-0;
-}
-
-/* Additional styling for alignment and aesthetics */
 .form-section h2 {
-    @apply text-center text-gray-800;
+    @apply text-center text-gray-800 text-xl font-medium;
 }
 
-/* Responsive design adjustments */
 @media (max-width: 768px) {
     .card {
         @apply flex-col w-[90%];
@@ -64,9 +53,5 @@ button:hover {
 
     .form-section {
         @apply border-r-0 border-b border-gray-200;
-    }
-
-    .form-section:last-child {
-        @apply border-b-0;
     }
 }

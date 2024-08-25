@@ -1,16 +1,15 @@
 /* src/styles/App.css */
 
-/* The main container of the app, centered text */
 .App {
   @apply text-center;
 }
 
-/* The logo, with a fixed height and pointer-events disabled */
 .App-logo {
-  @apply h-[40vmin] pointer-events-none;
+  @apply h-[40vmin] pointer-events-none animate-spin;
+  animation-duration: 5s; /* Customize spin duration */
 }
 
-/* The keyframe animation remains unchanged */
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -20,19 +19,10 @@
   }
 }
 
-/* Apply the animation conditionally based on the user's motion preference */
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-/* The header of the app, with a dark background, centered content */
 .App-header {
-  @apply bg-gray-800 min-h-screen flex flex-col items-center justify-center text-white text-[calc(10px+2vmin)];
+  @apply bg-gray-900 min-h-screen flex flex-col items-center justify-center text-white text-3xl;
 }
 
-/* The app link, with a custom color */
 .App-link {
-  @apply text-[#61dafb];
+  @apply text-blue-400 underline hover:text-blue-600 transition-colors duration-300;
 }
