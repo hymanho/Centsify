@@ -1,8 +1,9 @@
+import requests
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app)  # This will allow cross-origin requests
+CORS(app)
 
 @app.route('/chat', methods=['POST'])
 def chat():
@@ -11,13 +12,25 @@ def chat():
     return jsonify({"response": bot_response})
 
 def generate_response(message):
-    # Simple logic for generating a response
-    if 'hello' in message.lower():
-        return "Hi there! How can I assist you today?"
-    elif 'bye' in message.lower():
-        return "Goodbye! Have a great day!"
-    else:
-        return "I'm not sure how to respond to that. Can you try asking something else?"
+    try:
+        headers = {
+            'Authorization': f'Bearer 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'
+        }
+
+        data = {
+            "inputs": message,
+            "parameters": {"max_new_tokens": 150},
+        }
+
+        response = requests.post(
+            'https://api-inference.huggingface.co/models/gpt2',
+            headers=headers, json=data
+        )
+        
+        response_json = response.json()
+        return response_json[0]['generated_text'].strip() if 'generated_text' in response_json[0] else "I'm not sure how to respond to that."
+    except Exception as e:
+        return f"Sorry, I couldn't generate a response due to an error: {str(e)}"
 
 if __name__ == '__main__':
     app.run(debug=True)
