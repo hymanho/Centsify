@@ -1,47 +1,42 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import '../../../styles/ChatbotScreen.css'; // Import your CSS file for styling
 
-const ChatbotScreen = () => {
+function Chatbot() {
   const [message, setMessage] = useState('');
-  const [chatHistory, setChatHistory] = useState([]);
+  const [responses, setResponses] = useState([]);
 
-  const handleMessageSend = async () => {
+  const sendMessage = async () => {
     if (message.trim() === '') return;
 
-    setChatHistory([...chatHistory, { text: message, type: 'user' }]);
-
     try {
-      const response = await axios.post('/api/chat', { message });
-      const botReply = response.data.reply;
-      setChatHistory([...chatHistory, { text: message, type: 'user' }, { text: botReply, type: 'bot' }]);
+      const res = await axios.post('http://127.0.0.1:5000/chat', { message });
+      setResponses([...responses, { message, response: res.data.response }]);
+      setMessage('');
     } catch (error) {
-      console.error('Error sending message:', error);
+      console.error("There was an error sending the message!", error);
     }
-
-    setMessage('');
   };
 
   return (
-    <div className="chatbot-screen">
-      <div className="chat-history">
-        {chatHistory.map((entry, index) => (
-          <div key={index} className={`chat-entry ${entry.type}`}>
-            {entry.text}
+    <div>
+      <h1>Chatbot</h1>
+      <div>
+        {responses.map((item, index) => (
+          <div key={index}>
+            <p><strong>You:</strong> {item.message}</p>
+            <p><strong>Bot:</strong> {item.response}</p>
           </div>
         ))}
       </div>
-      <div className="chat-input">
-        <input
-          type="text"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          onKeyPress={(e) => e.key === 'Enter' && handleMessageSend()}
-        />
-        <button onClick={handleMessageSend}>Send</button>
-      </div>
+      <input 
+        type="text" 
+        value={message} 
+        onChange={(e) => setMessage(e.target.value)} 
+        onKeyPress={(e) => e.key === 'Enter' && sendMessage()} 
+      />
+      <button onClick={sendMessage}>Send</button>
     </div>
   );
-};
+}
 
-export default ChatbotScreen;
+export default Chatbot;
