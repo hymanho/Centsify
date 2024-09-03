@@ -1,6 +1,7 @@
 import requests
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+import os
 
 app = Flask(__name__)
 CORS(app)
@@ -14,7 +15,7 @@ def chat():
 def generate_response(message):
     try:
         headers = {
-            'Authorization': f'Bearer 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'
+            'Authorization': f'Bearer {os.getenv("HUGGING_API_KEY")}'
         }
 
         data = {
