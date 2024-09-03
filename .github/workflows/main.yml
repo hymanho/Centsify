@@ -1,4 +1,3 @@
-# .github/workflows/main.yml
 name: Deploy
 
 on:
@@ -14,10 +13,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'  # Set to the version you are using
+
       - name: Set up environment variables
         run: |
           echo "REACT_APP_FIREBASE_API_KEY=${{ secrets.FIREBASE_API_KEY }}" >> $GITHUB_ENV
-          echo "${{ secrets.FIREBASE_ADMIN_KEY }}" > ./firebaseAdminKeyjson
+          echo "FIREBASE_ADMIN_KEY=${{ secrets.FIREBASE_ADMIN_KEY }}" >> $GITHUB_ENV
           echo "REACT_APP_HUGGING_API_KEY=${{ secrets.HUGGING_API_KEY }}" >> $GITHUB_ENV
 
       - name: Install dependencies
@@ -26,8 +30,11 @@ jobs:
       - name: Build project
         run: npm run build
 
+      - name: Write Firebase Admin Key
+        run: echo "${{ secrets.FIREBASE_ADMIN_KEY }}" > ./firebaseAdminKey.json
+
       - name: Deploy
         run: |
           echo "Deploying application..."
           # Replace with your actual deployment command
-          # deploy-to-hosting-service --api-key $REACT_APP_FIREBASE_API_KEY --service-account ./firebase-service-account.json
+          # deploy-to-hosting-service --api-key $REACT_APP_FIREBASE_API_KEY --service-account ./firebaseAdminKey.json
