@@ -21,7 +21,7 @@ jobs:
       - name: Set up environment variables
         run: |
           echo "REACT_APP_FIREBASE_API_KEY=${{ secrets.FIREBASE_API_KEY }}" >> $GITHUB_ENV
-          echo "FIREBASE_ADMIN_KEY=${{ secrets.FIREBASE_ADMIN_KEY }}" >> $GITHUB_ENV
+          echo "${{ secrets.FIREBASE_ADMIN_KEY }}" > ./firebaseAdminKey.json
           echo "REACT_APP_HUGGING_API_KEY=${{ secrets.HUGGING_API_KEY }}" >> $GITHUB_ENV
 
       - name: Install dependencies
@@ -30,11 +30,8 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Write Firebase Admin Key
-        run: echo "${{ secrets.FIREBASE_ADMIN_KEY }}" > ./firebaseAdminKey.json
-
       - name: Deploy
         run: |
           echo "Deploying application..."
           # Replace with your actual deployment command
-          # deploy-to-hosting-service --api-key $REACT_APP_FIREBASE_API_KEY --service-account ./firebaseAdminKey.json
+          # Example command: deploy-to-hosting-service --api-key $REACT_APP_FIREBASE_API_KEY --service-account ./firebaseAdminKey.json
