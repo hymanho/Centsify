@@ -21,7 +21,7 @@ jobs:
       - name: Set up environment variables
         run: |
           echo "REACT_APP_FIREBASE_API_KEY=${{ secrets.FIREBASE_API_KEY }}" >> $GITHUB_ENV
-          echo "${{ secrets.FIREBASE_ADMIN_KEY }}" > ./firebaseAdminKey.json  # Save secret as file
+          echo "${{ secrets.FIREBASE_ADMIN_SDK_KEY }}" > ./firebaseAdminKey.json
           echo "REACT_APP_HUGGING_API_KEY=${{ secrets.HUGGING_API_KEY }}" >> $GITHUB_ENV
 
       - name: Install dependencies
@@ -35,10 +35,8 @@ jobs:
         with:
           python-version: '3.x'
 
-      - name: Print directory contents
-        run: |
-          echo "Printing directory contents"
-          ls -la
+      - name: List files
+        run: ls -al
 
       - name: Deploy
         run: |
