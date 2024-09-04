@@ -23,8 +23,13 @@ jobs:
           echo "REACT_APP_FIREBASE_API_KEY=${{ secrets.FIREBASE_API_KEY }}" >> $GITHUB_ENV
           echo "${{ secrets.FIREBASE_ADMIN_SDK_KEY }}" > ./firebaseAdminKey.json
           echo "REACT_APP_HUGGING_API_KEY=${{ secrets.HUGGING_API_KEY }}" >> $GITHUB_ENV
-
       
+      - name: List files
+        run: ls -al
+
+      - name: List directory contents
+        run: ls -la
+
       - name: Build project
         run: npm run build
 
@@ -32,9 +37,6 @@ jobs:
         uses: actions/setup-python@v3
         with:
           python-version: '3.x'
-
-      - name: List files
-        run: ls -al
 
       - name: Deploy
         run: |
