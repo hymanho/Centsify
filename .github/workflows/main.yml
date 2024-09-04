@@ -1,37 +1,59 @@
-name: Deploy
+name: Deploy and Test
 
 on:
   push:
     branches:
-      - main  # Trigger on push to the main branch
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
+      # Checkout code
       - name: Checkout code
         uses: actions/checkout@v3
 
+      # Set up Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'  # Set to the version you are using
+          node-version: '18'
 
+      # Set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'  # Adjust according to your Python version
+
+      # Set up environment variables
       - name: Set up environment variables
         run: |
           echo "REACT_APP_FIREBASE_API_KEY=${{ secrets.FIREBASE_API_KEY }}" >> $GITHUB_ENV
-          echo "${{ secrets.FIREBASE_ADMIN_KEY }}" > ./firebaseAdminKey.json
+          echo "FIREBASE_ADMIN_KEY=${{ secrets.FIREBASE_ADMIN_KEY }}" >> $GITHUB_ENV
           echo "REACT_APP_HUGGING_API_KEY=${{ secrets.HUGGING_API_KEY }}" >> $GITHUB_ENV
 
-      - name: Install dependencies
+      # Install Node.js dependencies
+      - name: Install Node.js dependencies
         run: npm install
 
+      # Build the project (Node.js)
       - name: Build project
         run: npm run build
 
+      # Install Python dependencies
+      - name: Install Python dependencies
+        run: |
+          pip install firebase-admin
+
+      # Run FetchData.py script to test Firebase connection
+      - name: Test test.py
+        run: |
+          python src/backend/Chatbot/test.py
+
+      # Deployment step
       - name: Deploy
         run: |
           echo "Deploying application..."
           # Replace with your actual deployment command
-          # Example command: deploy-to-hosting-service --api-key $REACT_APP_FIREBASE_API_KEY --service-account ./firebaseAdminKey.json
+          # deploy-to-hosting-service --api-key $REACT_APP_FIREBASE_API_KEY --service-account ./firebaseAdminKey.json
