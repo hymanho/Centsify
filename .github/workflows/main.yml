@@ -35,8 +35,10 @@ jobs:
         with:
           python-version: '3.x'
 
-      - name: Run FetchData.py to check if secret is pulled
-        run: python src/backend/Chatbot/FetchData.py
+      - name: Print directory contents
+        run: |
+          echo "Printing directory contents"
+          ls -la
 
       - name: Deploy
         run: |
