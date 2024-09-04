@@ -24,9 +24,7 @@ jobs:
           echo "${{ secrets.FIREBASE_ADMIN_SDK_KEY }}" > ./firebaseAdminKey.json
           echo "REACT_APP_HUGGING_API_KEY=${{ secrets.HUGGING_API_KEY }}" >> $GITHUB_ENV
 
-      - name: Install dependencies
-        run: npm install
-
+      
       - name: Build project
         run: npm run build
 
