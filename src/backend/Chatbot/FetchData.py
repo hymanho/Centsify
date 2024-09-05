@@ -1,33 +1,38 @@
-import os
-import json
 import firebase_admin
 from firebase_admin import credentials, firestore
-from dotenv import load_dotenv
+import os
 
-load_dotenv()
-
+# Initialize Firebase
 def initialize_firebase():
-    # Retrieve Firebase Admin SDK key from environment variable
-    firebase_admin_key = os.getenv('FIREBASE_ADMIN_SDK_KEY')
-    
+    # Path to your service account JSON file
 
-    # Save the secret to a file
-    with open('firebaseAdminKey.json', 'w') as file:
-        file.write(firebase_admin_key)
-    
-    # Initialize Firebase
-    cred = credentials.Certificate('firebaseAdminKey.json')
+    firebase_admin_sdk_key = os.getenv('FIREBASE_ADMIN_SDK_KEY')
+
+    # Initialize Firebase Admin SDK with the service account JSON key
+    cred = credentials.Certificate(firebase_admin_sdk_key)
     firebase_admin.initialize_app(cred)
+    print("Firebase Initialized")
 
-def fetch_data_from_firestore():
-    initialize_firebase()
+# Fetch Data from Firestore
+def fetch_data(collection_name):
+    try:
+        db = firestore.client()
+        collection_ref = db.collection(collection_name)
+        docs = collection_ref.stream()
 
-    db = firestore.client()
-    # Replace 'your_collection' with the name of your Firestore collection
-    docs = db.collection('Accounts').stream()
+        data = []
+        for doc in docs:
+            data.append(doc.to_dict())
+        
+        print(f"Fetched {len(data)} documents from the {collection_name} collection.")
+        return data
 
-    for doc in docs:
-        print(f'{doc.id} => {doc.to_dict()}')
+    except Exception as e:
+        print(f"An error occurred while fetching data: {e}")
+        return []
 
 if __name__ == "__main__":
-    fetch_data_from_firestore()
+    initialize_firebase()
+    collection_name = 'Accounts'  # Modify based on your Firestore collection name
+    data = fetch_data(collection_name)
+    print(data)

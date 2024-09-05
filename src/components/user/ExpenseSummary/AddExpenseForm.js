@@ -4,8 +4,7 @@ import { auth } from '../../../firebase';
 import { addExpense } from '../../../backend/Account/ExpenseManagement/ExpenseService';
 import Expense from '../../../models/ExpensesDataModel';
 import * as tf from '@tensorflow/tfjs';
-import '@tensorflow/tfjs-backend-webgl'; // Import WebGL backend
-import '@tensorflow/tfjs-backend-cpu'; // Import CPU backend as fallback
+
 import * as use from '@tensorflow-models/universal-sentence-encoder';
 
 const AddExpenseForm = ({ onAddExpense }) => {

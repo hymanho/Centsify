@@ -25,6 +25,8 @@ jobs:
         run: |
           echo "REACT_APP_FIREBASE_API_KEY=${{ secrets.FIREBASE_API_KEY }}" >> $GITHUB_ENV
           echo "${{ secrets.FIREBASE_ADMIN_SDK_KEY }}" > ./firebaseAdminKey.json
+          env:
+            FIREBASE_ADMIN_SDK_KEY: ${{ secrets.FIREBASE_ADMIN_SDK_KEY }}
           echo "REACT_APP_HUGGING_API_KEY=${{ secrets.HUGGING_API_KEY }}" >> $GITHUB_ENV
       
       - name: List files
