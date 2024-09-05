@@ -1,12 +1,16 @@
 import firebase_admin
 from firebase_admin import credentials, firestore
 import os
+from dotenv import load_dotenv
+import json
+
+load_dotenv()
 
 # Initialize Firebase
 def initialize_firebase():
     # Path to your service account JSON file
 
-    firebase_admin_sdk_key = os.getenv('FIREBASE_ADMIN_SDK_KEY')
+    firebase_admin_sdk_key = json.loads(os.getenv('FIREBASE_ADMIN_SDK_KEY'))
 
     # Initialize Firebase Admin SDK with the service account JSON key
     cred = credentials.Certificate(firebase_admin_sdk_key)
