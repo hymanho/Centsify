@@ -11,8 +11,8 @@ load_dotenv()
 def initialize_firebase():
     try:
         firebase_admin_sdk_key = json.loads(os.getenv('FIREBASE_ADMIN_SDK_KEY'))
-        if not firebase_admin._apps:
-            cred = credentials.Certificate(firebase_admin_sdk_key)
+        if not firebase_admin.apps:
+            cred = credentials.Certificate(firebaseadminsdkkey)
             firebase_admin.initialize_app(cred)
             print("Firebase Initialized")
         else:
@@ -45,34 +45,8 @@ def fetch_data(collection_name):
         print(f"Fetched {len(data)} documents from the {collection_name} collection.")
         return data
     except Exception as e:
-        print(f"An error occurred while fetching data from {collection_name}: {e}")
+        print(f"An error occurred while fetching data: {e}")
         return []
-
-def fetch_expenses_for_account(account_id):
-    """Fetch expenses for a specific account."""
-    try:
-        db = firestore.client()
-        expenses_ref = db.collection('Accounts').document(account_id).collection('Expenses')
-        docs = expenses_ref.stream()
-
-        expenses = []
-        for doc in docs:
-            expense_data = convert_firestore_types(doc.to_dict())  # Handle special types
-            expenses.append(expense_data)
-
-        return expenses
-    except Exception as e:
-        print(f"An error occurred while fetching expenses for account {account_id}: {e}")
-        return []
-
-def save_data_to_file(data, filename):
-    """Save data to a JSON file."""
-    try:
-        with open(filename, 'w') as outfile:
-            json.dump(data, outfile, indent=4)
-        print(f"Data saved to {filename}")
-    except Exception as e:
-        print(f"An error occurred while saving data to {filename}: {e}")
 
 if __name__ == "__main__":
     initialize_firebase()

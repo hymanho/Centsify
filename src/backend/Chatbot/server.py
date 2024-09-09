@@ -34,5 +34,5 @@ def generate_response(message):
     except Exception as e:
         return f"Sorry, I couldn't generate a response due to an error: {str(e)}"
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run(debug=True)
