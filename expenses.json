@@ -1,0 +1,37 @@
+[
+    {
+        "balance": 0,
+        "preferences": {},
+        "currency": "USD",
+        "reports": {},
+        "alerts": {},
+        "settings": {},
+        "email": "12341@gmail.com",
+        "expenses": [],
+        "username": "ahsdsadlas;",
+        "name": "ahsdsadlas;"
+    },
+    {
+        "balance": 0,
+        "preferences": {},
+        "currency": "USD",
+        "reports": {},
+        "alerts": {},
+        "settings": {},
+        "email": "12345@gmail.com",
+        "expenses": [],
+        "username": "lol12312312",
+        "name": "lol12312312"
+    },
+    {
+        "balance": "",
+        "preferences": "",
+        "currency": "USD",
+        "reports": "",
+        "alerts": "",
+        "settings": "",
+        "email": "",
+        "expenses": [
+            {
+                "description": "",
+                "date": 
