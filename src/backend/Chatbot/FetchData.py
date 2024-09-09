@@ -40,8 +40,7 @@ def convert_firestore_types(data):
 
     return data
 
-# Fetch Data from Firestore
-def fetch_data(collection_name):
+def fetch_data_from_collection(collection_name):
     """Fetch all documents from a Firestore collection and convert them to JSON serializable data."""
     try:
         db = firestore.client()
@@ -53,18 +52,55 @@ def fetch_data(collection_name):
             doc_data = convert_firestore_types(doc.to_dict())  # Handle special types
             data.append(doc_data)
 
-        with open('expenses.json', 'w') as outfile:
-            json.dump(data, outfile, indent=4)
-
-        print(f"Fetched {len(data)} documents from the {collection_name} collection.")
         return data
     except Exception as e:
-        print(f"An error occurred while fetching data: {e}")
+        print(f"An error occurred while fetching data from {collection_name}: {e}")
         return []
+
+def fetch_expenses_for_account(account_id):
+    """Fetch expenses for a specific account."""
+    try:
+        db = firestore.client()
+        expenses_ref = db.collection('Accounts').document(account_id).collection('Expenses')
+        docs = expenses_ref.stream()
+
+        expenses = []
+        for doc in docs:
+            expense_data = convert_firestore_types(doc.to_dict())  # Handle special types
+            expenses.append(expense_data)
+
+        return expenses
+    except Exception as e:
+        print(f"An error occurred while fetching expenses for account {account_id}: {e}")
+        return []
+
+def save_data_to_file(data, filename):
+    """Save data to a JSON file."""
+    try:
+        with open(filename, 'w') as outfile:
+            json.dump(data, outfile, indent=4)
+        print(f"Data saved to {filename}")
+    except Exception as e:
+        print(f"An error occurred while saving data to {filename}: {e}")
 
 if __name__ == "__main__":
     initialize_firebase()
-    collection_name = 'Accounts'  # Modify based on your Firestore collection name
-    data = fetch_data(collection_name)
-    print(data)
-
+    
+    # Fetch and save account data
+    accounts_data = fetch_data_from_collection('Accounts')
+    save_data_to_file(accounts_data, 'accounts.json')
+    
+    # Fetch expenses for each account
+    all_expenses = []
+    for account in accounts_data:
+        account_id = account.get('accountId')
+        if account_id:
+            expenses_data = fetch_expenses_for_account(account_id)
+            for expense in expenses_data:
+                expense['accountId'] = account_id  # Link expense to account
+            all_expenses.extend(expenses_data)
+    
+    # Save all expenses data
+    save_data_to_file(all_expenses, 'expenses.json')
+    
+    print("Data fetching completed.")
