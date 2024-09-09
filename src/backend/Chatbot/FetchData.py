@@ -1,24 +1,28 @@
 import firebase_admin
 from firebase_admin import credentials, firestore
 import os
-from dotenv import load_dotenv
 import json
 
-load_dotenv()
-
-# Initialize Firebase
 def initialize_firebase():
-    # Path to your service account JSON file
+    """Initialize Firebase Admin SDK using credentials from environment variable."""
+    try:
+        # Load Firebase Admin SDK key from the environment variable
+        firebase_admin_sdk_key = json.loads(os.getenv('FIREBASE_ADMIN_SDK_KEY'))
+        
+        # Check if the Firebase app is already initialized
+        if not firebase_admin._apps:
+            cred = credentials.Certificate(firebase_admin_sdk_key)
+            firebase_admin.initialize_app(cred)
+            print("Firebase Initialized")
+        else:
+            print("Firebase already initialized")
 
-    firebase_admin_sdk_key = json.loads(os.getenv('FIREBASE_ADMIN_SDK_KEY'))
-
-    # Initialize Firebase Admin SDK with the service account JSON key
-    cred = credentials.Certificate(firebase_admin_sdk_key)
-    firebase_admin.initialize_app(cred)
-    print("Firebase Initialized")
+    except Exception as e:
+        print(f"Error initializing Firebase: {e}")
 
 # Fetch Data from Firestore
 def fetch_data(collection_name):
+    """Fetch all documents from a Firestore collection."""
     try:
         db = firestore.client()
         collection_ref = db.collection(collection_name)

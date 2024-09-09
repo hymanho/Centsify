@@ -1,38 +1,28 @@
-import re
-import string
+import json
 import pandas as pd
+from datetime import datetime
 
-class DataProcessor:
-    def __init__(self, data):
-        """
-        Initialize the processor with data from Firestore.
-        """
-        if isinstance(data, list):
-            self.data = pd.DataFrame(data, columns=['text'])  # Adjust based on your actual data structure
-        else:
-            raise ValueError("Unsupported data format.")
+def process_expense_data(file_path):
+    """Process expense data from JSON file."""
+    with open(file_path, 'r') as f:
+        raw_data = json.load(f)
 
-    def clean_text(self, text):
-        """
-        Clean the input text by removing unwanted characters, punctuations, and numbers.
-        """
-        text = text.lower()
-        text = re.sub(r'\[.*?\]', '', text)  
-        text = re.sub(r'[%s]' % re.escape(string.punctuation), '', text)  
-        text = re.sub(r'\w*\d\w*', '', text)  
-        text = re.sub(r'\s+', ' ', text).strip()  
-        return text
+    # Convert to DataFrame for easier manipulation
+    df = pd.DataFrame(raw_data)
+    
+    # Convert timestamp to datetime and extract month for analysis
+    df['date'] = pd.to_datetime(df['date'], format='%Y-%m-%d')
+    df['month'] = df['date'].dt.month
+    
+    # Example: aggregate by categories
+    category_summary = df.groupby('category')['amount'].sum().reset_index()
 
-    def process_data(self):
-        """
-        Clean and process the data.
-        """
-        self.data['cleaned_text'] = self.data['text'].apply(self.clean_text)
-        return self.data
+    return category_summary
 
-# Example usage
 if __name__ == "__main__":
-    sample_data = [{"text": "Hello World!"}, {"text": "Another example."}]  # Example input
-    processor = DataProcessor(sample_data)
-    cleaned_data = processor.process_data()
-    print(cleaned_data)
+    processed_data = process_expense_data('expenses.json')
+    
+    # Save processed data to a file
+    processed_data.to_csv('processed_expenses.csv', index=False)
+    
+    print("Expense data processed and saved to processed_expenses.csv")
