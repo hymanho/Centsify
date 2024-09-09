@@ -1,18 +1,38 @@
-import json
+import re
+import string
+import pandas as pd
 
-def transform_data(data):
-    transformed_data = []
-    for item in data:
-        prompt = f"What was the expense description? {item.get('description', 'N/A')}"
-        response = f"Amount spent: {item.get('amount', 'N/A')}"
-        transformed_data.append({"prompt": prompt, "response": response})
-    return transformed_data
+class DataProcessor:
+    def __init__(self, data):
+        """
+        Initialize the processor with data from Firestore.
+        """
+        if isinstance(data, list):
+            self.data = pd.DataFrame(data, columns=['text'])  # Adjust based on your actual data structure
+        else:
+            raise ValueError("Unsupported data format.")
 
+    def clean_text(self, text):
+        """
+        Clean the input text by removing unwanted characters, punctuations, and numbers.
+        """
+        text = text.lower()
+        text = re.sub(r'\[.*?\]', '', text)  
+        text = re.sub(r'[%s]' % re.escape(string.punctuation), '', text)  
+        text = re.sub(r'\w*\d\w*', '', text)  
+        text = re.sub(r'\s+', ' ', text).strip()  
+        return text
+
+    def process_data(self):
+        """
+        Clean and process the data.
+        """
+        self.data['cleaned_text'] = self.data['text'].apply(self.clean_text)
+        return self.data
+
+# Example usage
 if __name__ == "__main__":
-    with open('data/dataset.json', 'r') as f:
-        raw_data = json.load(f)
-    
-    transformed_data = transform_data(raw_data)
-    
-    with open('data/transformed_expenses_data.json', 'w') as f:
-        json.dump(transformed_data, f, indent=4)
+    sample_data = [{"text": "Hello World!"}, {"text": "Another example."}]  # Example input
+    processor = DataProcessor(sample_data)
+    cleaned_data = processor.process_data()
+    print(cleaned_data)

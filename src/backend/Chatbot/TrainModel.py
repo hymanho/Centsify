@@ -1,42 +1,39 @@
-from datasets import load_dataset
-from transformers import AutoTokenizer, AutoModelForCausalLM, Trainer, TrainingArguments
+from transformers import GPT2Tokenizer, GPT2LMHeadModel, Trainer, TrainingArguments
+from ProcessData import DataProcessor
+from FetchData import initialize_firebase, fetch_data
 
-# Load dataset
-dataset = load_dataset('json', data_files='data/transformed_expenses_data.json')
+def train_model(processed_data):
+    tokenizer = GPT2Tokenizer.from_pretrained('gpt2')
+    model = GPT2LMHeadModel.from_pretrained('gpt2')
 
-# Initialize tokenizer
-tokenizer = AutoTokenizer.from_pretrained('gpt-4')
+    tokenized_data = tokenizer(
+        processed_data['cleaned_text'].tolist(),
+        padding=True,
+        truncation=True,
+        return_tensors="pt"
+    )
 
-def tokenize_function(examples):
-    return tokenizer(examples['prompt'], truncation=True, padding='max_length', max_length=512)
+    training_args = TrainingArguments(
+        output_dir="./results",
+        num_train_epochs=3,
+        per_device_train_batch_size=4,
+        save_steps=10_000,
+        save_total_limit=2,
+    )
 
-tokenized_dataset = dataset.map(tokenize_function, batched=True)
+    trainer = Trainer(
+        model=model,
+        args=training_args,
+        train_dataset=tokenized_data['input_ids']
+    )
 
-# Load pre-trained model
-model = AutoModelForCausalLM.from_pretrained('gpt-4')
+    trainer.train()
 
-# Define training arguments
-training_args = TrainingArguments(
-    output_dir="./model/fine-tuned-model",
-    evaluation_strategy="epoch",
-    per_device_train_batch_size=2,
-    per_device_eval_batch_size=2,
-    num_train_epochs=3,
-    weight_decay=0.01,
-    logging_dir="./logs",
-)
+if __name__ == "__main__":
+    initialize_firebase()
+    raw_data = fetch_data('Accounts')  # Fetch Firestore data
 
-# Setup Trainer
-trainer = Trainer(
-    model=model,
-    args=training_args,
-    train_dataset=tokenized_dataset['train'],
-    eval_dataset=tokenized_dataset['test']
-)
+    processor = DataProcessor(raw_data)
+    processed_data = processor.process_data()
 
-# Train the model
-trainer.train()
-
-# Save the model
-model.save_pretrained('./model/fine-tuned-model')
-tokenizer.save_pretrained('./model/fine-tuned-model')
+    train_model(processed_data)
