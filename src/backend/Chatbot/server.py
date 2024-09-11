@@ -1,38 +1,43 @@
-#server.py
-import requests
 from flask import Flask, request, jsonify
-from flask_cors import CORS
-import os
+import pickle
+import pandas as pd
 
 app = Flask(__name__)
-CORS(app)
+
+# Load the trained expense prediction model
+with open('expense_model.pkl', 'rb') as model_file:
+    expense_model = pickle.load(model_file)
+
+def preprocess_user_data(user_data):
+    """
+    Preprocess user data to match the format used for training the model.
+    Example: Convert to feature vector as expected by the model.
+    """
+    # Extract features from user data
+    features = [
+        user_data.get('total_spent', 0),
+        user_data.get('most_expensive_purchase_amount', 0),
+        user_data.get('number_of_transactions', 0),
+        user_data.get('average_transaction_amount', 0),
+        # Add other features here
+    ]
+    return features
 
 @app.route('/chat', methods=['POST'])
 def chat():
-    user_message = request.json.get('message')
-    bot_response = generate_response(user_message)
-    return jsonify({"response": bot_response})
+    user_message = request.json.get('message')  # Get the user's message
+    user_data = request.json.get('data', {})  # Get the user data for prediction
 
-def generate_response(message):
-    try:
-        headers = {
-            'Authorization': f'Bearer {os.getenv("HUGGING_API_KEY")}'
-        }
-
-        data = {
-            "inputs": message,
-            "parameters": {"max_new_tokens": 150},
-        }
-
-        response = requests.post(
-            'https://api-inference.huggingface.co/models/gpt2',
-            headers=headers, json=data
-        )
+    # Example logic for chatbot response based on user message
+    if "predict my expenses" in user_message.lower():
+        # Preprocess user data and predict expenses
+        features = preprocess_user_data(user_data)
+        predicted_expense = expense_model.predict([features])
         
-        response_json = response.json()
-        return response_json[0]['generated_text'].strip() if 'generated_text' in response_json[0] else "I'm not sure how to respond to that."
-    except Exception as e:
-        return f"Sorry, I couldn't generate a response due to an error: {str(e)}"
+        response = f"Based on your current data, your predicted expense is: ${predicted_expense[0]:.2f}."
+        return jsonify({"response": response})
+    
+    return jsonify({"response": "I'm sorry, I didn't understand your request."})
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     app.run(debug=True)
