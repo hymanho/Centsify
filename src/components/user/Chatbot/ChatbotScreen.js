@@ -1,42 +1,61 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
+import '../../../styles/Chatbot.css'; // Import CSS file for styling
 
-function Chatbot() {
-  const [message, setMessage] = useState('');
-  const [responses, setResponses] = useState([]);
+const Chatbot = () => {
+    const [message, setMessage] = useState('');
+    const [responses, setResponses] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const messagesEndRef = useRef(null);
 
-  const sendMessage = async () => {
-    if (message.trim() === '') return;
+    const handleSend = async () => {
+        if (!message.trim()) return;
 
-    try {
-      const res = await axios.post('http://127.0.0.1:5000/chat', { message });
-      setResponses([...responses, { message, response: res.data.response }]);
-      setMessage('');
-    } catch (error) {
-      console.error("There was an error sending the message!", error);
-    }
-  };
+        setIsLoading(true);
+        try {
+            const result = await axios.post('http://localhost:5000/chat', {
+                message: message,
+                data: {}  // Include any relevant data for prediction if needed
+            });
+            setResponses([...responses, { user: message, bot: result.data.response }]);
+            setMessage('');
+        } catch (error) {
+            console.error('Error sending message:', error);
+            setResponses([...responses, { user: message, bot: 'Error sending message. Please try again.' }]);
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
-  return (
-    <div>
-      <h1>Chatbot</h1>
-      <div>
-        {responses.map((item, index) => (
-          <div key={index}>
-            <p><strong>You:</strong> {item.message}</p>
-            <p><strong>Bot:</strong> {item.response}</p>
-          </div>
-        ))}
-      </div>
-      <input 
-        type="text" 
-        value={message} 
-        onChange={(e) => setMessage(e.target.value)} 
-        onKeyPress={(e) => e.key === 'Enter' && sendMessage()} 
-      />
-      <button onClick={sendMessage}>Send</button>
-    </div>
-  );
-}
+    useEffect(() => {
+        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, [responses]);
+
+    return (
+        <div className="chatbot-container">
+            <div className="chatbot-header">
+                <h1>Chatbot</h1>
+            </div>
+            <div className="chatbot-messages">
+                {responses.map((msg, index) => (
+                    <div key={index} className={`chatbot-message ${msg.user ? 'user' : 'bot'}`}>
+                        <span>{msg.user || msg.bot}</span>
+                    </div>
+                ))}
+                {isLoading && <div className="chatbot-message bot">Typing...</div>}
+                <div ref={messagesEndRef} />
+            </div>
+            <div className="chatbot-input">
+                <textarea
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    placeholder="Type your message here..."
+                    rows="2"
+                />
+                <button onClick={handleSend} disabled={isLoading}>Send</button>
+            </div>
+        </div>
+    );
+};
 
 export default Chatbot;
