@@ -2,7 +2,8 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import pickle
 import spacy
-import openai
+import requests
+import os
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
@@ -19,8 +20,9 @@ except Exception as e:
 # Load spaCy model
 nlp = spacy.load("en_core_web_sm")
 
-# Initialize OpenAI API
-openai.api_key = 'HUGGING_API_KEY'
+# Initialize Hugging Face API
+HUGGING_API_KEY = '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'
+HUGGING_FACE_API_URL = 'https://api-inference.huggingface.co/models/gpt2'
 
 def preprocess_user_data(user_data):
     """Prepare user data for prediction."""
@@ -42,13 +44,21 @@ def interpret_message(message):
     return intent
 
 def generate_response(message):
-    """Generate a response using OpenAI."""
-    response = openai.Completion.create(
-        engine="text-davinci-003",
-        prompt=message,
-        max_tokens=150
-    )
-    return response.choices[0].text.strip()
+    """Generate a response using Hugging Face."""
+    headers = {
+        "Authorization": f"Bearer {HUGGING_API_KEY}",
+        "Content-Type": "application/json"
+    }
+    payload = {
+        "inputs": message
+    }
+    response = requests.post(HUGGING_FACE_API_URL, headers=headers, json=payload)
+    
+    if response.status_code == 200:
+        response_data = response.json()
+        return response_data.get('generated_text', 'No response generated')
+    else:
+        return f"Error: {response.status_code}, {response.text}"
 
 @app.route('/chat', methods=['POST'])
 def chat():
@@ -60,7 +70,7 @@ def chat():
         if expense_model is None:
             return jsonify({"error": "Model not loaded. Please check server logs for details."})
 
-        # Use OpenAI for message interpretation
+        # Use Hugging Face for message interpretation
         response_text = generate_response(user_message)
         return jsonify({"response": response_text})
 
