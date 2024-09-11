@@ -9,7 +9,7 @@ CORS(app)  # Enable CORS for all routes
 
 # Load the trained model
 try:
-    with open('expense.pkl', 'rb') as model_file:
+    with open('expense_model.pkl', 'rb') as model_file:
         expense_model = pickle.load(model_file)
     print("Model loaded successfully.")
 except Exception as e:
@@ -20,7 +20,7 @@ except Exception as e:
 nlp = spacy.load("en_core_web_sm")
 
 # Initialize OpenAI API
-openai.api_key = 'your-openai-api-key'
+openai.api_key = 'HUGGING_API_KEY'
 
 def preprocess_user_data(user_data):
     """Prepare user data for prediction."""
