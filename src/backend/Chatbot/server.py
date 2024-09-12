@@ -7,25 +7,26 @@ import os
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 app = Flask(__name__)
-CORS(app)  # Enable CORS for all routes
+CORS(app)
 
-def load_model():
-    model_path = 'expense_model.pkl'
-    full_path = os.path.abspath(model_path)
-    print("Full Path to Model File:", full_path)
-    if not os.path.isfile(full_path):
-        print(f"Model file not found: {full_path}")
-    with open(full_path, 'rb') as model_file:
-        model = pickle.load(model_file)
-        print("Model loaded sucessfully.")
-    return model
+# Load the trained model using an absolute path
+try:
+    model_path = r'C:\Users\Diljan\moneytracker\src\backend\Chatbot\expense_model.pkl'
+    print(f"Attempting to load the model from: {model_path}")
+    
+    with open(model_path, 'rb') as model_file:
+        expense_model = pickle.load(model_file)
+    print("Model loaded successfully.")
+except Exception as e:
+    print(f"Error loading model: {e}")
+    expense_model = None
 
 # Load spaCy model
 nlp = spacy.load("en_core_web_sm")
 
 # Initialize Hugging Face API
-HUGGING_API_KEY = 'hf_UgOfalrHWFsRmHthFtoycUwWmhKkuPqXoQb'
-HUGGING_FACE_API_URL = 'https://api-inference.huggingface.co/models/EleutherAI/gpt-j-6B'
+HUGGING_API_KEY = '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'
+HUGGING_FACE_API_URL = 'https://api-inference.huggingface.co/models/gpt2'
 
 def preprocess_user_data(user_data):
     """Prepare user data for prediction."""
@@ -62,26 +63,57 @@ def generate_text_with_gpt2(input_text):
         'Authorization': f'Bearer {HUGGING_API_KEY}',
         'Content-Type': 'application/json'
     }
-    data = {'inputs': input_text}
-    
-    response = requests.post(HUGGING_FACE_API_URL, headers=headers, json=data)
-    if response.status_code == 200:
-        return response.json()[0]['generated_text']
-    else:
-        return None, response.status_code, response.text
+    payload = {
+        "inputs": message
+    }
+    try:
+        print(f"Sending request to Hugging Face: {payload}")  # Log the payload
+        response = requests.post(HUGGING_FACE_API_URL, headers=headers, json=payload)
+        print(f"Received Hugging Face status code: {response.status_code}")  # Log status code
+        
+        if response.status_code == 200:
+            response_data = response.json()
+            print(f"Hugging Face Response: {response_data}")  # Log the Hugging Face response
+            
+            # Since response_data is a list, access the first element
+            if isinstance(response_data, list) and len(response_data) > 0:
+                first_item = response_data[0]
+                # Access the 'generated_text' field
+                generated_text = first_item.get('generated_text', 'No response generated')
+                return generated_text
+            else:
+                return "No response generated"
+        else:
+            # Log errors and return error message
+            print(f"Error from Hugging Face: {response.status_code}, {response.text}")
+            return f"Error: {response.status_code}, {response.text}"
+    except Exception as e:
+        print(f"Exception during Hugging Face API call: {e}")
+        return f"Error: {e}"
+
+
 
 @app.route('/chat', methods=['POST'])
 def chat():
-    input_text = request.json.get('input_text')
-    
-    # Generate text with GPT-2
-    gpt2_output, status_code, error_message = generate_text_with_gpt2(input_text)
-    if gpt2_output:
-        # Process the generated text with your local model
-        processed_output = process_with_local_model(gpt2_output)
-        return jsonify({'gpt2_output': gpt2_output, 'local_model_output': processed_output})
-    else:
-        return jsonify({'error': f'Failed to generate text with GPT-2: {error_message}'}), status_code
+    """Handle chat messages and make predictions."""
+    try:
+        user_message = request.json.get('message')
+        user_data = request.json.get('data', {})
+        
+        print(f"Received message: {user_message}")  # Log the received message
+        print(f"Received user data: {user_data}")  # Log the received user data
+
+        if expense_model is None:
+            return jsonify({"error": "Model not loaded. Please check server logs for details."})
+
+        # Use Hugging Face for message interpretation
+        response_text = generate_response(user_message)
+        print(f"Generated response: {response_text}")  # Log the response being sent back
+        return jsonify({"response": response_text})
+
+    except Exception as e:
+        print(f"Error in /chat endpoint: {e}")  # Log any errors during request handling
+        return jsonify({"error": str(e)})
 
 if __name__ == '__main__':
     app.run(debug=True)
