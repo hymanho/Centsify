@@ -6,11 +6,14 @@ import requests
 import os
 
 app = Flask(__name__)
-CORS(app)  # Enable CORS for all routes
+CORS(app)
 
-# Load the trained model
+# Load the trained model using an absolute path
 try:
-    with open('expense_model.pkl', 'rb') as model_file:
+    model_path = r'C:\Users\Diljan\moneytracker\src\backend\Chatbot\expense_model.pkl'
+    print(f"Attempting to load the model from: {model_path}")
+    
+    with open(model_path, 'rb') as model_file:
         expense_model = pickle.load(model_file)
     print("Model loaded successfully.")
 except Exception as e:
@@ -21,7 +24,7 @@ except Exception as e:
 nlp = spacy.load("en_core_web_sm")
 
 # Initialize Hugging Face API
-HUGGING_API_KEY = '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'
+HUGGING_API_KEY = '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'
 HUGGING_FACE_API_URL = 'https://api-inference.huggingface.co/models/gpt2'
 
 def preprocess_user_data(user_data):
@@ -52,13 +55,32 @@ def generate_response(message):
     payload = {
         "inputs": message
     }
-    response = requests.post(HUGGING_FACE_API_URL, headers=headers, json=payload)
-    
-    if response.status_code == 200:
-        response_data = response.json()
-        return response_data.get('generated_text', 'No response generated')
-    else:
-        return f"Error: {response.status_code}, {response.text}"
+    try:
+        print(f"Sending request to Hugging Face: {payload}")  # Log the payload
+        response = requests.post(HUGGING_FACE_API_URL, headers=headers, json=payload)
+        print(f"Received Hugging Face status code: {response.status_code}")  # Log status code
+        
+        if response.status_code == 200:
+            response_data = response.json()
+            print(f"Hugging Face Response: {response_data}")  # Log the Hugging Face response
+            
+            # Since response_data is a list, access the first element
+            if isinstance(response_data, list) and len(response_data) > 0:
+                first_item = response_data[0]
+                # Access the 'generated_text' field
+                generated_text = first_item.get('generated_text', 'No response generated')
+                return generated_text
+            else:
+                return "No response generated"
+        else:
+            # Log errors and return error message
+            print(f"Error from Hugging Face: {response.status_code}, {response.text}")
+            return f"Error: {response.status_code}, {response.text}"
+    except Exception as e:
+        print(f"Exception during Hugging Face API call: {e}")
+        return f"Error: {e}"
+
+
 
 @app.route('/chat', methods=['POST'])
 def chat():
@@ -66,15 +88,20 @@ def chat():
     try:
         user_message = request.json.get('message')
         user_data = request.json.get('data', {})
+        
+        print(f"Received message: {user_message}")  # Log the received message
+        print(f"Received user data: {user_data}")  # Log the received user data
 
         if expense_model is None:
             return jsonify({"error": "Model not loaded. Please check server logs for details."})
 
         # Use Hugging Face for message interpretation
         response_text = generate_response(user_message)
+        print(f"Generated response: {response_text}")  # Log the response being sent back
         return jsonify({"response": response_text})
 
     except Exception as e:
+        print(f"Error in /chat endpoint: {e}")  # Log any errors during request handling
         return jsonify({"error": str(e)})
 
 if __name__ == '__main__':
