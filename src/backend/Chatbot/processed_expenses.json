@@ -1,36 +1,21 @@
 {
-  "total_spent": 4500.0,
+  "total_spent": 0.0,
   "most_expensive_purchase": {
-    "amount": 1000.0,
-    "category": "electronics",
-    "title": "Laptop",
-    "date": "2024-08-15"
+    "amount": 0.0,
+    "category": "",
+    "title": "",
+    "date": "2024-08-10"
   },
-  "most_frequent_category": "groceries",
+  "most_frequent_category": "",
   "category_breakdown": [
     {
-      "category": "groceries",
-      "total_amount": 2000.0,
-      "average_amount": 100.0,
-      "transaction_count": 20,
-      "first_date": "2024-07-05",
-      "last_date": "2024-08-30"
-    },
-    {
-      "category": "transportation",
-      "total_amount": 1500.0,
-      "average_amount": 75.0,
-      "transaction_count": 20,
-      "first_date": "2024-07-10",
-      "last_date": "2024-08-25"
-    },
-    {
-      "category": "electronics",
-      "total_amount": 1000.0,
-      "average_amount": 1000.0,
+      "category": "",
+      "total_amount": 0,
+      "average_amount": 0.0,
       "transaction_count": 1,
-      "first_date": "2024-08-15",
-      "last_date": "2024-08-15"
+      "first_date": "2024-08-10 20:56:02.442000+00:00",
+      "last_date": "2024-08-10 20:56:02.442000+00:00",
+      "month": 8
     }
   ]
 }
