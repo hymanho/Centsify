@@ -8,9 +8,13 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 app = Flask(__name__)
 CORS(app)
 
-# Load the trained local model and vectorizer
-model_path = r'C:\Users\Diljan\moneytracker\src\backend\Chatbot\expense_model.pkl'
-vector_path = r'C:\Users\Diljan\moneytracker\src\backend\Chatbot\tfidf_vectorizer.pkl'
+# Load the trained model using an absolute path
+
+base_dir = os.path.dirname(os.path.abspath(__file__))
+
+# Get the absolute paths of the .pkl files
+model_path = os.path.join(base_dir, 'expense_model.pkl')
+vector_path = os.path.join(base_dir, 'tfidf_vectorizer.pkl')
 
 try:
     with open(model_path, 'rb') as model_file:
