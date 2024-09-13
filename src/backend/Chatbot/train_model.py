@@ -1,25 +1,37 @@
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.ensemble import RandomForestClassifier
-import pickle
+from transformers import GPT2Tokenizer, GPT2LMHeadModel, Trainer, TrainingArguments
+from datasets import load_dataset
 
-# Sample training data
-training_data = ["sample text data", "another sample text"]
-training_labels = [0, 1]  # Replace with your actual labels
+# Load pre-trained model and tokenizer
+model_name = "gpt2"
+tokenizer = GPT2Tokenizer.from_pretrained(model_name)
+model = GPT2LMHeadModel.from_pretrained(model_name)
 
-# Initialize and fit the vectorizer
-vectorizer = TfidfVectorizer()
-X_train = vectorizer.fit_transform(training_data)
+# Load and preprocess dataset
+dataset = load_dataset('path_to_your_dataset')
+def tokenize_function(examples):
+    return tokenizer(examples["text"], padding="max_length", truncation=True)
+tokenized_datasets = dataset.map(tokenize_function, batched=True)
 
-# Initialize and train the model
-model = RandomForestClassifier()
-model.fit(X_train, training_labels)
+# Define training arguments
+training_args = TrainingArguments(
+    per_device_train_batch_size=4,
+    per_device_eval_batch_size=4,
+    output_dir="./results",
+    num_train_epochs=3,
+    weight_decay=0.01,
+)
 
-# Save the vectorizer
-with open('tfidf_vectorizer.pkl', 'wb') as vectorizer_file:
-    pickle.dump(vectorizer, vectorizer_file)
+# Initialize Trainer
+trainer = Trainer(
+    model=model,
+    args=training_args,
+    train_dataset=tokenized_datasets["train"],
+    eval_dataset=tokenized_datasets["test"],
+)
 
-# Save the model
-with open('expense_model.pkl', 'wb') as model_file:
-    pickle.dump(model, model_file)
+# Train model
+trainer.train()
 
-print("Model and vectorizer have been saved.")
+# Save fine-tuned model
+model.save_pretrained("./fine-tuned-model")
+tokenizer.save_pretrained("./fine-tuned-model")
