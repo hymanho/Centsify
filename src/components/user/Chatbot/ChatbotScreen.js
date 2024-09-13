@@ -1,78 +1,83 @@
-import React, { useState, useEffect, useRef  } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
-import '../../../styles/Chatbot.css'; // Ensure you have the updated CSS
+import '../../../styles/Chatbot.css';
 
 const Chatbot = () => {
     const [message, setMessage] = useState('');
-    const [chatHistory, setChatHistory] = useState([]);
+    const [responses, setResponses] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-    const chatEndRef = useRef(null);
-
-    // Scroll to the bottom whenever the chat history updates
-    const scrollToBottom = () => {
-        chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-    };
-
-    useEffect(() => {
-        scrollToBottom();
-    }, [chatHistory]);
+    const messagesEndRef = useRef(null);
+    const chatHistoryRef = useRef(null);
 
     const handleSend = async () => {
         if (!message.trim()) return;
-
-        const userMessage = { sender: 'user', text: message };
-        setChatHistory((prevHistory) => [...prevHistory, userMessage]);
-        setMessage('');
-
+    
         setIsLoading(true);
         try {
+            console.log('Sending message:', message);
+            setResponses(prevResponses => [...prevResponses, { type: 'user', content: message }]);
+            
             const result = await axios.post('http://localhost:5000/chat', {
                 message: message,
-                data: {}  // Include any relevant data for prediction if needed
+                data: {}
             });
-
-            const botMessage = { sender: 'bot', text: result.data.response || 'No response from server' };
-            setChatHistory((prevHistory) => [...prevHistory, botMessage]);
+    
+            console.log('Backend response:', result.data);
+    
+            setResponses(prevResponses => [
+                ...prevResponses,
+                { type: 'bot', content: result.data.response || 'No response from bot.' }
+            ]);
+    
+            setMessage('');
         } catch (error) {
             console.error('Error sending message:', error);
-            const botMessage = { sender: 'bot', text: 'Error sending message. Please try again.' };
-            setChatHistory((prevHistory) => [...prevHistory, botMessage]);
+            setResponses(prevResponses => [
+                ...prevResponses,
+                { type: 'bot', content: 'Error sending message. Please try again.' }
+            ]);
         } finally {
             setIsLoading(false);
         }
     };
-
-    // Handle Enter key press to send the message
-    const handleKeyDown = (e) => {
-        if (e.key === 'Enter' && !e.shiftKey) {
-            e.preventDefault();
-            handleSend();
-        }
-    };
+    
+    useEffect(() => {
+        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, [responses]);
 
     return (
         <div className="chatbot-container">
-            <div className="chat-history">
-                {chatHistory.map((chat, index) => (
-                    <div key={index} className={`message-bubble ${chat.sender}`}>
-                        {chat.text}
+            <div className="chat-history" ref={chatHistoryRef}>
+                {responses.map((msg, index) => (
+                    <div key={index} className={`message-bubble ${msg.type}`}>
+                        {msg.content}
                     </div>
                 ))}
-                {isLoading && <div className="loading-message">Bot is typing...</div>}
-                <div ref={chatEndRef} /> {/* Target for scrolling */}
+                {isLoading && <div className="loading-message">Typing</div>}
+                <div ref={messagesEndRef} />
             </div>
             <div className="message-input-area">
                 <textarea
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
-                    onKeyDown={handleKeyDown}
+                    onKeyPress={(e) => {
+                        if (e.key === 'Enter' && !e.shiftKey) {
+                            e.preventDefault();
+                            handleSend();
+                        }
+                    }}
                     placeholder="Type your message here..."
                     rows="1"
                 />
-                <button onClick={handleSend} disabled={isLoading}>Send</button>
+                <button onClick={handleSend} disabled={isLoading}>
+                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg>
+                </button>
             </div>
         </div>
     );
-};;
+};
 
 export default Chatbot;

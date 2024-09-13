@@ -8,9 +8,9 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 app = Flask(__name__)
 CORS(app)
 
-# Load the trained model using an absolute path
-model_path = r'C:\Users\r7-1700\moneytracker\src\backend\Chatbot\expense_model.pkl'
-vector_path = r'C:\Users\r7-1700\moneytracker\src\backend\Chatbot\tfidf_vectorizer.pkl'
+# Load the trained local model and vectorizer
+model_path = r'C:\Users\Diljan\moneytracker\src\backend\Chatbot\expense_model.pkl'
+vector_path = r'C:\Users\Diljan\moneytracker\src\backend\Chatbot\tfidf_vectorizer.pkl'
 
 try:
     with open(model_path, 'rb') as model_file:
@@ -28,96 +28,81 @@ except Exception as e:
     print(f"Error loading vectorizer: {e}")
     vectorizer = None
 
-# Initialize Hugging Face API
+# Initialize OpenAssistant API
 HUGGING_API_KEY = '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'
-HUGGING_FACE_API_URL = 'https://api-inference.huggingface.co/models/gpt2'
+HUGGING_FACE_API_URL = 'https://api-inference.huggingface.co/models/facebook/blenderbot-1B-distill'
 
 def preprocess_text(text):
-    """Convert text to feature vector using the same vectorizer."""
+    """Convert text to feature vector using the vectorizer."""
     if vectorizer is None:
         raise ValueError("Vectorizer is not loaded.")
     return vectorizer.transform([text])
 
 def process_with_local_model(text):
-    """Process text with the locally trained model and return a meaningful response."""
+    """Process text with the locally trained model and return a response."""
     if model is None:
-        raise ValueError("Model is not loaded.")
+        return "I cannot analyze your expenses right now."
+
     features = preprocess_text(text)
     prediction = model.predict(features)
-    
-    # Convert prediction to a standard Python type for JSON serialization
-    prediction_result = str(prediction[0])  # Ensure it's a string
+    prediction_result = str(prediction[0])
 
-    # Example where prediction results in direct, meaningful text
     if prediction_result == '0':
-        response = 'You have spent less than average this month. Great job on managing your expenses!'
+        return 'You have spent less than average this month. Great job on managing your expenses!'
     elif prediction_result == '1':
-        response = 'Your spending is on track with your budget goals. Keep it up!'
+        return 'Your spending is on track with your budget goals. Keep it up!'
     elif prediction_result == '2':
-        response = 'It looks like you have exceeded your budget limit. Consider reviewing your spending habits.'
+        return 'It looks like you have exceeded your budget limit. Consider reviewing your spending habits.'
     else:
-        response = 'I’m not sure about that. Can you provide more details?'
+        return 'I’m not sure about that. Can you provide more details?'
 
-    return response
-
-def generate_response(input_text):
-    """Generate a response using GPT-2 from Hugging Face."""
+def generate_response_with_gpt(input_text):
+    """Generate a response using OpenAssistant from Hugging Face."""
     headers = {
         'Authorization': f'Bearer {HUGGING_API_KEY}',
         'Content-Type': 'application/json'
     }
-    payload = {
-        "inputs": input_text
-    }
+    payload = {"inputs": input_text}
+
     try:
-        print(f"Sending request to Hugging Face: {payload}")  # Log the payload
         response = requests.post(HUGGING_FACE_API_URL, headers=headers, json=payload)
-        print(f"Received Hugging Face status code: {response.status_code}")  # Log status code
-        
         if response.status_code == 200:
             response_data = response.json()
-            print(f"Hugging Face Response: {response_data}")  # Log the Hugging Face response
-            
-            # Extract and return the generated text
             if isinstance(response_data, list) and len(response_data) > 0:
-                generated_text = response_data[0]['generated_text']
-                return generated_text
+                return response_data[0].get('generated_text', "I'm not sure how to respond to that.")
             else:
-                return "Sorry, I couldn't generate a response at the moment."
+                return "Sorry, I couldn't generate a response."
         else:
-            # Log errors and return error message
-            print(f"Error from Hugging Face: {response.status_code}, {response.text}")
             return f"Error: {response.status_code}, {response.text}"
     except Exception as e:
-        print(f"Exception during Hugging Face API call: {e}")
         return f"Error: {e}"
 
 @app.route('/chat', methods=['POST'])
 def chat():
-    """Handle chat messages and make predictions."""
+    """Handle chat messages and provide responses."""
     try:
         data = request.json
         user_message = data.get('message')
         user_data = data.get('data', {})
 
-        print(f"Received message: {user_message}")  # Log the received message
-        print(f"Received user data: {user_data}")  # Log the received user data
+        print(f"Received message: {user_message}")
+        print(f"Received user data: {user_data}")
 
         if not user_message:
             return jsonify({"error": "No message provided"})
 
-        # Use local model if available
-        if model is not None:
-            response_text = generate_response(user_message)
-        else:
-            # Use Hugging Face API if local model is not available
+        # Try local model processing first if message is related to expenses
+        if "expense" in user_message.lower() or "budget" in user_message.lower():
             response_text = process_with_local_model(user_message)
+        else:
+            # Use GPT-2 for general conversations
+            response_text = generate_response_with_gpt(user_message)
         
-        print(f"Generated response: {response_text}")  # Log the response being sent back
+        print(f"Generated response: {response_text}")
         return jsonify({"response": response_text})
 
     except Exception as e:
-        print(f"Error in /chat endpoint: {e}")  # Log any errors during request handling
+        print(f"Error in /chat endpoint: {e}")
         return jsonify({"error": str(e)})
 
 if __name__ == '__main__':

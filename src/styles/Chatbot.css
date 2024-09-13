@@ -1,83 +1,134 @@
 .chatbot-container {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  height: 100%; /* Ensure the container takes up available height */
-  max-width: 600px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  background-color: #f9f9f9;
-  position: relative;
+  height: 100vh;
+  max-width: 400px;
+  border: none;
+  border-radius: 20px;
+  background-color: #f0f4f8;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
   margin: 0 auto;
+  overflow: hidden;
 }
 
 .chat-history {
   flex-grow: 1;
   padding: 20px;
-  overflow-y: auto; /* Enables vertical scrolling */
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start; /* Messages will stack from the top */
-  gap: 10px;
-  max-height: 1000px; /* Limit the height of the chat area to make it scrollable */
+  gap: 15px;
   background-color: #ffffff;
-  border-bottom: 1px solid #ddd; /* Adds a border to separate the chat history from the input */
 }
 
 .message-bubble {
-  padding: 10px 15px;
-  border-radius: 15px;
-  max-width: 80%;
+  padding: 12px 18px;
+  border-radius: 18px;
+  max-width: 75%;
   word-wrap: break-word;
-  line-height: 1.5;
+  line-height: 1.4;
+  font-size: 14px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .message-bubble.user {
   background-color: #007bff;
   color: white;
   align-self: flex-end;
+  border-bottom-right-radius: 4px;
 }
 
 .message-bubble.bot {
-  background-color: #e1e1e1;
-  color: black;
+  background-color: #f0f0f0;
+  color: #333;
   align-self: flex-start;
+  border-bottom-left-radius: 4px;
 }
 
 .loading-message {
-  color: grey;
+  color: #888;
   font-style: italic;
   align-self: flex-start;
+  padding: 8px 12px;
+  background-color: #f0f0f0;
+  border-radius: 12px;
+  font-size: 14px;
 }
 
 .message-input-area {
   display: flex;
-  padding: 10px;
-  border-top: 1px solid #ddd;
+  padding: 15px;
   background-color: #fff;
+  border-top: 1px solid #e0e0e0;
 }
 
 textarea {
   flex-grow: 1;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px;
+  padding: 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 20px;
+  font-size: 14px;
   resize: none;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+textarea:focus {
+  border-color: #007bff;
 }
 
 button {
   margin-left: 10px;
-  padding: 10px 20px;
+  padding: 0;
+  width: 40px;
+  height: 40px;
   background-color: #007bff;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 50%;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
 }
 
 button:disabled {
-  background-color: #ccc;
+  background-color: #b0b0b0;
   cursor: not-allowed;
+}
+
+/* Add this for a smooth scrollbar */
+.chat-history::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chat-history::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.chat-history::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 3px;
+}
+
+.chat-history::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Add a typing animation */
+@keyframes typing {
+  0% { opacity: .2; }
+  20% { opacity: 1; }
+  100% { opacity: .2; }
+}
+
+.loading-message::after {
+  content: '...';
+  animation: typing 1.4s infinite;
 }
