@@ -1,27 +1,27 @@
-/* Set a fixed height for the chatbot to ensure it's scrollable */
 .chatbot-container {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 400px; /* Adjust this height as needed */
-  width: 100%;
+  height: 100%; /* Ensure the container takes up available height */
+  max-width: 600px;
   border: 1px solid #ccc;
   border-radius: 10px;
   background-color: #f9f9f9;
   position: relative;
-  max-width: 600px;
-  margin: 20px auto;
+  margin: 0 auto;
 }
 
 .chat-history {
   flex-grow: 1;
   padding: 20px;
-  overflow-y: auto; /* Enables the chat history to scroll */
+  overflow-y: auto; /* Enables vertical scrolling */
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: flex-start; /* Messages will stack from the top */
   gap: 10px;
-  max-height: 300px; /* Set a max height to limit the chat area and allow scrolling */
+  max-height: 1000px; /* Limit the height of the chat area to make it scrollable */
+  background-color: #ffffff;
+  border-bottom: 1px solid #ddd; /* Adds a border to separate the chat history from the input */
 }
 
 .message-bubble {
