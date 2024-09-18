@@ -1,67 +1,143 @@
 /* src/styles/ExpenseSummaryField.css */
 
+/* Define CSS variables here */
+:root {
+  --primary-color: #2D9CDB; /* Blue */
+  --secondary-color: #27AE60; /* Green */
+  --accent-color: #F2C94C; /* Yellow */
+  --background-color: #F9FAFB; /* Light Gray */
+  --text-color: #333333; /* Dark Gray */
+  --button-bg-color: var(--primary-color);
+  --button-text-color: #ffffff;
+  --button-hover-bg-color: #1B7CB3;
+}
+
+/* Styles */
 .expense-summary {
-  @apply max-w-5xl mx-auto mt-8 p-6 bg-white shadow-xl rounded-lg;
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 30px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
 }
 
 .expense-list {
-  @apply flex flex-col gap-6 mb-8;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 30px;
 }
 
 .expense-bar {
-  @apply flex justify-between items-center p-6 bg-gray-100 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  background-color: #F9FAFB;
+  border-radius: 10px;
+  transition: background-color 0.3s;
+}
+
+.expense-bar:hover {
+  background-color: #E0F7FA;
+}
+
+.expense-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .expense-title {
-  @apply font-bold text-lg text-gray-800;
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--text-color);
 }
 
 .expense-amount {
-  @apply text-green-500 text-xl font-semibold;
+  color: var(--secondary-color);
+  font-size: 18px;
+  font-weight: 600;
 }
 
-.expense-date,
-.expense-category,
-.expense-description {
-  @apply text-gray-600 text-sm;
+.expense-meta {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
 }
 
-.expense-description {
-  @apply flex-grow text-sm;
+.expense-meta span {
+  font-size: 14px;
+  color: #666666;
 }
 
 .add-expense-btn {
-  @apply bg-blue-500 text-white py-3 px-6 rounded-lg hover:bg-blue-600 transition-colors duration-200;
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
+.add-expense-btn .button {
+  background-color: var(--secondary-color);
+}
+
+.add-expense-btn .button:hover {
+  background-color: #1E874B;
 }
 
 .edit-btn {
-  @apply bg-teal-500 text-white py-2 px-4 rounded-lg hover:bg-teal-600 transition-colors duration-200;
+  background-color: var(--accent-color);
+  margin-left: 10px;
 }
 
-.card {
-  @apply bg-white p-6 rounded-lg shadow-lg mb-8;
-}
-
-.card-title {
-  @apply mb-4 text-2xl font-semibold text-gray-800 border-b-2 border-gray-300 pb-2;
-}
-
-.spending-item {
-  @apply flex flex-col mb-4 pb-4 border-b border-gray-200;
-}
-
-.spending-amount {
-  @apply text-blue-500 font-semibold text-lg;
+.edit-btn:hover {
+  background-color: #D1A300;
 }
 
 .anomaly-warning {
-  @apply border-l-4 border-yellow-500 p-4 bg-yellow-100 rounded-md mt-6 shadow-md;
+  border-left: 4px solid #F2C94C;
+  padding: 20px;
+  background-color: #FFF8E1;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
 }
 
 .warning-icon {
-  @apply text-yellow-500 mr-3 text-2xl;
+  font-size: 24px;
+  color: #F2C94C;
+  margin-right: 15px;
 }
 
 .main-container {
-  @apply w-4/5 max-w-7xl mx-auto p-8 bg-gray-50 rounded-lg shadow-lg;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px;
+  background-color: var(--background-color);
+}
+
+/* Button styles */
+.button {
+  padding: 12px 20px;
+  background-color: var(--button-bg-color);
+  color: var(--button-text-color);
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button:hover {
+  background-color: var(--button-hover-bg-color);
+  transform: scale(1.05);
+}
+
+.button:disabled {
+  background-color: #B0C4DE;
+  cursor: not-allowed;
 }

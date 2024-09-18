@@ -1,5 +1,12 @@
+// src/components/user/ExpenseSummary/EditExpenseForm.js
+
 import React, { useState, useEffect } from 'react';
-import { editExpense, deleteExpense, getExpense } from '../../../backend/Account/ExpenseManagement/ExpenseService';
+import {
+  editExpense,
+  deleteExpense,
+  getExpense,
+} from '../../../backend/Account/ExpenseManagement/ExpenseService';
+import '../../../styles/EditExpenseForm.css';
 
 const EditExpenseForm = ({ expenseId, onClose, userEmail }) => {
   const [expense, setExpense] = useState(null);
@@ -44,31 +51,67 @@ const EditExpenseForm = ({ expenseId, onClose, userEmail }) => {
   };
 
   return (
-    <div className="edit-expense-form">
-      <h3>Edit Expense</h3>
-      <label>
-        Title:
-        <input type="text" name="title" value={formData.title} onChange={handleChange} />
-      </label>
-      <label>
-        Amount:
-        <input type="number" name="amount" value={formData.amount} onChange={handleChange} />
-      </label>
-      <label>
-        Date:
-        <input type="date" name="date" value={formData.date} onChange={handleChange} />
-      </label>
-      <label>
-        Category:
-        <input type="text" name="category" value={formData.category} onChange={handleChange} />
-      </label>
-      <label>
-        Description:
-        <textarea name="description" value={formData.description} onChange={handleChange} />
-      </label>
-      <button onClick={handleSave}>Save</button>
-      <button onClick={handleDelete}>Delete</button>
-      <button onClick={onClose}>Cancel</button>
+    <div className="card">
+      <h3 className="card-title">Edit Expense</h3>
+      <form className="form-container">
+        <input
+          type="text"
+          name="title"
+          value={formData.title}
+          onChange={handleChange}
+          className="input-field"
+        />
+        <input
+          type="number"
+          name="amount"
+          value={formData.amount}
+          onChange={handleChange}
+          className="input-field"
+        />
+        <input
+          type="date"
+          name="date"
+          value={formData.date}
+          onChange={handleChange}
+          className="input-field"
+        />
+        <input
+          type="text"
+          name="category"
+          value={formData.category}
+          onChange={handleChange}
+          className="input-field"
+        />
+        <textarea
+          name="description"
+          value={formData.description}
+          onChange={handleChange}
+          className="input-field"
+        ></textarea>
+        <div className="button-group">
+          <button
+            type="button"
+            onClick={handleSave}
+            className="custom-button save-button"
+          >
+            Save
+          </button>
+          <button
+            type="button"
+            onClick={handleDelete}
+            className="custom-button delete-button"
+          >
+            Delete
+          </button>
+          <button
+            type="button"
+            onClick={onClose}
+            className="custom-button cancel-button"
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
     </div>
   );
 };
