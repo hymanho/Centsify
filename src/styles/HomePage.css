@@ -1,19 +1,97 @@
 /* src/styles/HomePage.css */
 
-.page-header {
-  @apply fixed top-0 left-0 w-full p-6 px-12 bg-green-500 text-white text-3xl font-bold shadow-md z-10;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+
+:root {
+  --primary-color: #2D9CDB; /* Blue */
+  --secondary-color: #27AE60; /* Green */
+  --accent-color: #F2C94C; /* Yellow */
+  /* --background-color: #E6F2FF; */ /* Very Light Blue */ /* Commented out since we're using a gradient */
+  --text-color: #333333; /* Dark Gray */
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, #E6F2FF, #E6FFFA); /* Light blue to light green gradient */
+  color: var(--text-color);
+  display: flex;
+  justify-content: center;
 }
 
 .home-page {
-  @apply mt-24 flex flex-col items-center w-full p-6 bg-gray-100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  font-size: 36px;
+  font-weight: bold;
+  margin-top: 40px;
+  color: var(--primary-color);
+}
+
+.logo {
+  height: 60px;
+  margin-right: 15px;
+}
+
+.hero-section {
+  text-align: center;
+  margin: 40px 20px;
+}
+
+.hero-section h2 {
+  font-size: 32px;
+  color: var(--secondary-color);
+}
+
+.hero-section p {
+  font-size: 18px;
+  color: var(--text-color);
+  max-width: 600px;
+  margin: 20px auto 0;
 }
 
 .auth-forms {
-  @apply flex justify-around w-full max-w-[900px] mt-8 bg-white p-8 rounded-lg shadow-lg;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 900px;
+  margin-bottom: 50px;
+}
+
+.auth-forms > div {
+  flex: 1 1 300px;
+  margin: 20px;
+  max-width: 400px;
 }
 
 @media (max-width: 768px) {
+  .page-header {
+    font-size: 28px;
+  }
+
+  .hero-section h2 {
+    font-size: 24px;
+  }
+
   .auth-forms {
-    @apply flex-col items-center;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .auth-forms > div {
+    margin: 10px 0;
   }
 }

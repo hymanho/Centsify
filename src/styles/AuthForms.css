@@ -1,57 +1,77 @@
 /* src/styles/AuthForms.css */
 
-body {
-    @apply font-sans bg-gray-100 m-0 p-0 flex justify-center items-center h-screen;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+
+:root {
+  --primary-color: #2D9CDB; /* Blue */
+  --secondary-color: #27AE60; /* Green */
+  --accent-color: #F2C94C; /* Yellow */
+  --background-color: #F9FAFB; /* Light Gray */
+  --text-color: #333333; /* Dark Gray */
 }
 
-/* Card styling */
 .card {
-    @apply bg-white rounded-xl shadow-xl overflow-hidden flex w-[700px] flex-row hover:shadow-2xl transition-shadow duration-300;
+  background-color: #ffffff;
+  border: 1px solid #E0E0E0;
+  border-radius: 10px;
+  padding: 30px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Form container styling */
+.form-section .header {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 20px;
+  text-align: center;
+}
+
 .form-container {
-    @apply p-12 flex flex-col justify-center;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center items horizontally */
 }
 
-/* Input fields styling */
-input[type="text"],
-input[type="password"],
-input[type="email"] {
-    @apply w-full p-4 my-2 border border-gray-300 rounded-lg box-border focus:outline-none focus:ring-2 focus:ring-green-500;
+.form-container input {
+  width: 100%; /* Ensure inputs take full width */
+  max-width: 350px; /* Limit maximum width */
+  padding: 12px 15px;
+  margin-bottom: 15px;
+  border: 1px solid #BDBDBD;
+  border-radius: 5px;
+  font-size: 16px;
 }
 
-/* Button Styling */
-button {
-    @apply p-3 mt-2 border-none text-white uppercase rounded-lg cursor-pointer shadow-lg transition-transform duration-300 ease-in-out transform hover:scale-105;
-    background: linear-gradient(to right, #32be8f, #38d39f);
-    font-weight: bold;
+.form-container input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(45, 156, 219, 0.2);
 }
 
-/* Hover Effects */
-button:hover {
-    @apply shadow-xl;
-    background: linear-gradient(to right, #28a745, #34d058);
+.form-container button {
+  width: 100%; /* Make the button take full width */
+  max-width: 350px; /* Limit maximum width */
+  padding: 14px; /* Increase padding for larger button */
+  background-color: var(--primary-color);
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 600;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 10px; /* Add margin to separate from inputs */
 }
 
-.header {
-    @apply p-6 bg-green-500 text-white text-center text-2xl shadow-lg;
+.form-container button:hover {
+  background-color: #1B7CB3;
 }
 
-.form-section {
-    @apply border-r border-gray-200 flex-1;
-}
-
-.form-section h2 {
-    @apply text-center text-gray-800 text-xl font-medium;
-}
-
-@media (max-width: 768px) {
-    .card {
-        @apply flex-col w-[90%];
-    }
-
-    .form-section {
-        @apply border-r-0 border-b border-gray-200;
-    }
+.form-container p {
+  color: #E74C3C;
+  font-size: 14px;
+  margin-top: 10px;
+  text-align: center;
 }
