@@ -1,11 +1,13 @@
+// src/components/user/ExpenseSummary/AddExpenseForm.js
+
 import React, { useState, useEffect } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../../firebase';
 import { addExpense } from '../../../backend/Account/ExpenseManagement/ExpenseService';
 import Expense from '../../../models/ExpensesDataModel';
 import * as tf from '@tensorflow/tfjs';
-
 import * as use from '@tensorflow-models/universal-sentence-encoder';
+import '../../../styles/AddExpenseForm.css';
 
 const AddExpenseForm = ({ onAddExpense }) => {
   const [title, setTitle] = useState('');
@@ -23,7 +25,7 @@ const AddExpenseForm = ({ onAddExpense }) => {
       await tf.ready();
 
       if (tf.getBackend() !== 'webgl') {
-        console.warn("WebGL backend not available, switching to CPU backend.");
+        console.warn('WebGL backend not available, switching to CPU backend.');
         await tf.setBackend('cpu');
         await tf.ready();
       }
@@ -38,14 +40,14 @@ const AddExpenseForm = ({ onAddExpense }) => {
     if (!model) return;
 
     if (!title || title.trim() === '') {
-      console.warn("Title is empty or undefined.");
+      console.warn('Title is empty or undefined.');
       return;
     }
 
     const embeddings = await model.embed([title]);
 
     if (!embeddings || embeddings.length === 0) {
-      console.warn("Embeddings are undefined or empty.");
+      console.warn('Embeddings are undefined or empty.');
       return;
     }
 
@@ -88,14 +90,54 @@ const AddExpenseForm = ({ onAddExpense }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input type="text" placeholder="Title" value={title} onChange={handleTitleChange} required />
-      <input type="number" placeholder="Amount" value={amount} onChange={(e) => setAmount(e.target.value)} required />
-      <input type="date" value={date} onChange={(e) => setDate(e.target.value)} required />
-      <input type="text" placeholder="Category" value={category} onChange={(e) => setCategory(e.target.value)} required />
-      <textarea placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
-      <button type="submit" disabled={isSubmitting}>Add Expense</button>
-    </form>
+    <div className="card">
+      <form onSubmit={handleSubmit} className="form-container">
+        <input
+          type="text"
+          placeholder="Title"
+          value={title}
+          onChange={handleTitleChange}
+          required
+          className="input-field"
+        />
+        <input
+          type="number"
+          placeholder="Amount"
+          value={amount}
+          onChange={(e) => setAmount(e.target.value)}
+          required
+          className="input-field"
+        />
+        <input
+          type="date"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+          required
+          className="input-field"
+        />
+        <input
+          type="text"
+          placeholder="Category"
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+          required
+          className="input-field"
+        />
+        <textarea
+          placeholder="Description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          className="input-field"
+        ></textarea>
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className="custom-button add-button"
+        >
+          {isSubmitting ? 'Adding...' : 'Add Expense'}
+        </button>
+      </form>
+    </div>
   );
 };
 

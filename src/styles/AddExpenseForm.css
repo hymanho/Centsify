@@ -1,0 +1,85 @@
+/* src/components/user/ExpenseSummary/AddExpenseForm.css */
+
+/* Define CSS variables here */
+:root {
+    --primary-color: #007bff; /* Bootstrap primary blue */
+    --secondary-color: #6c757d; /* Bootstrap secondary gray */
+    --success-color: #28a745; /* Green */
+    --danger-color: #dc3545; /* Red */
+    --background-color: #f8f9fa; /* Light Gray */
+    --text-color: #343a40; /* Dark Gray */
+    --button-bg-color: var(--primary-color);
+    --button-text-color: #ffffff;
+    --button-hover-bg-color: #0056b3;
+    --input-border-color: #ced4da;
+  }
+  
+  /* Global styles for the component */
+  .card {
+    background-color: #ffffff;
+    border: 1px solid var(--input-border-color);
+    border-radius: 0.25rem;
+    padding: 1.5rem;
+    width: 100%;
+    max-width: 600px;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    margin-bottom: 1rem;
+  }
+  
+  .form-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .input-field {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    margin-bottom: 1rem;
+    border: 1px solid var(--input-border-color);
+    border-radius: 0.25rem;
+    font-size: 1rem;
+    color: var(--text-color);
+    background-color: #fff;
+  }
+  
+  .input-field::placeholder {
+    color: #6c757d;
+  }
+  
+  .input-field:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  }
+  
+  textarea.input-field {
+    resize: vertical;
+    min-height: 100px;
+  }
+  
+  /* Center the button and ensure it appears as a proper button */
+  .custom-button.add-button {
+    align-self: center;
+    margin-top: 1rem;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background-color: var(--button-bg-color);
+    color: var(--button-text-color);
+    font-size: 1rem;
+    font-weight: 600;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    transition: background-color 0.15s ease-in-out;
+    text-align: center;
+  }
+  
+  .custom-button.add-button:hover {
+    background-color: var(--button-hover-bg-color);
+  }
+  
+  .custom-button.add-button:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+  }
+  
