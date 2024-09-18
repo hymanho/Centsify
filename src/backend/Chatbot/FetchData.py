@@ -1,36 +1,35 @@
+import requests
+import json
+import os
+from dotenv import load_dotenv
 import firebase_admin
 from firebase_admin import credentials, firestore
-import os
-import json
-from dotenv import load_dotenv
 
 load_dotenv()
 
+# Initialize Firebase
 def initialize_firebase():
-    """
-    Initialize Firebase application with the service account key.
-    """
     try:
-        # Load Firebase Admin SDK key from environment variable
         firebase_admin_sdk_key = json.loads(os.getenv('FIREBASE_ADMIN_SDK_KEY'))
-        
         cred = credentials.Certificate(firebase_admin_sdk_key)
         firebase_admin.initialize_app(cred)
         print("Firebase Initialized")
-        
     except Exception as e:
         print(f"Error initializing Firebase: {e}")
 
-def convert_firestore_types(data):
-    """
-    Convert Firestore types to JSON serializable types.
-    
-    Args:
-    data (any): Data from Firestore to be converted.
+# Get current user ID from backend API
+def get_current_user_id():
+    try:
+        response = requests.get('http://localhost:5000/current-user-id')
+        response.raise_for_status()
+        data = response.json()
+        return data.get('userId')
+    except requests.exceptions.RequestException as e:
+        print(f"Error fetching user ID: {e}")
+        return None
 
-    Returns:
-    any: Converted data.
-    """
+# Convert Firestore types to JSON serializable types
+def convert_firestore_types(data):
     if isinstance(data, dict):
         return {k: convert_firestore_types(v) for k, v in data.items()}
     elif isinstance(data, list):
@@ -39,17 +38,8 @@ def convert_firestore_types(data):
         return data.isoformat()
     return data
 
+# Fetch expenses data for a specific account
 def fetch_expenses_data(doc_id, collection_name):
-    """
-    Fetch all data from the 'expenses' subcollection and the 'expenseContainer' document for a specific account.
-
-    Args:
-    doc_id (str): The document ID of the account.
-    collection_name (str): The name of the main Firestore collection.
-
-    Returns:
-    dict: Combined data from the 'expenses' subcollection including the 'expenseContainer' document.
-    """
     try:
         db = firestore.client()
         expenses_data = {}
@@ -76,17 +66,15 @@ def fetch_expenses_data(doc_id, collection_name):
         print(f"An error occurred while fetching data for account ID {doc_id}: {e}")
         return {}
 
+# Fetch data for the current logged-in user
 def fetch_data(collection_name):
-    """
-    Fetch all documents from a Firestore collection and include data from 'expenses' subcollection.
-
-    Args:
-    collection_name (str): The name of the Firestore collection to fetch.
-
-    Returns:
-    list: List of documents including data from the 'expenses' subcollection and 'expenseContainer' document.
-    """
     try:
+        initialize_firebase()
+        user_id = get_current_user_id()
+        if user_id is None:
+            print("No user is currently logged in.")
+            return []
+
         db = firestore.client()
         collection_ref = db.collection(collection_name)
         docs = collection_ref.stream()
@@ -95,13 +83,13 @@ def fetch_data(collection_name):
         for doc in docs:
             doc_data = convert_firestore_types(doc.to_dict())
             doc_id = doc.id
-            # Fetch data from 'expenses' subcollection and 'expenseContainer' document
-            expenses_data = fetch_expenses_data(doc_id, collection_name)
-            doc_data['Expenses'] = expenses_data
-            data.append(doc_data)
-            print(f"Fetched document ID: {doc_id}")
+            if doc_id == user_id:  # Fetch only the data for the logged-in user
+                expenses_data = fetch_expenses_data(doc_id, collection_name)
+                doc_data['Expenses'] = expenses_data
+                data.append(doc_data)
+                print(f"Fetched document ID: {doc_id}")
 
-        with open('account_data', 'w') as outfile:
+        with open('account_data.json', 'w') as outfile:
             json.dump(data, outfile, indent=4)
 
         print(f"Fetched {len(data)} documents from the {collection_name} collection.")
@@ -111,7 +99,5 @@ def fetch_data(collection_name):
         return []
 
 if __name__ == "__main__":
-    initialize_firebase()
-    collection_name = 'Accounts'  # Adjust this if needed to match your Firestore collection name
-    data = fetch_data(collection_name)
-    print(f"Data fetched and saved to accounts_with_expenses.json")
+    collection_name = 'Accounts'  # Adjust this if needed
+    fetch_data(collection_name)

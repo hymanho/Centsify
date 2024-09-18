@@ -1,0 +1,66 @@
+version: "3.1"
+
+intents:
+  - greet
+  - goodbye
+  - ask_expenses
+  - add_expense
+  - most_expensive_expense
+  - least_expensive_expense
+  - total_expenditure
+  - inform
+  - deny
+  - check_expenses  # Ensure this line is included
+
+actions:
+  - action_most_expensive_expense
+  - action_least_expensive_expense
+  - action_total_expenditure
+  - action_add_expense
+  - action_check_expenses
+
+responses:
+  utter_greet:
+    - text: "Hello! How can I help you today?"
+  utter_goodbye:
+    - text: "Goodbye! Have a great day!"
+  utter_ask_expenses:
+    - text: "What would you like to know about your expenses?"
+  utter_add_expense:
+    - text: "Please provide the details of the expense."
+  utter_most_expensive_expense:
+    - text: "The most expensive expense is..."
+  utter_least_expensive_expense:
+    - text: "The least expensive expense is..."
+  utter_total_expenditure:
+    - text: "Your total expenditure is..."
+  utter_check_expenses:
+    - text: "Checking your expenses."
+
+slots:
+  amount:
+    type: float
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: amount
+  category:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: category
+
+forms:
+  add_expense_form:
+    required_slots:
+      - amount
+      - category
+
+entities:
+  - amount
+  - category
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true

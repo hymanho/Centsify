@@ -1,92 +1,50 @@
 import json
-import requests
 
-def load_json_file(file_path):
+def load_expense_data(file_path='accounts_with_expenses.json'):
     """
-    Load JSON data from a file.
+    Load the expense data from a JSON file.
 
     Args:
-    file_path (str): The path to the JSON file.
+    file_path (str): Path to the JSON file containing expense data.
 
     Returns:
-    dict: The loaded JSON data.
+    dict: Parsed JSON data.
     """
     try:
         with open(file_path, 'r') as file:
             data = json.load(file)
-        print("JSON data loaded successfully.")
+        print("Expense data loaded successfully.")
         return data
     except Exception as e:
-        print(f"Error loading JSON file: {e}")
+        print(f"Error loading expense data: {e}")
         return {}
 
 def format_data_for_chatbot(data):
     """
-    Format the JSON data for the chatbot. This function can be customized based on how
-    you want to use the data in your chatbot.
+    Format the expense data to a structure suitable for the chatbot.
 
     Args:
-    data (dict): The JSON data loaded from the file.
+    data (dict): Raw data from the JSON file.
 
     Returns:
-    str: A formatted string representation of the data suitable for the chatbot.
+    dict: Formatted data.
     """
-    formatted_data = ""
+    # Example formatting; adjust according to your chatbot's requirements
+    formatted_data = {}
     for account in data:
-        user_name = account.get('name', 'Unknown')
-        email = account.get('email', 'No email')
-        expenses = account.get('Expenses', {}).get('expenseContainer', {}).get('expenses', [])
-
-        formatted_data += f"User: {user_name}\nEmail: {email}\nExpenses:\n"
-        if expenses:
-            for expense in expenses:
-                description = expense.get('description', 'No description')
-                date = expense.get('date', 'No date')
-                title = expense.get('title', 'No title')
-                amount = expense.get('amount', 0)
-                category = expense.get('category', 'No category')
-                formatted_data += f"  - Title: {title}, Date: {date}, Amount: ${amount}, Category: {category}, Description: {description}\n"
-        else:
-            formatted_data += "  No expenses found.\n"
-
-        formatted_data += "\n"
-
+        email = account.get('email')
+        if email:
+            formatted_data[email] = account.get('Expenses', {}).get('expenseContainer', {}).get('expenses', [])
     return formatted_data
 
-def send_data_to_chatbot(formatted_data):
+def feed_data_to_chatbot(data):
     """
-    Send the formatted data to the chatbot API.
+    Feed the formatted expense data to the chatbot.
 
     Args:
-    formatted_data (str): The formatted string data to be sent to the chatbot.
-
-    Returns:
-    None
+    data (dict): Formatted expense data to send to the chatbot.
     """
-    chatbot_url = 'http://localhost:5000/chat'  # Replace with your chatbot's URL
-    headers = {
-        'Content-Type': 'application/json'
-    }
-    payload = {
-        'message': formatted_data
-    }
-
-    try:
-        response = requests.post(chatbot_url, headers=headers, json=payload)
-        if response.status_code == 200:
-            print("Data successfully sent to the chatbot.")
-        else:
-            print(f"Failed to send data. Status code: {response.status_code}")
-            print("Response:", response.text)
-    except Exception as e:
-        print(f"Error sending data to chatbot: {e}")
-
-def main():
-    json_file_path = 'accounts_with_expenses.json'  # Path to your JSON file
-    data = load_json_file(json_file_path)
-    if data:
-        formatted_data = format_data_for_chatbot(data)
-        send_data_to_chatbot(formatted_data)
-
-if __name__ == "__main__":
-    main()
+    # Replace this with the actual code to send data to the chatbot
+    print("Feeding data to chatbot...")
+    # Example: print the data or send it to a server endpoint
+    print(json.dumps(data, indent=4))
