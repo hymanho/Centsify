@@ -61,22 +61,25 @@ const AccountPage = () => {
 
   return (
     <div className="account-page">
+      {/* Sidebar */}
       <nav className="sidebar">
         <h1>Dashboard</h1>
         <NavLink to="expenses" className={({ isActive }) => isActive ? 'active' : ''}>Expense Summary</NavLink>
         <NavLink to="reports" className={({ isActive }) => isActive ? 'active' : ''}>Reports</NavLink>
         <NavLink to="chatbot" className={({ isActive }) => isActive ? 'active' : ''}>Chatbot</NavLink>
-        <NavLink to="about" className={({ isActive }) => isActive ? 'active' : ''}>About</NavLink> {/* New About tab */}
+        <NavLink to="about" className={({ isActive }) => isActive ? 'active' : ''}>About</NavLink>
         <div className="logoff-container">
           <LogOff />  {/* Add LogOff button here */}
         </div>
       </nav>
+
+      {/* Main Content */}
       <div className="main-content">
         <Routes>
           <Route path="expenses" element={<ExpenseSummaryField />} />  
           <Route path="reports" element={<Reports />} />
           <Route path="chatbot" element={<Chatbot />} />
-          <Route path="about" element={<About />} />  {/* New About route */}
+          <Route path="about" element={<About />} />
         </Routes>
       </div>
     </div>

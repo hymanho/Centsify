@@ -17,7 +17,7 @@ const HomePage = () => {
       <section className="hero-section">
         <h2>Take Control of Your Finances</h2>
         <p>
-          Track your expenses, manage your budget, and achieve your financial goals with Centsible.
+          Track your expenses, manage your budget, and achieve your financial goals with Centsible!
         </p>
       </section>
 

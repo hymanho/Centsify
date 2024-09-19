@@ -1,6 +1,5 @@
-/* src/styles/AccountPage.css */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
 
-/* Define CSS variables here */
 :root {
   --primary-color: #2D9CDB; /* Blue */
   --secondary-color: #27AE60; /* Green */
@@ -10,6 +9,8 @@
   --button-bg-color: var(--primary-color);
   --button-text-color: #ffffff;
   --button-hover-bg-color: #1B7CB3;
+  --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  --card-shadow-hover: 0 8px 16px rgba(0, 0, 0, 0.1);
 }
 
 /* Global styles */
@@ -22,6 +23,13 @@ body {
   margin: 0;
 }
 
+.account-page {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+/* Sidebar */
 .sidebar {
   position: fixed;
   top: 0;
@@ -30,71 +38,116 @@ body {
   height: 100%;
   background: var(--primary-color);
   color: #ffffff;
-  padding: 20px;
+  padding: 80px 20px 20px;
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
 }
 
 .sidebar h1 {
-  font-size: 24px;
+  font-size: 26px;
   font-weight: bold;
   margin-bottom: 40px;
   text-align: center;
 }
 
+/* Sidebar Tabs */
 .sidebar a {
   color: #ffffff;
   text-decoration: none;
   padding: 12px 20px;
-  margin: 8px 0;
-  border-radius: 5px;
-  transition: background-color 0.3s;
+  margin: 10px 0;
+  border-radius: 8px 8px 0 0;
+  background-color: rgba(255, 255, 255, 0.15);
+  transition: background-color 0.3s, transform 0.2s, border-bottom 0.3s;
+  display: inline-block;
+  border-bottom: 2px solid transparent;
+}
+
+.sidebar a.active {
+  background-color: #ffffff;
+  color: var(--primary-color);
+  border-bottom: 2px solid var(--primary-color);
 }
 
 .sidebar a:hover {
-  background-color: var(--button-hover-bg-color);
+  background-color: rgba(255, 255, 255, 0.25);
+  transform: scale(1.02);
+}
+
+.sidebar a.active:hover {
+  background-color: #e0f0ff;
 }
 
 .logoff-container {
   margin-top: auto;
-  text-align: center;
 }
 
 .logoff-container button {
   margin-top: 20px;
+  background-color: rgba(255, 255, 255, 0.15);
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #fff;
+  width: 100%;
+  transition: background-color 0.3s, transform 0.2s;
+  box-sizing: border-box;
 }
 
+.logoff-container button:hover {
+  background-color: rgba(255, 255, 255, 0.25);
+  transform: scale(1.02);
+}
+
+.logoff-container button:active {
+  background-color: #ffffff;
+  color: var(--primary-color);
+  border-bottom: 2px solid var(--primary-color);
+}
+
+/* Main Content */
 .main-content {
   margin-left: 240px;
   padding: 40px;
   background-color: var(--background-color);
   width: calc(100% - 240px);
   overflow-y: auto;
+  box-sizing: border-box;
 }
 
 .card {
   background-color: #ffffff;
-  border: 1px solid #E0E0E0;
+  border: 1px solid #e0e0e0;
   border-radius: 10px;
   padding: 30px;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
+  box-shadow: var(--card-shadow);
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.card:hover {
+  box-shadow: var(--card-shadow-hover);
+  transform: translateY(-5px);
 }
 
 h2 {
-  font-size: 28px;
-  font-weight: 600;
+  font-size: 34px;
+  font-weight: 700;
   color: var(--text-color);
-  margin-bottom: 20px;
+  margin-bottom: 30px;
+  text-align: center;
 }
 
 .button {
-  padding: 12px 20px;
+  padding: 12px 24px;
   background-color: var(--button-bg-color);
   color: var(--button-text-color);
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 600;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s, transform 0.2s;
   display: inline-flex;
@@ -108,48 +161,58 @@ h2 {
 }
 
 .button:disabled {
-  background-color: #B0C4DE;
+  background-color: #b0c4de;
   cursor: not-allowed;
 }
 
 .about-tab {
   text-align: center;
+  margin-top: 50px;
 }
 
 .creators-list {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  margin-top: 20px;
+  gap: 40px; /* Increased gap for more breathing room */
+  margin-top: 40px;
 }
 
 .creator-card {
-  width: 300px;  /* Increased width */
+  width: 350px;  /* Increased width for more spacious cards */
   border: 1px solid #ddd;
-  border-radius: 10px;
-  padding: 20px;
+  border-radius: 15px;  /* Slightly more rounded corners for a softer look */
+  padding: 25px;
   text-align: center;
   margin: 20px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  background-color: #fff;  /* Optional: Gives a background color */
+  box-shadow: var(--card-shadow);
+  background-color: #ffffff;
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.creator-card:hover {
+  box-shadow: var(--card-shadow-hover);
+  transform: translateY(-5px);
 }
 
 .creator-image {
-  width: 100%;  /* Ensure the image takes up the full width of the card */
-  height: auto;  /* Maintains the aspect ratio to prevent stretching */
-  border-radius: 0%;  /* Circular images */
-  max-width: 900px;  /* Set a max width for the image */
+  width: 100%;
+  height: auto;
+  border-radius: 50%; /* Circular images for a modern, professional feel */
+  max-width: 600px; /* Keep image sizes uniform */
   margin-bottom: 15px;
 }
 
 .creator-card h3 {
   margin: 10px 0;
-  font-size: 20px;
-  font-weight: 600;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-color);
+  line-height: 1.3;
 }
 
 .creator-card p {
-  font-size: 14px;
-  color: #666;
+  font-size: 16px;
+  color: #666666;
+  line-height: 1.6;
 }
-

@@ -1,12 +1,9 @@
-/* src/styles/HomePage.css */
-
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap');
 
 :root {
   --primary-color: #2D9CDB; /* Blue */
   --secondary-color: #27AE60; /* Green */
   --accent-color: #F2C94C; /* Yellow */
-  /* --background-color: #E6F2FF; */ /* Very Light Blue */ /* Commented out since we're using a gradient */
   --text-color: #333333; /* Dark Gray */
 }
 
@@ -21,12 +18,14 @@ body {
   color: var(--text-color);
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 .home-page {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center; /* Ensures vertical centering */
   min-height: 100vh;
   width: 100%;
 }
@@ -34,56 +33,67 @@ body {
 .page-header {
   display: flex;
   align-items: center;
-  font-size: 36px;
-  font-weight: bold;
-  margin-top: 40px;
+  justify-content: center; /* Center the logo and title */
+  font-size: 64px; /* Large font size for the title */
+  font-weight: 900; /* Heaviest font weight for the title */
+  margin-top: 20px;
   color: var(--primary-color);
 }
 
 .logo {
-  height: 60px;
-  margin-right: 15px;
+  height: 120px; /* Significantly larger logo */
+  margin-right: 25px; /* More space between the logo and title */
 }
 
 .hero-section {
   text-align: center;
-  margin: 40px 20px;
+  margin: 50px 20px;
 }
 
 .hero-section h2 {
-  font-size: 32px;
+  font-size: 40px; /* Bigger font size for the subtitle */
+  font-weight: 800; /* Bold subtitle */
   color: var(--secondary-color);
 }
 
 .hero-section p {
-  font-size: 18px;
+  font-size: 22px; /* Larger body text */
+  font-weight: 500; /* Slightly bold text for emphasis */
   color: var(--text-color);
-  max-width: 600px;
+  max-width: 700px; /* Slightly wider to maintain a balanced look */
   margin: 20px auto 0;
 }
 
 .auth-forms {
   display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
+  justify-content: center; /* Ensures the forms are centered horizontally */
+  align-items: center; /* Ensures vertical centering of form contents */
+  gap: 40px; /* Adds space between the forms */
   width: 100%;
-  max-width: 900px;
+  max-width: 1000px;
   margin-bottom: 50px;
 }
 
 .auth-forms > div {
   flex: 1 1 300px;
-  margin: 20px;
   max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center; /* Ensures form inputs and buttons are centered */
 }
 
 @media (max-width: 768px) {
   .page-header {
-    font-size: 28px;
+    font-size: 48px;
+  }
+
+  .logo {
+    height: 80px;
   }
 
   .hero-section h2 {
-    font-size: 24px;
+    font-size: 32px;
   }
 
   .auth-forms {
@@ -93,5 +103,6 @@ body {
 
   .auth-forms > div {
     margin: 10px 0;
+    max-width: 100%; /* Ensure full width on small screens */
   }
 }
