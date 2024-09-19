@@ -111,3 +111,45 @@ h2 {
   background-color: #B0C4DE;
   cursor: not-allowed;
 }
+
+.about-tab {
+  text-align: center;
+}
+
+.creators-list {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.creator-card {
+  width: 300px;  /* Increased width */
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  margin: 20px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  background-color: #fff;  /* Optional: Gives a background color */
+}
+
+.creator-image {
+  width: 100%;  /* Ensure the image takes up the full width of the card */
+  height: auto;  /* Maintains the aspect ratio to prevent stretching */
+  border-radius: 0%;  /* Circular images */
+  max-width: 900px;  /* Set a max width for the image */
+  margin-bottom: 15px;
+}
+
+.creator-card h3 {
+  margin: 10px 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.creator-card p {
+  font-size: 14px;
+  color: #666;
+}
+
