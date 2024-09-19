@@ -83,3 +83,25 @@
     cursor: not-allowed;
   }
   
+  .add-expense-btn {
+    background-color: var(--button-bg-color); /* Button background color */
+    color: var(--button-text-color); /* Button text color */
+    font-size: 16px; /* Adjusted font size */
+    padding: 12px 24px; /* Increase padding for a larger button */
+    border: 1px solid var(--button-bg-color); /* Border for button */
+    border-radius: 5px; /* Optional: Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    text-align: center; /* Center the text */
+    display: inline-block; /* Ensures it's treated like a button */
+    width: 100%; /* Ensure it takes up the full available width if needed */
+    max-width: 200px; /* Optional: Set a max width to control size */
+    white-space: nowrap; /* Prevents the text from wrapping */
+    overflow: hidden; /* Ensure no overflow issues */
+    text-overflow: ellipsis; /* Handle overflow with ellipsis if needed */
+    box-sizing: border-box; /* Ensures padding and border are included in the size */
+  }
+  
+  .add-expense-btn:hover {
+    background-color: var(--button-hover-bg-color); /* Define a hover background color */
+  }
+  
