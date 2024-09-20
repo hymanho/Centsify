@@ -1,5 +1,6 @@
 import { auth } from '../../firebase';
 import {signInWithEmailAndPassword} from 'firebase/auth';
+import { getAuth } from 'firebase/auth';
 
 export const logIn = async (email, password) => {
     try {
@@ -11,16 +12,14 @@ export const logIn = async (email, password) => {
     }
   };
 
-export const getCurrentUserId = () => {
-    try {
-        const user = auth.currentUser;
-        if (user) {
-            return user.uid;
-        } else {
-            throw new Error('No user is currently logged in.');
-        }
-    } catch (error) {
-        console.error('Error fetching user ID:', error);
-        throw error;
+  export async function getCurrentUserToken() {
+    const auth = getAuth();
+    const user = auth.currentUser;
+  
+    if (user) {
+      const token = await user.getIdToken();
+      return token;
+    } else {
+      throw new Error("No user is logged in");
     }
-};
+  }

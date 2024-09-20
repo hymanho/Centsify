@@ -11,7 +11,7 @@ import os
 import json
 from sklearn.feature_extraction.text import TfidfVectorizer
 
-from FetchData import initialize_firebase
+from backend.Chatbot.rasa.FetchData import initialize_firebase
 
 app = Flask(__name__)
 CORS(app)

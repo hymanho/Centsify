@@ -1,84 +1,62 @@
 import json
-import pandas as pd
-from datetime import datetime
+from statistics import mean, median
+from collections import Counter
 
 def process_expense_data(data):
-    # Flatten the list of expenses across all accounts
-    expenses = [item for account in data for item in account.get('expenses', [])]
-
-    # Create a DataFrame from the list of expenses
-    df = pd.DataFrame(expenses)
-
-    if df.empty:
-        print("No expense data available.")
+    # Extract expenses from the data
+    expenses = data.get("Expenses", {}).get("expenseContainer", {}).get("expenses", [])
+    
+    # If there are no expenses, return an empty result
+    if not expenses:
         return {}
 
-    # Convert columns to appropriate types
-    df['date'] = pd.to_datetime(df['date'])
-    df['amount'] = pd.to_numeric(df['amount'], errors='coerce').fillna(0)
-    df['category'] = df['category'].str.lower().fillna('unknown')
+    # Calculate total expenses, categories, and amounts
+    total_amounts = [expense['amount'] for expense in expenses]
+    categories = [expense['category'] for expense in expenses]
+    
+    # Finding average and median cost
+    avg_cost = mean(total_amounts)
+    median_cost = median(total_amounts)
+    
+    # Finding the most frequent category
+    most_frequent_category = Counter(categories).most_common(1)[0][0]
+    
+    # Finding the most and least expensive expenses
+    most_expensive_expense = max(expenses, key=lambda x: x['amount'])
+    least_expensive_expense = min(expenses, key=lambda x: x['amount'])
+    
+    # Total amount spent
+    total_spent = sum(total_amounts)
+    
+    # Count of expenses
+    expense_count = len(expenses)
 
-    # Calculate total spent
-    total_spent = df['amount'].sum()
-
-    # Find the most expensive purchase
-    most_expensive_purchase = df.loc[df['amount'].idxmax()] if not df.empty else None
-
-    # Find the most frequent category
-    most_frequent_category = df['category'].mode().iloc[0] if not df.empty else 'unknown'
-
-    # Group by category and aggregate data
-    category_summary = df.groupby('category').agg({
-        'amount': ['sum', 'mean', 'count'],
-        'date': ['min', 'max']
-    }).reset_index()
-
-    # Rename columns for clarity
-    category_summary.columns = ['category', 'total_amount', 'average_amount', 'transaction_count', 'first_date', 'last_date']
-
-    # Add a 'month' column by extracting the month from the 'first_date'
-    category_summary['first_date'] = pd.to_datetime(category_summary['first_date'])
-    category_summary['month'] = category_summary['first_date'].dt.month
-
-    # Convert DataFrame to JSON serializable format
-    category_summary['first_date'] = category_summary['first_date'].astype(str)
-    category_summary['last_date'] = category_summary['last_date'].astype(str)
-
-    # Handle the case when there's no data
-    if most_expensive_purchase is not None:
-        most_expensive = {
-            'amount': float(most_expensive_purchase['amount']),
-            'category': most_expensive_purchase['category'],
-            'title': most_expensive_purchase.get('title', ''),
-            'date': most_expensive_purchase['date'].strftime('%Y-%m-%d')
-        }
-    else:
-        most_expensive = {
-            'amount': 0,
-            'category': 'unknown',
-            'title': '',
-            'date': ''
-        }
-
-    # Build insights dictionary
-    insights = {
-        'total_spent': float(total_spent),
-        'most_expensive_purchase': most_expensive,
-        'most_frequent_category': most_frequent_category,
-        'category_breakdown': category_summary.to_dict(orient='records')
+    # Prepare the result
+    result = {
+        "average_cost": avg_cost,
+        "median_cost": median_cost,
+        "most_frequent_category": most_frequent_category,
+        "most_expensive_expense": most_expensive_expense,
+        "least_expensive_expense": least_expensive_expense,
+        "total_spent": total_spent,
+        "expense_count": expense_count
     }
-
-    return insights
-
-def load_firestore_data(file_path='expenses.json'):
-    with open(file_path, 'r') as f:
-        return json.load(f)
+    
+    return result
 
 if __name__ == "__main__":
-    firestore_data = load_firestore_data()
-    processed_data = process_expense_data(firestore_data)
+    # Load data from a JSON file
+    input_file = "yurt@gmail.com_data.json"
+    
+    with open(input_file, "r") as f:
+        data = json.load(f)
+    
+    # Process the data
+    processed_data = process_expense_data(data)
 
-    with open('processed_expenses.json', 'w') as f:
-        json.dump(processed_data, f, indent=2)
+    # Save the processed data to a JSON file
+    output_file = "processed_expense_data.json"
+    with open(output_file, "w") as f:
+        json.dump(processed_data, f, indent=4)
 
-    print("Expense data processed and saved to processed_expenses.json")
+    print(f"Processed data saved to {output_file}")

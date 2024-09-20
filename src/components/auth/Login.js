@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { logIn } from '../../backend/auth/login';
+import { logIn, getCurrentUserToken } from '../../backend/auth/login';
 import '../../styles/AuthForms.css';
 
 const Login = () => {
@@ -21,6 +21,18 @@ const Login = () => {
       console.log('Login failed:', error.message);
       setError('Wrong username or password, please try again.');
     }
+
+    const userToken = await getCurrentUserToken();
+    console.log('User token:', userToken);
+
+    await fetch('http://localhost:5000/store-token', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ token: userToken }), // Pass token to server
+    });
+
   };
 
   return (

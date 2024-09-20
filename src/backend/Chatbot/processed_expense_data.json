@@ -1,0 +1,23 @@
+{
+    "average_cost": 390.6666666666667,
+    "median_cost": 125,
+    "most_frequent_category": "Food",
+    "most_expensive_expense": {
+        "description": "4K TV",
+        "date": "2024-09-11",
+        "title": "TV",
+        "id": "1726200382961",
+        "amount": 999,
+        "category": "Electronics"
+    },
+    "least_expensive_expense": {
+        "description": "3 orders",
+        "date": "2024-09-12",
+        "title": "Teriyaki",
+        "id": "1726200425086",
+        "amount": 48,
+        "category": "Food"
+    },
+    "total_spent": 1172,
+    "expense_count": 3
+}

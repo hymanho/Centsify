@@ -1,0 +1,41 @@
+version: "3.1"
+rules:
+  - rule: Always greet when someone says hi
+    steps:
+      - intent: greet
+      - action: utter_greet
+
+  - rule: Handle goodbye
+    steps:
+      - intent: goodbye
+      - action: utter_goodbye
+
+  - rule: Handle add expense
+    steps:
+      - intent: add_expense
+      - action: action_add_expense
+
+  - rule: Handle check expenses
+    steps:
+      - intent: check_expenses
+      - action: action_check_expenses
+
+  - rule: Handle most expensive expense
+    steps:
+      - intent: most_expensive_expense
+      - action: action_most_expensive_expense
+
+  - rule: Handle least expensive expense
+    steps:
+      - intent: least_expensive_expense
+      - action: action_least_expensive_expense
+
+  - rule: Handle total expenditure
+    steps:
+      - intent: total_expenditure
+      - action: action_total_expenditure
+
+  - rule: Handle compute expense data
+    steps:
+      - intent: compute_expense_data
+      - action: action_compute_expense_data
