@@ -1,5 +1,12 @@
 # server.py
 
+"""
+
+API's to allow the sending of firestore token to different applications within the project,
+in order to allow for account access
+
+"""
+
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 

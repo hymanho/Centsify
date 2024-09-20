@@ -19,6 +19,18 @@ def initialize_firebase():
     except Exception as e:
         print(f"Error initializing Firebase: {e}")
 
+def clear_token():
+    try:
+        response = requests.post('http://localhost:5000/clear-token')
+        response.raise_for_status()
+        data = response.json()
+        message = data.get('message')
+        print(message)
+        return message
+    except requests.RequestException as e:
+        print(f"Error clearing token: {e}")
+        return None
+
 def fetch_token():
     try:
         response = requests.get('http://localhost:5000/get-token')
@@ -35,8 +47,6 @@ def fetch_token():
         print(f"Error fetching token: {e}")
         return None
     
-    
-
 # Get current user ID using a token
 def verify_token(token):
     try:

@@ -1,4 +1,5 @@
 version: "3.1"
+
 rules:
   - rule: Always greet when someone says hi
     steps:
@@ -10,10 +11,10 @@ rules:
       - intent: goodbye
       - action: utter_goodbye
 
-  - rule: Handle add expense
+  - rule: Handle out-of-scope messages
     steps:
-      - intent: add_expense
-      - action: action_add_expense
+      - intent: out_of_scope
+      - action: utter_default
 
   - rule: Handle check expenses
     steps:

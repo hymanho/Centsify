@@ -10,6 +10,14 @@ const LogOff = () => {
   const handleLogOff = async () => {
     try {
       await logOff();
+      // Fetch the clear token endpoint after logging off
+      await fetch('http://localhost:5000/clear-token', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
       navigate('/'); // Redirect to HomePage after logging off
       alert('Logged off successfully');
     } catch (error) {

@@ -13,25 +13,6 @@ userID = get_email_from_UID(get_UID_from_token(token))
 
 print(userID)
 
-class ActionAddExpense(Action):
-    def name(self) -> str:
-        return "action_add_expense"
-
-    def run(self, dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-
-        amount = tracker.get_slot("amount")
-        category = tracker.get_slot("category")
-        
-        # Save the expense to Firestore
-        # Call your method to save data using userID
-        save_expense_to_firestore(userID, amount, category)  # Define this method to save the expense
-        
-        dispatcher.utter_message(text=f"Expense of {amount} for {category} added.")
-        return []
-
-
 class ActionCheckExpenses(Action):
     def name(self) -> str:
         return "action_check_expenses"

@@ -1,42 +1,46 @@
 version: "3.1"
 
 stories:
-  - story: greet and add expense
+  - story: greet and farewell
     steps:
       - intent: greet
       - action: utter_greet
-      - intent: add_expense
-        entities:
-          - amount: 50
-          - category: dinner
-      - action: action_add_expense
+      - intent: goodbye
+      - action: utter_goodbye
 
   - story: check expenses
     steps:
       - intent: check_expenses
       - action: action_check_expenses
 
-  - story: most expensive expense
+  - story: greet and check expenses
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - intent: check_expenses
+      - action: action_check_expenses
+
+  - story: ask for most expensive expense
     steps:
       - intent: most_expensive_expense
       - action: action_most_expensive_expense
 
-  - story: least expensive expense
+  - story: ask for least expensive expense
     steps:
       - intent: least_expensive_expense
       - action: action_least_expensive_expense
 
-  - story: total expenditure
+  - story: total expenditure inquiry
     steps:
       - intent: total_expenditure
       - action: action_total_expenditure
-
-  - story: farewell
-    steps:
-      - intent: goodbye
-      - action: utter_goodbye
 
   - story: compute expense data
     steps:
       - intent: compute_expense_data
       - action: action_compute_expense_data
+
+  - story: out of scope response
+    steps:
+      - intent: out_of_scope
+      - action: utter_default

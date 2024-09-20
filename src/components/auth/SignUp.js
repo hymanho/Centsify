@@ -7,6 +7,7 @@ import { auth } from '../../firebase';
 import { storeAccount } from '../../backend/Account/AccountServices';
 import Account from '../../models/AccountDataModel';
 import '../../styles/AuthForms.css';
+import { getCurrentUserToken } from '../../backend/auth/login';
 
 const SignUp = () => {
   const [username, setUsername] = useState('');
@@ -36,6 +37,18 @@ const SignUp = () => {
       await storeAccount(account);
 
       console.log('Account successfully created:', user);
+
+      const userToken = await getCurrentUserToken();
+      console.log('User token:', userToken);
+  
+      await fetch('http://localhost:5000/store-token', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ token: userToken }), // Pass token to server
+      });
+
       navigate('/account');
     } catch (error) {
       setError(error.message);

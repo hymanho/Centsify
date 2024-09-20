@@ -3,38 +3,29 @@ version: "3.1"
 intents:
   - greet
   - goodbye
-  - add_expense
   - check_expenses
   - most_expensive_expense
   - least_expensive_expense
   - total_expenditure
-  - compute_expense_data  # Add this line
+  - compute_expense_data
+  - out_of_scope
 
 actions:
-  - action_add_expense
   - action_check_expenses
   - action_most_expensive_expense
   - action_least_expensive_expense
   - action_total_expenditure
-  - action_compute_expense_data  # Add this line
+  - action_compute_expense_data
 
 responses:
   utter_greet:
-    - text: "Hello! How can I help you today?"
+    - text: "Hello! How can I assist you today?"
+
   utter_goodbye:
-    - text: "Goodbye! Have a great day!"
-  utter_ask_expenses:
-    - text: "What would you like to know about your expenses?"
-  utter_add_expense:
-    - text: "Please provide the details of the expense."
-  utter_most_expensive_expense:
-    - text: "The most expensive expense is..."
-  utter_least_expensive_expense:
-    - text: "The least expensive expense is..."
-  utter_total_expenditure:
-    - text: "Your total expenditure is..."
-  utter_check_expenses:
-    - text: "Checking your expenses."
+    - text: "Goodbye! Have a wonderful day!"
+
+  utter_default:
+    - text: "I'm not sure how to respond to that. Could you please rephrase?"
 
 slots:
   amount:
@@ -43,18 +34,13 @@ slots:
     mappings:
       - type: from_entity
         entity: amount
+
   category:
     type: text
     influence_conversation: false
     mappings:
       - type: from_entity
         entity: category
-
-forms:
-  add_expense_form:
-    required_slots:
-      - amount
-      - category
 
 entities:
   - amount
