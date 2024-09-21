@@ -47,6 +47,8 @@ const Chatbot = () => {
 
     return (
         <div className="chatbot-container">
+            <h3>Chat with our Assistant</h3>
+            <p>Ask any questions, and our AI assistant will help you.</p>
             <div className="chat-history" ref={chatHistoryRef}>
                 {responses.map((msg, index) => (
                     <div key={index} className={`message-bubble ${msg.type}`}>
@@ -66,7 +68,7 @@ const Chatbot = () => {
                             handleSend();
                         }
                     }}
-                    placeholder="Type your message here..."
+                    placeholder="  Type your message here..."
                     rows="1"
                 />
                 <button onClick={handleSend} disabled={isLoading}>
