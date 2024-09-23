@@ -1,13 +1,21 @@
-/* src/styles/LoginPage.css */
+/*
 
+Defines the styling for the login page, including layout, form input fields, and button styles.
+Tailwind utility classes are applied for consistency, with additional custom styles for gradients and transitions.
+
+*/
+
+/* Container for the login form */
 .login-container {
   @apply flex justify-center items-center h-screen bg-gray-200;
 }
 
+/* Styling for the login form */
 .login-form {
   @apply p-6 bg-white rounded-lg shadow-lg w-80 space-y-4;
 }
 
+/* Input fields for text, password, and email */
 .login-form input[type="text"],
 .login-form input[type="password"],
 .login-form input[type="email"] {
@@ -23,6 +31,7 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+/* Hover state for the button */
 .login-form button:hover {
   background: linear-gradient(to right, #28a745, #34d058);
 }

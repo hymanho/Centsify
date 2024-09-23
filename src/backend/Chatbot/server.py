@@ -1,5 +1,3 @@
-# server.py
-
 """
 
 API's to allow the sending of firestore token to different applications within the project,
@@ -13,7 +11,7 @@ from flask_cors import CORS
 global_token = None
 
 app = Flask(__name__)
-CORS(app)  # Enable CORS for all domains
+CORS(app)
 
 # Route to handle token storage
 @app.route('/store-token', methods=['POST'])

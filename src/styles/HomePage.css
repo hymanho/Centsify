@@ -1,3 +1,10 @@
+/*
+
+Defines the styling for the home page, including layout for the header, hero section, and authentication forms. 
+Ensures a responsive design with proper centering and spacing for different screen sizes.
+
+*/
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap');
 
 :root {
@@ -15,66 +22,47 @@ body {
   margin: 0;
   font-family: 'Inter', sans-serif;
   background: url('../assets/pastelbackground.jpg') no-repeat center center fixed;
-  background-size: cover; /* Ensure the image covers the entire background */
+  background-size: cover;
   color: var(--text-color);
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-
+/* Home Page Layout */
 .home-page {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center; /* Ensures vertical centering */
+  justify-content: center;
   min-height: 100vh;
   width: 100%;
 }
 
+/* Page Header */
 .page-header {
   display: flex;
   align-items: center;
-  justify-content: center; /* Center the logo and title */
-  font-size: 64px; /* Large font size for the title */
-  font-weight: 900; /* Heaviest font weight for the title */
+  justify-content: center;
+  font-size: 64px;
+  font-weight: 900;
   margin-top: 20px;
   color: var(--primary-color);
 }
 
 .page-header h1 {
-  font-size: 100px; /* Large title size */
-  font-weight: 900; /* Heavy weight for boldness */
-  text-transform: uppercase; /* Uppercase to enhance the title look */
-  letter-spacing: 3px; /* Adds space between letters for emphasis */
-  
-  /* Solid vibrant color for the title */
-  color: #2D9CDB; /* Use your primary blue color */
-  
-  /* Subtle text shadow to add depth */
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Subtle black shadow for depth */
-  
-  /* Underline for emphasis */
-  border-bottom: 5px solid #F2C94C; /* Yellow accent color for underline */
-  padding-bottom: 10px; /* Space between text and underline */
-  
-  /* Optional: Fade-in animation for smooth appearance */
+  font-size: 100px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: #2D9CDB;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  border-bottom: 5px solid #F2C94C;
+  padding-bottom: 10px;
   animation: fadeInTitle 1s ease-in-out;
 }
 
-/* Keyframe animation for the title fade-in */
-@keyframes fadeInTitle {
-  0% {
-    opacity: 0;
-    transform: translateY(-20px); /* Slight vertical movement on load */
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0); /* Fade-in and move into place */
-  }
-}
-
-
+/* Keyframe animation for title fade-in */
 @keyframes fadeInTitle {
   0% {
     opacity: 0;
@@ -86,36 +74,38 @@ body {
   }
 }
 
-
+/* Logo styling */
 .logo {
-  height: 120px; /* Significantly larger logo */
-  margin-right: 25px; /* More space between the logo and title */
+  height: 120px;
+  margin-right: 25px;
 }
 
+/* Hero Section */
 .hero-section {
   text-align: center;
   margin: 50px 20px;
 }
 
 .hero-section h2 {
-  font-size: 40px; /* Bigger font size for the subtitle */
-  font-weight: 800; /* Bold subtitle */
+  font-size: 40px;
+  font-weight: 800;
   color: var(--secondary-color);
 }
 
 .hero-section p {
-  font-size: 22px; /* Larger body text */
-  font-weight: 500; /* Slightly bold text for emphasis */
+  font-size: 22px;
+  font-weight: 500;
   color: var(--text-color);
-  max-width: 700px; /* Slightly wider to maintain a balanced look */
+  max-width: 700px;
   margin: 20px auto 0;
 }
 
+/* Authentication Forms */
 .auth-forms {
   display: flex;
-  justify-content: center; /* Ensures the forms are centered horizontally */
-  align-items: center; /* Ensures vertical centering of form contents */
-  gap: 40px; /* Adds space between the forms */
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
   width: 100%;
   max-width: 1000px;
   margin-bottom: 50px;
@@ -127,9 +117,10 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center; /* Ensures form inputs and buttons are centered */
+  text-align: center;
 }
 
+/* Responsive Design for smaller screens */
 @media (max-width: 768px) {
   .page-header {
     font-size: 48px;
@@ -150,6 +141,6 @@ body {
 
   .auth-forms > div {
     margin: 10px 0;
-    max-width: 100%; /* Ensure full width on small screens */
+    max-width: 100%;
   }
 }

@@ -1,14 +1,14 @@
-// src/backend/Account.js
-import ExpenseContainer from './ExpenseContainer'
-
 /*
-
-Data strucuture for Account -- Account class
+ 
+Defines the Account class which handles user account data, including balance, currency, preferences, and expenses.
 
 */
 
+import ExpenseContainer from './ExpenseContainer';
+
 class Account {
   constructor(name, email, username, balance = 0, currency = 'USD', preferences = {}, alerts = {}, settings = {}, reports = {}) {
+    // Initializes the account with provided user details and an empty ExpenseContainer.
     this.name = name;
     this.email = email;
     this.username = username;
@@ -18,24 +18,18 @@ class Account {
     this.alerts = alerts;
     this.settings = settings;
     this.reports = reports;
-    // Initialize expenses as an instance of ExpenseContainer
     this.expenses = new ExpenseContainer();
   }
 
-  // Method to update balance
+  // Updates the account balance by adding the specified amount.
   updateBalance(amount) {
     this.balance += amount;
   }
 
-  // Method to add an expense
-  
-
-  // Method to get all expenses
+  // Retrieves all expenses associated with the account.
   getExpenses() {
-    return this.expenses.getExpenses(); // Retrieve all expenses from the ExpenseContainer
+    return this.expenses.getExpenses();
   }
-
-  // Additional methods as needed
 }
 
 export default Account;

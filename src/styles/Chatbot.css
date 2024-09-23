@@ -1,3 +1,10 @@
+/*
+
+Defines the styling for the chatbot component, including the chat container, 
+message bubbles, input area, and responsive adjustments for mobile screens.
+
+*/
+
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
 
 /* Container for the entire chatbot */
@@ -17,16 +24,16 @@
 
 /* Header of the chat window */
 .chat-header {
-    background-color: #ffffff; /* Changed to white */
+    background-color: #ffffff;
     padding: 20px;
     text-align: center;
-    color: #333333; /* Changed text color to dark for contrast */
+    color: #333333;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .chat-header h2 {
     margin: 0;
-    font-size: 1.6em; /* Slightly larger font size for prominence */
+    font-size: 1.6em;
     font-weight: 500;
 }
 
@@ -203,7 +210,7 @@
     }
 
     .chat-header h2 {
-        font-size: 1.4em; /* Adjusted for smaller screens */
+        font-size: 1.4em;
     }
 
     .input-area button {
