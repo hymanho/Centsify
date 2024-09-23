@@ -1,5 +1,14 @@
 // src/components/user/ExpenseSummary/EditExpenseForm.js
 
+/*
+
+Defines the EditExpenseForm component, which allows users to edit or delete an existing expense.
+It retrieves the expense data based on the provided expenseId and userEmail. The form includes
+fields for title, amount, date, category, and description. After editing or deleting the expense,
+the form is closed upon saving or deletion.
+
+*/
+
 import React, { useState, useEffect } from 'react';
 import {
   editExpense,
@@ -18,6 +27,7 @@ const EditExpenseForm = ({ expenseId, onClose, userEmail }) => {
     description: '',
   });
 
+  // Fetch the expense data when the component mounts
   useEffect(() => {
     const fetchExpense = async () => {
       const fetchedExpense = await getExpense(userEmail, expenseId);
@@ -35,16 +45,19 @@ const EditExpenseForm = ({ expenseId, onClose, userEmail }) => {
     fetchExpense();
   }, [expenseId, userEmail]);
 
+  // Handle changes in the form fields
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
+  // Handle saving the edited expense
   const handleSave = async () => {
     await editExpense(userEmail, expenseId, formData);
     onClose(); // Close the form after saving
   };
 
+  // Handle deleting the expense
   const handleDelete = async () => {
     await deleteExpense(userEmail, expenseId);
     onClose(); // Close the form after deletion
