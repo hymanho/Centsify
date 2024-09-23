@@ -33,3 +33,5 @@ rasa_env/Scripts/
 __pycache__/
 *.pyd
 *.dll
+bfg-1.14.0.jar
+java
