@@ -1,9 +1,17 @@
+/*
+
+Defines the ExpenseContainer class which handles storing, adding, editing, deleting, 
+and retrieving expenses. It also converts expenses into a format suitable for Firestore storage.
+
+*/
+
 class ExpenseContainer {
   constructor(expenses = []) {
-    this.expenses = expenses; // Initialize with given expenses or an empty array
+    // Initialize with given expenses or an empty array
+    this.expenses = expenses;
   }
 
-  // Method to convert expenses to a plain object array for Firestore storage
+  // Converts expenses to a plain object array for Firestore storage
   toPlainArray() {
     return this.expenses.map(expense => ({
       id: expense.id,
@@ -15,12 +23,12 @@ class ExpenseContainer {
     }));
   }
 
-  // Method to add a new expense
+  // Adds a new expense to the container
   addExpense(expense) {
     this.expenses.push(expense);
   }
 
-  // Method to edit an existing expense
+  // Edits an existing expense by its ID
   editExpense(expenseId, updatedFields) {
     const index = this.expenses.findIndex(expense => expense.id === expenseId);
     if (index !== -1) {
@@ -30,19 +38,19 @@ class ExpenseContainer {
     return false;
   }
 
-  // Method to delete an expense by its ID
+  // Deletes an expense by its ID
   deleteExpense(expenseId) {
     const initialLength = this.expenses.length;
     this.expenses = this.expenses.filter(expense => expense.id !== expenseId);
     return this.expenses.length < initialLength; // Returns true if an expense was deleted
   }
 
-  // Method to get all expenses
+  // Retrieves all expenses from the container
   getExpenses() {
     return this.expenses;
   }
 
-  // Method to find an expense by its ID
+  // Finds an expense by its ID
   findExpenseById(expenseId) {
     return this.expenses.find(expense => expense.id === expenseId);
   }

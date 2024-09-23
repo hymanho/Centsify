@@ -1,107 +1,111 @@
-/* src/components/user/ExpenseSummary/AddExpenseForm.css */
+/*
+
+Defines the styling for the AddExpenseForm component, including form layout, input field styling, 
+and button styles. It utilizes Bootstrap-inspired colors and provides responsive design for inputs and buttons.
+
+*/
 
 /* Define CSS variables here */
 :root {
-    --primary-color: #007bff; /* Bootstrap primary blue */
-    --secondary-color: #6c757d; /* Bootstrap secondary gray */
-    --success-color: #28a745; /* Green */
-    --danger-color: #dc3545; /* Red */
-    --background-color: #f8f9fa; /* Light Gray */
-    --text-color: #343a40; /* Dark Gray */
-    --button-bg-color: var(--primary-color);
-    --button-text-color: #ffffff;
-    --button-hover-bg-color: #0056b3;
-    --input-border-color: #ced4da;
-  }
-  
-  /* Global styles for the component */
-  .card {
-    background-color: #ffffff;
-    border: 1px solid var(--input-border-color);
-    border-radius: 0.25rem;
-    padding: 1.5rem;
-    width: 100%;
-    max-width: 600px;
-    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-    margin-bottom: 1rem;
-  }
-  
-  .form-container {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .input-field {
-    width: 100%;
-    padding: 0.5rem 0.75rem;
-    margin-bottom: 1rem;
-    border: 1px solid var(--input-border-color);
-    border-radius: 0.25rem;
-    font-size: 1rem;
-    color: var(--text-color);
-    background-color: #fff;
-  }
-  
-  .input-field::placeholder {
-    color: #6c757d;
-  }
-  
-  .input-field:focus {
-    outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-  }
-  
-  textarea.input-field {
-    resize: vertical;
-    min-height: 100px;
-  }
-  
-  /* Center the button and ensure it appears as a proper button */
-  .custom-button.add-button {
-    align-self: center;
-    margin-top: 1rem;
-    width: 100%;
-    padding: 0.75rem 1rem;
-    background-color: var(--button-bg-color);
-    color: var(--button-text-color);
-    font-size: 1rem;
-    font-weight: 600;
-    border: 1px solid transparent;
-    border-radius: 0.25rem;
-    cursor: pointer;
-    transition: background-color 0.15s ease-in-out;
-    text-align: center;
-  }
-  
-  .custom-button.add-button:hover {
-    background-color: var(--button-hover-bg-color);
-  }
-  
-  .custom-button.add-button:disabled {
-    background-color: #6c757d;
-    cursor: not-allowed;
-  }
-  
-  .add-expense-btn {
-    background-color: var(--button-bg-color); /* Button background color */
-    color: var(--button-text-color); /* Button text color */
-    font-size: 16px; /* Adjusted font size */
-    padding: 12px 24px; /* Increase padding for a larger button */
-    border: 1px solid var(--button-bg-color); /* Border for button */
-    border-radius: 5px; /* Optional: Rounded corners */
-    cursor: pointer; /* Pointer cursor on hover */
-    text-align: center; /* Center the text */
-    display: inline-block; /* Ensures it's treated like a button */
-    width: 100%; /* Ensure it takes up the full available width if needed */
-    max-width: 200px; /* Optional: Set a max width to control size */
-    white-space: nowrap; /* Prevents the text from wrapping */
-    overflow: hidden; /* Ensure no overflow issues */
-    text-overflow: ellipsis; /* Handle overflow with ellipsis if needed */
-    box-sizing: border-box; /* Ensures padding and border are included in the size */
-  }
-  
-  .add-expense-btn:hover {
-    background-color: var(--button-hover-bg-color); /* Define a hover background color */
-  }
-  
+  --primary-color: #007bff;
+  --secondary-color: #6c757d;
+  --success-color: #28a745;
+  --danger-color: #dc3545;
+  --background-color: #f8f9fa;
+  --text-color: #343a40;
+  --button-bg-color: var(--primary-color);
+  --button-text-color: #ffffff;
+  --button-hover-bg-color: #0056b3;
+  --input-border-color: #ced4da;
+}
+
+/* Global styles for the component */
+.card {
+  background-color: #ffffff;
+  border: 1px solid var(--input-border-color);
+  border-radius: 0.25rem;
+  padding: 1.5rem;
+  width: 100%;
+  max-width: 600px;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  margin-bottom: 1rem;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-field {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid var(--input-border-color);
+  border-radius: 0.25rem;
+  font-size: 1rem;
+  color: var(--text-color);
+  background-color: #fff;
+}
+
+.input-field::placeholder {
+  color: #6c757d;
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+textarea.input-field {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* Center the button and ensure it appears as a proper button */
+.custom-button.add-button {
+  align-self: center;
+  margin-top: 1rem;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background-color: var(--button-bg-color);
+  color: var(--button-text-color);
+  font-size: 1rem;
+  font-weight: 600;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: background-color 0.15s ease-in-out;
+  text-align: center;
+}
+
+.custom-button.add-button:hover {
+  background-color: var(--button-hover-bg-color);
+}
+
+.custom-button.add-button:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
+.add-expense-btn {
+  background-color: var(--button-bg-color);
+  color: var(--button-text-color);
+  font-size: 16px;
+  padding: 12px 24px;
+  border: 1px solid var(--button-bg-color);
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  display: inline-block;
+  width: 100%;
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  box-sizing: border-box;
+}
+
+.add-expense-btn:hover {
+  background-color: var(--button-hover-bg-color); 
+}

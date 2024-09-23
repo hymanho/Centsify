@@ -1,4 +1,9 @@
-// src/pages/HomePage.js
+/*
+
+Defines the HomePage component, which serves as the landing page of the application. 
+It includes the Centsible logo, a hero section, and options to log in or sign up.
+
+*/
 
 import React from 'react';
 import Login from '../components/auth/Login';
@@ -9,11 +14,13 @@ import logo from '../assets/centsible-logo.png';
 const HomePage = () => {
   return (
     <div className="home-page">
+      {/* Header section with logo and title */}
       <header className="page-header">
         <img src={logo} alt="Centsible Logo" className="logo" />
         <h1>Centsible</h1>
       </header>
 
+      {/* Hero section with a brief description of the app's purpose */}
       <section className="hero-section">
         <h2>Take Control of Your Finances</h2>
         <p>
@@ -21,6 +28,7 @@ const HomePage = () => {
         </p>
       </section>
 
+      {/* Login and Signup forms */}
       <div className="auth-forms">
         <Login />
         <SignUp />

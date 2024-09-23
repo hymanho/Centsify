@@ -1,4 +1,9 @@
-/* src/styles/AuthForms.css */
+/*
+
+Defines the styles for authentication forms, including card layout, form input styling, 
+and buttons. This stylesheet ensures a responsive and visually appealing login/sign-up experience.
+
+*/
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
 
@@ -10,6 +15,7 @@
   --text-color: #333333; /* Dark Gray */
 }
 
+/* Card styling for the authentication forms */
 .card {
   background-color: #ffffff;
   border: 1px solid #E0E0E0;
@@ -20,6 +26,7 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+/* Header section of the form */
 .form-section .header {
   font-size: 24px;
   font-weight: 700;
@@ -28,12 +35,14 @@
   text-align: center;
 }
 
+/* Container for the form elements */
 .form-container {
   display: flex;
   flex-direction: column;
   align-items: center; /* Center items horizontally */
 }
 
+/* Input field styling */
 .form-container input {
   width: 100%; /* Ensure inputs take full width */
   max-width: 350px; /* Limit maximum width */
@@ -44,12 +53,14 @@
   font-size: 16px;
 }
 
+/* Focus state for inputs */
 .form-container input:focus {
   outline: none;
   border-color: var(--primary-color);
   box-shadow: 0 0 0 2px rgba(45, 156, 219, 0.2);
 }
 
+/* Button styling */
 .form-container button {
   width: 100%; /* Make the button take full width */
   max-width: 350px; /* Limit maximum width */
@@ -65,10 +76,12 @@
   margin-top: 10px; /* Add margin to separate from inputs */
 }
 
+/* Button hover state */
 .form-container button:hover {
   background-color: #1B7CB3;
 }
 
+/* Error message styling */
 .form-container p {
   color: #E74C3C;
   font-size: 14px;

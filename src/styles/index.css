@@ -1,4 +1,9 @@
-/* src/styles/index.css */
+/*
+
+Defines global styles for the application, including body and code block styling, 
+and applies Tailwind utility classes for consistent appearance.
+
+*/
 
 /* Global body styles */
 body {

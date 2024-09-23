@@ -1,13 +1,21 @@
-/* src/styles/Charts.css */
+/*
 
+Defines the styling for chart components used in the application, 
+including container, title, and specific chart types like pie charts.
+
+*/
+
+/* Chart container styling */
 .chart-container {
   @apply flex flex-col items-center p-8 bg-gray-50 rounded-lg shadow-md;
 }
 
+/* Chart title styling */
 .chart-title {
   @apply text-3xl mb-8 font-semibold text-gray-700;
 }
 
+/* Pie chart specific styling */
 .pie-chart {
   @apply mt-10 w-full max-w-md;
 }

@@ -1,33 +1,40 @@
+/*
+
+Defines the styling for the expense summary layout and related components such as expense cards,
+buttons, and the spending analysis section. Includes media queries to ensure responsiveness.
+
+*/
+
 /* Define CSS variables here */
 :root {
-  --primary-color: #2D9CDB; /* Blue */
-  --secondary-color: #27AE60; /* Green */
-  --accent-color: #F2C94C; /* Yellow */
-  --background-color: #F9FAFB; /* Light Gray */
-  --text-color: #333333; /* Dark Gray */
+  --primary-color: #2D9CDB;
+  --secondary-color: #27AE60;
+  --accent-color: #F2C94C;
+  --background-color: #F9FAFB;
+  --text-color: #333333;
   --button-bg-color: var(--primary-color);
   --button-text-color: #ffffff;
   --button-hover-bg-color: #1B7CB3;
-  --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* Subtle shadow */
-  --card-shadow-hover: 0 8px 16px rgba(0, 0, 0, 0.1); /* Hover shadow */
+  --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  --card-shadow-hover: 0 8px 16px rgba(0, 0, 0, 0.1);
 }
 
 /* Main Container for overall layout */
 .main-container {
-  width: 100%;  /* Full width usage */
+  width: 100%;
   margin: 0 auto;
   padding: 40px;
   background-color: var(--background-color);
-  box-sizing: border-box; /* Ensure padding is included in the element's width */
+  box-sizing: border-box;
 }
 
 /* Expense Summary Container */
 .expense-summary {
-  width: 100%;  /* Full width */
+  width: 100%;
   margin: 40px 0;
   padding: 40px;
   background-color: #ffffff;
-  box-shadow: var(--card-shadow);  /* Subtle shadow for the entire summary */
+  box-shadow: var(--card-shadow);
   border-radius: 10px;
   text-align: left;
   display: flex;
@@ -38,7 +45,7 @@
 /* Expense Summary Title */
 .expense-summary h2 {
   margin-bottom: 20px;
-  text-align: center;  /* Keep the title centered */
+  text-align: center;
   font-size: 36px;
   color: var(--primary-color);
   font-weight: 700;
@@ -51,18 +58,18 @@
   background-color: var(--button-bg-color);
   color: var(--button-text-color);
   font-size: 16px;
-  padding: 12px 28px;  /* Larger button */
+  padding: 12px 28px;
   border: 1px solid var(--button-bg-color);
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;  /* Smooth transition */
+  transition: background-color 0.3s ease, transform 0.2s ease;
   max-width: 220px;
-  margin: 0 auto; /* Center the button */
+  margin: 0 auto;
 }
 
 .add-expense-btn:hover {
   background-color: var(--button-hover-bg-color);
-  transform: scale(1.05);  /* Subtle hover scale */
+  transform: scale(1.05);
 }
 
 /* Expense List */
@@ -83,13 +90,13 @@
   background-color: #f9f9f9;
   border: 1px solid #ddd;
   border-radius: 10px;
-  box-shadow: var(--card-shadow);  /* Consistent card shadow */
-  transition: box-shadow 0.3s ease, transform 0.3s ease;  /* Smooth hover effect */
+  box-shadow: var(--card-shadow);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
 .expense-card:hover {
-  box-shadow: var(--card-shadow-hover);  /* Enhanced shadow on hover */
-  transform: translateY(-5px);  /* Lift the card slightly on hover */
+  box-shadow: var(--card-shadow-hover);
+  transform: translateY(-5px);
 }
 
 .expense-card span {
@@ -118,7 +125,7 @@
 }
 
 .edit-btn:hover {
-  background-color: #d1a300;  /* Slightly darker yellow on hover */
+  background-color: #d1a300;
 }
 
 /* Spending Analysis */
@@ -127,7 +134,7 @@
   padding: 20px;
   border-radius: 10px;
   border: 1px solid #ddd;
-  box-shadow: var(--card-shadow);  /* Match the card shadow style */
+  box-shadow: var(--card-shadow);
   margin-top: 30px;
 }
 
@@ -183,7 +190,7 @@
 
 .button:hover {
   background-color: var(--button-hover-bg-color);
-  transform: scale(1.05);  /* Slight scaling effect */
+  transform: scale(1.05);
 }
 
 .button:disabled {
