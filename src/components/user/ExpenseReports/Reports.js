@@ -1,3 +1,11 @@
+/* 
+
+This component fetches the current user's expense data and displays it in three charts: 
+a line chart for expenses over time, a bar chart for expenses by category, 
+and a pie chart for category distribution.
+
+*/
+
 import React, { useEffect, useState } from 'react';
 import { getExpenses } from '../../../backend/Account/ExpenseManagement/ExpenseService';
 import { auth } from '../../../firebase';
