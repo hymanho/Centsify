@@ -8,7 +8,7 @@ const About = () => {
       name: 'Diljan Shah',
       role: 'Lead Developer',
       image: creator1,  // Use the imported image
-      bio: "Hi! My name is Diljan Shah, I'm a highly motivated and dedicated computer science student at SU, pursuing my Bachelor's degree in Computer Science. With a strong passion for innovation and a genuine interest in software development, I am constantly seeking opportunities to expand my knowledge and skills in this dynamic field.\n\nLet's connect and discuss the exciting possibilities of working together. Feel free to reach out to me via LinkedIn or my email at diljanshah119@gmail.com",
+      bio: "Hi! My name is Diljan Shah, I'm a highly motivated and dedicated computer science student at SU, pursuing my Bachelor's degree in Computer Science. With a strong passion for innovation and a genuine interest in software development, I am constantly seeking opportunities to expand my knowledge and skills in this dynamic field.\n\nLet's connect and discuss the exciting possibilities of working together. Feel free to reach out to me via LinkedIn or my email at diljanshah119@gmail.com.",
       linkedIn: 'https://www.linkedin.com/in/diljan-shah',  // Add your LinkedIn URL here
       github: 'https://github.com/diljanshah333',  // Add your GitHub URL here
     },
@@ -16,7 +16,7 @@ const About = () => {
       name: 'Hyman Ho',
       role: 'Lead Developer',
       image: creator2,
-      bio: 'You can achieve anything you put your mind to!',
+      bio: "Hi, my name is Hyman Ho. I am an undergraduate that is studying for a Bachelor's computer science at Seattle Univerisity. I am strongly passionate about using technology, especially AI and machine learning to improve the status quo. I am constantly seeking opportunities to grow my skills and gain experience in the field.\n\nFeel free to connect with me and we can discuss about working together! Feel free to reach out to me via LinkedIn or my email at hymanho@outlook.com.",
       linkedIn: 'https://www.linkedin.com/in/hymanho',
       github: 'https://github.com/hymanho',
     },
