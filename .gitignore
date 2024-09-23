@@ -24,3 +24,12 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# Ignore virtual environments and cache directories
+rasa_env/
+rasa_env/Lib/
+rasa_env/bin/
+rasa_env/Include/
+rasa_env/Scripts/
+__pycache__/
+*.pyd
+*.dll
