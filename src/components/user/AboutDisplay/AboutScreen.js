@@ -28,7 +28,7 @@ const About = () => {
     },
   ];
 
-  const projectMission = "Our mission with this AI-powered expense tracking application is to revolutionize the way individuals manage their personal finances. The application helps users track expenses, gain insights through detailed reports, and leverage AI-driven predictions to plan better for the future. Our chatbot assistant provides instant support to answer financial queries and offers advice tailored to spending habits. By making financial management simple, intuitive, and powerful, we aim to empower users to take control of their finances and make informed decisions.";
+  const projectMission = "Our mission with this AI-powered expense tracking application is to revolutionize the way individuals manage their personal finances. The application helps users track expenses, gain insights through detailed reports, and use AI-driven predictions to plan better for the future. Our chatbot assistant provides instant support to answer financial queries and offers advice tailored to spending habits. By making financial management simple, intuitive, and powerful, we aim to empower users to take control of their finances and make informed decisions.";
 
   return (
     <div className="about-tab">
@@ -65,7 +65,7 @@ const About = () => {
         </div>
         {/* Project Mission Section */}
         <div className="project-mission">
-          <h3>Project Mission</h3>
+          <h3>Centsibles Goal</h3>
           <p>{projectMission}</p>
         </div>
       </div>
