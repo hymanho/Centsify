@@ -3,8 +3,8 @@ import AddExpenseForm from './AddExpenseForm';
 import EditExpenseForm from './EditExpenseForm';
 import { getExpenseContainer, addExpense, analyzeSpendingPatterns, detectAnomalies } from '../../../backend/Account/ExpenseManagement/ExpenseService';
 import { auth } from '../../../firebase';
-import '../../../styles/ExpenseSummaryField.css'; // Import the CSS file for styling
-import { FaExclamationTriangle, FaCheckCircle } from 'react-icons/fa'; // Icons for warning and success
+import '../../../styles/ExpenseSummaryField.css';
+import { FaExclamationTriangle } from 'react-icons/fa';
 
 const ExpenseSummaryField = () => {
   const [expenses, setExpenses] = useState([]);
@@ -94,7 +94,7 @@ const ExpenseSummaryField = () => {
       </div>
       
       <div className="spending-analysis card">
-        <h3 className="card-title">Spending Analysis</h3>
+        <h3>Spending Analysis</h3>
         {Object.entries(spendingAnalysis).map(([category, average]) => (
           <div key={category} className="spending-item">
             <strong>{category}:</strong> Average spending: <span className="spending-amount">${average.toFixed(2)}</span>
@@ -105,7 +105,7 @@ const ExpenseSummaryField = () => {
       {anomalyDetected && (
         <div className="anomaly-warning card">
           <FaExclamationTriangle className="warning-icon" />
-          <h3 className="card-title">Anomaly Detected!</h3>
+          <h3>Anomaly Detected!</h3>
           <p>We've detected some unusual spending patterns. Please review your recent expenses.</p>
         </div>
       )}

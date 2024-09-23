@@ -1,5 +1,3 @@
-/* src/styles/ExpenseSummaryField.css */
-
 /* Define CSS variables here */
 :root {
   --primary-color: #2D9CDB; /* Blue */
@@ -10,51 +8,69 @@
   --button-bg-color: var(--primary-color);
   --button-text-color: #ffffff;
   --button-hover-bg-color: #1B7CB3;
+  --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* Subtle shadow */
+  --card-shadow-hover: 0 8px 16px rgba(0, 0, 0, 0.1); /* Hover shadow */
+}
+
+/* Main Container for overall layout */
+.main-container {
+  width: 100%;  /* Full width usage */
+  margin: 0 auto;
+  padding: 40px;
+  background-color: var(--background-color);
+  box-sizing: border-box; /* Ensure padding is included in the element's width */
 }
 
 /* Expense Summary Container */
 .expense-summary {
-  max-width: 800px;
-  margin: 40px auto;
+  width: 100%;  /* Full width */
+  margin: 40px 0;
   padding: 40px;
   background-color: #ffffff;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--card-shadow);  /* Subtle shadow for the entire summary */
   border-radius: 10px;
-  text-align: center;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
-/* Add spacing between sections */
+/* Expense Summary Title */
 .expense-summary h2 {
   margin-bottom: 20px;
+  text-align: center;  /* Keep the title centered */
+  font-size: 36px;
+  color: var(--primary-color);
+  font-weight: 700;
 }
 
 /* Add Expense Button */
 .add-expense-btn {
-  display: inline-block;
-  margin-bottom: 40px;  /* Added more margin below button */
+  display: block;
+  margin-bottom: 40px;
   background-color: var(--button-bg-color);
   color: var(--button-text-color);
   font-size: 16px;
-  padding: 8px 24px;
+  padding: 12px 28px;  /* Larger button */
   border: 1px solid var(--button-bg-color);
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-  text-align: center;
-  max-width: 200px;
-  margin: 0 auto;
+  transition: background-color 0.3s ease, transform 0.2s ease;  /* Smooth transition */
+  max-width: 220px;
+  margin: 0 auto; /* Center the button */
 }
 
 .add-expense-btn:hover {
   background-color: var(--button-hover-bg-color);
+  transform: scale(1.05);  /* Subtle hover scale */
 }
 
 /* Expense List */
 .expense-list {
   display: flex;
   flex-direction: column;
-  gap: 20px;  /* Space between each expense */
-  margin-top: 40px;  /* Space between Add Expense button and expense list */
+  gap: 20px;
+  margin-top: 40px;
   margin-bottom: 30px;
 }
 
@@ -67,7 +83,13 @@
   background-color: #f9f9f9;
   border: 1px solid #ddd;
   border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--card-shadow);  /* Consistent card shadow */
+  transition: box-shadow 0.3s ease, transform 0.3s ease;  /* Smooth hover effect */
+}
+
+.expense-card:hover {
+  box-shadow: var(--card-shadow-hover);  /* Enhanced shadow on hover */
+  transform: translateY(-5px);  /* Lift the card slightly on hover */
 }
 
 .expense-card span {
@@ -92,10 +114,11 @@
   border-radius: 5px;
   border: none;
   cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .edit-btn:hover {
-  background-color: #d1a300;
+  background-color: #d1a300;  /* Slightly darker yellow on hover */
 }
 
 /* Spending Analysis */
@@ -104,16 +127,20 @@
   padding: 20px;
   border-radius: 10px;
   border: 1px solid #ddd;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--card-shadow);  /* Match the card shadow style */
   margin-top: 30px;
 }
 
 .spending-analysis h3 {
   margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--primary-color);
 }
 
 .spending-item {
   margin-bottom: 15px;
+  font-size: 16px;
 }
 
 .spending-amount {
@@ -123,7 +150,7 @@
 
 /* Anomaly Warning */
 .anomaly-warning {
-  border-left: 4px solid #f2c94c;
+  border-left: 4px solid var(--accent-color);
   padding: 20px;
   background-color: #fff8e1;
   border-radius: 5px;
@@ -134,17 +161,8 @@
 
 .warning-icon {
   font-size: 24px;
-  color: #f2c94c;
+  color: var(--accent-color);
   margin-right: 15px;
-}
-
-/* Main Container for overall layout */
-.main-container {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 40px;
-  background-color: var(--background-color);
 }
 
 /* General Button Styles */
@@ -165,10 +183,33 @@
 
 .button:hover {
   background-color: var(--button-hover-bg-color);
-  transform: scale(1.05);
+  transform: scale(1.05);  /* Slight scaling effect */
 }
 
 .button:disabled {
   background-color: #B0C4DE;
   cursor: not-allowed;
+}
+
+/* Media Queries to ensure responsiveness */
+@media (max-width: 768px) {
+  .expense-card {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .expense-card span {
+    margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .expense-summary {
+    padding: 20px;
+  }
+
+  .add-expense-btn {
+    max-width: 180px;
+    padding: 10px 20px;
+  }
 }

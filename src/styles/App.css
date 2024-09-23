@@ -1,28 +1,132 @@
-/* src/styles/App.css */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+
+:root {
+  --primary-color: #2D9CDB;
+  --secondary-color: #27AE60;
+  --accent-color: #F2C94C;
+  --background-color: #F9FAFB;
+  --text-color: #333333;
+  --button-bg-color: var(--primary-color);
+  --button-text-color: #ffffff;
+  --button-hover-bg-color: #1B7CB3;
+  --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  --card-shadow-hover: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* Global styles */
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
 
 .App {
-  @apply text-center;
+  text-align: center;
+  display: flex;
+  height: 100vh;
 }
 
-.App-logo {
-  @apply h-[40vmin] pointer-events-none animate-spin;
-  animation-duration: 5s; /* Customize spin duration */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 240px;
+  height: 100%;
+  background: var(--primary-color);
+  color: #ffffff;
+  padding: 80px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  overflow-y: auto;
 }
 
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.sidebar h1 {
+  font-size: 26px;
+  font-weight: bold;
+  margin-bottom: 40px;
+  text-align: center;
 }
 
-.App-header {
-  @apply bg-gray-900 min-h-screen flex flex-col items-center justify-center text-white text-3xl;
+.sidebar a {
+  color: #ffffff;
+  text-decoration: none;
+  padding: 12px 20px;
+  margin: 10px 0;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.15);
+  transition: background-color 0.3s, transform 0.2s, border-bottom 0.3s;
+  display: block;
+  border-bottom: 2px solid transparent;
 }
 
-.App-link {
-  @apply text-blue-400 underline hover:text-blue-600 transition-colors duration-300;
+.sidebar a.active {
+  background-color: #ffffff;
+  color: var(--primary-color);
+  border-bottom: 2px solid var(--primary-color);
+}
+
+.sidebar a:hover {
+  background-color: rgba(255, 255, 255, 0.25);
+  transform: scale(1.02);
+}
+
+.logoff-container {
+  margin-top: auto;
+}
+
+.main-content {
+  margin-left: 240px;
+  padding: 40px;
+  background-color: var(--background-color);
+  width: calc(100% - 240px);
+  height: 100vh;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.card {
+  width: 100%;
+  max-width: 800px;
+  background-color: #ffffff;
+  border-radius: 15px;
+  box-shadow: var(--card-shadow);
+  padding: 30px;
+  margin-bottom: 40px;
+  text-align: center;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  border: 1px solid #eaeaea;
+}
+
+.card:hover {
+  box-shadow: var(--card-shadow-hover);
+  transform: translateY(-8px);
+}
+
+button {
+  padding: 12px 24px;
+  background-color: var(--button-bg-color);
+  color: var(--button-text-color);
+  font-size: 18px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  margin-top: 20px;
+}
+
+button:hover {
+  background-color: var(--button-hover-bg-color);
+  transform: scale(1.05);
+}
+
+button:disabled {
+  background-color: #b0c4de;
+  cursor: not-allowed;
 }
