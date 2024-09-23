@@ -32,10 +32,10 @@ const Chatbot = () => {
 
     return (
         <div className="chatbot-container">
-            <div className="chatbot-response">
-                {messages.map((msg, index) => (
-                    <div key={index} className={msg.from === 'user' ? 'user-message' : 'bot-message'}>
-                        {msg.text}
+            <div className="chat-history" ref={chatHistoryRef}>
+                {responses.map((msg, index) => (
+                    <div key={index} className={`message-bubble ${msg.type}`}>
+                        {msg.content}
                     </div>
                 ))}
             </div>

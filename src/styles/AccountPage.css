@@ -18,15 +18,22 @@ body {
   font-family: 'Inter', sans-serif;
   background-color: var(--background-color);
   color: var(--text-color);
-  display: flex;
-  height: 100vh;
   margin: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;  /* Set the height to 100% of the viewport */
+  overflow: hidden;  /* Prevent body from overflowing */
 }
 
-.account-page {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
+h2 {
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--primary-color);
+  background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+  margin-bottom: 40px;
 }
 
 /* Sidebar */
@@ -42,6 +49,7 @@ body {
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+  overflow-y: auto;  /* Make the sidebar scrollable */
 }
 
 .sidebar h1 {
@@ -107,39 +115,136 @@ body {
   border-bottom: 2px solid var(--primary-color);
 }
 
-/* Main Content */
+/* Main Content Layout */
 .main-content {
   margin-left: 240px;
   padding: 40px;
   background-color: var(--background-color);
   width: calc(100% - 240px);
-  overflow-y: auto;
+  height: calc(100% - 80px);  /* Ensure main content takes full height */
+  overflow-y: auto;  /* Enable scrolling in main content area */
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .card {
+  width: 100%;
+  max-width: 800px;
   background-color: #ffffff;
-  border: 1px solid #e0e0e0;
-  border-radius: 10px;
-  padding: 30px;
-  margin-bottom: 30px;
+  border-radius: 15px;
   box-shadow: var(--card-shadow);
-  transition: box-shadow 0.3s ease, transform 0.2s ease;
+  padding: 30px;
+  margin-bottom: 40px;
+  text-align: center;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  border: 1px solid #eaeaea;
 }
 
 .card:hover {
   box-shadow: var(--card-shadow-hover);
-  transform: translateY(-5px);
+  transform: translateY(-8px);
 }
 
-h2 {
-  font-size: 34px;
+p {
+  font-size: 16px;
+  color: #666;
+  line-height: 1.6;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  padding: 10px;
+  font-size: 16px;
+  border-bottom: 1px solid #eaeaea;
+  transition: background-color 0.3s ease;
+}
+
+li:hover {
+  background-color: #f5f5f5;
+}
+
+/* Expense Summary Field */
+.expense-summary {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+}
+
+.expense-summary h2 {
+  font-size: 40px;  /* Larger font size for the title */
   font-weight: 700;
-  color: var(--text-color);
-  margin-bottom: 30px;
+  color: var(--primary-color);
+  margin-bottom: 30px;  /* Space below the title */
   text-align: center;
 }
 
+.expense-item {
+  width: 250px;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: var(--card-shadow);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.expense-item:hover {
+  box-shadow: var(--card-shadow-hover);
+  transform: translateY(-5px);
+}
+
+.expense-item h3 {
+  font-size: 20px;
+  color: var(--primary-color);
+  margin-bottom: 10px;
+}
+
+.expense-item p {
+  color: #666;
+  font-size: 16px;
+}
+
+/* Chatbot Section */
+.chatbot-container {
+  width: 100%;
+  max-width: 600px;
+  max-height: 600px;  /* Set a max height to avoid excessive stretching */
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: var(--card-shadow);
+  text-align: center;
+  overflow-y: auto;  /* Enable vertical scroll if content overflows */
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  margin-bottom: 40px;
+}
+
+.chatbot-container:hover {
+  box-shadow: var(--card-shadow-hover);
+  transform: translateY(-5px);
+}
+
+.chatbot-container h3 {
+  font-size: 24px;  /* Slightly bigger for better readability */
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 15px;
+}
+
+.chatbot-container p {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 20px; /* Some margin before the chatbot input */
+}
+
+/* Buttons */
 .button {
   padding: 12px 24px;
   background-color: var(--button-bg-color);
@@ -153,6 +258,7 @@ h2 {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  margin-top: 20px;
 }
 
 .button:hover {
@@ -165,54 +271,132 @@ h2 {
   cursor: not-allowed;
 }
 
+/* About Tab Section */
 .about-tab {
   text-align: center;
   margin-top: 50px;
 }
 
-.creators-list {
+.about-tab h2 {
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--primary-color);
+  background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 50px;
+}
+
+.about-content {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   flex-wrap: wrap;
-  gap: 40px; /* Increased gap for more breathing room */
+  gap: 30px;
   margin-top: 40px;
 }
 
+.creators-list {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
 .creator-card {
-  width: 350px;  /* Increased width for more spacious cards */
-  border: 1px solid #ddd;
-  border-radius: 15px;  /* Slightly more rounded corners for a softer look */
-  padding: 25px;
-  text-align: center;
-  margin: 20px;
+  width: 350px;
+  background-color: #fff;
+  border-radius: 20px; /* Softer, more modern rounded corners */
   box-shadow: var(--card-shadow);
-  background-color: #ffffff;
-  transition: box-shadow 0.3s ease, transform 0.2s ease;
+  padding: 30px;
+  text-align: center;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  border: 1px solid #eaeaea;
+  display: flex;
+  flex-direction: column;
+  align-items: center;  /* Horizontally center content */
 }
 
 .creator-card:hover {
   box-shadow: var(--card-shadow-hover);
-  transform: translateY(-5px);
+  transform: translateY(-8px); /* Slightly higher hover effect */
 }
 
 .creator-image {
-  width: 100%;
-  height: auto;
-  border-radius: 50%; /* Circular images for a modern, professional feel */
-  max-width: 600px; /* Keep image sizes uniform */
-  margin-bottom: 15px;
+  width: 250px;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 50%;  /* Circular images */
+  margin-bottom: 20px;
+  border: 4px solid var(--primary-color); /* Add border to images for emphasis */
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .creator-card h3 {
-  margin: 10px 0;
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 700;
-  color: var(--text-color);
-  line-height: 1.3;
+  margin-bottom: 10px;
+  color: var(--primary-color);
 }
 
 .creator-card p {
   font-size: 16px;
-  color: #666666;
+  color: #666;
+}
+
+.creator-card p strong {
+  color: var(--secondary-color);  /* Highlight role text */
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.social-links {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;  /* Space between the two icons */
+}
+
+.github-link, .linkedin-link {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.github-link i, .linkedin-link i {
+  font-size: 20px;
+}
+
+.github-link:hover, .linkedin-link:hover {
+  color: var(--button-hover-bg-color);
+  text-decoration: underline;
+}
+
+/* Project Mission Section */
+.project-mission {
+  flex: 1;
+  max-width: 400px; /* Adjust the width as needed */
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: var(--card-shadow);
+  text-align: left;
+}
+
+.project-mission h3 {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 15px;
+}
+
+.project-mission p {
+  font-size: 16px;
+  color: #666;
   line-height: 1.6;
 }
