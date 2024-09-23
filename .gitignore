@@ -35,3 +35,4 @@ __pycache__/
 *.dll
 bfg-1.14.0.jar
 java
+echo "rasa_env/" >> .gitignore
