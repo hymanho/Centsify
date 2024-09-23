@@ -1,5 +1,14 @@
 // src/components/user/ExpenseSummary/AddExpenseForm.js
 
+/*
+
+Defines the AddExpenseForm component, which allows users to add a new expense.
+It includes fields for title, amount, date, category, and description. The component integrates
+with Firebase for user authentication and uses TensorFlow.js with the Universal Sentence Encoder
+to suggest a category based on the title input.
+
+*/
+
 import React, { useState, useEffect } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../../firebase';
@@ -19,6 +28,7 @@ const AddExpenseForm = ({ onAddExpense }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [model, setModel] = useState(null);
 
+  // Load the TensorFlow model and set the backend
   useEffect(() => {
     const loadModel = async () => {
       await tf.setBackend('webgl');
@@ -36,6 +46,7 @@ const AddExpenseForm = ({ onAddExpense }) => {
     loadModel();
   }, []);
 
+  // Suggest category based on the title using TensorFlow embeddings
   const suggestCategory = async (title) => {
     if (!model) return;
 
@@ -56,11 +67,13 @@ const AddExpenseForm = ({ onAddExpense }) => {
     setCategory(suggestedCategory);
   };
 
+  // Handle title input changes and trigger category suggestion
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
     suggestCategory(e.target.value);
   };
 
+  // Handle form submission to add a new expense
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (isSubmitting) return;
@@ -81,6 +94,7 @@ const AddExpenseForm = ({ onAddExpense }) => {
 
     onAddExpense({ ...newExpense, id: expenseId });
 
+    // Reset form fields
     setTitle('');
     setAmount('');
     setDate('');

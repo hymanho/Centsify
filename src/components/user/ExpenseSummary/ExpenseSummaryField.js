@@ -1,3 +1,14 @@
+// src/components/user/ExpenseSummary/ExpenseSummaryField.js
+
+/*
+
+Defines the ExpenseSummaryField component, which displays a summary of the user's expenses. 
+It allows users to add, edit, and view expenses. The component also includes spending analysis 
+based on the user's expense data and detects anomalies in spending patterns. TensorFlow.js 
+and a custom anomaly detection function are integrated to enhance spending analysis.
+
+*/
+
 import React, { useState, useEffect } from 'react';
 import AddExpenseForm from './AddExpenseForm';
 import EditExpenseForm from './EditExpenseForm';
@@ -15,6 +26,7 @@ const ExpenseSummaryField = () => {
   const [spendingAnalysis, setSpendingAnalysis] = useState({});
   const [anomalyDetected, setAnomalyDetected] = useState(false);
 
+  // Fetch expenses and analyze spending patterns on mount
   useEffect(() => {
     const fetchExpenses = async () => {
       const user = auth.currentUser;
@@ -30,7 +42,7 @@ const ExpenseSummaryField = () => {
           const analysis = analyzeSpendingPatterns(expensesList);
           setSpendingAnalysis(analysis);
 
-          // Check for anomalies
+          // Check for anomalies in expenses
           const anomaly = expensesList.some(expense => detectAnomalies(expensesList, expense));
           setAnomalyDetected(anomaly);
         }
@@ -40,6 +52,7 @@ const ExpenseSummaryField = () => {
     fetchExpenses();
   }, [userEmail]);
 
+  // Handle adding a new expense
   const handleAddExpense = async (newExpense) => {
     if (userEmail) {
       await addExpense(userEmail, newExpense);
@@ -47,7 +60,7 @@ const ExpenseSummaryField = () => {
       setExpenses(updatedExpenses.expenses || []);
       setShowAddForm(false);
 
-      // Re-run analysis and anomaly detection after adding a new expense
+      // Re-analyze spending and detect anomalies
       const analysis = analyzeSpendingPatterns(updatedExpenses.expenses || []);
       setSpendingAnalysis(analysis);
 
@@ -56,11 +69,13 @@ const ExpenseSummaryField = () => {
     }
   };
 
+  // Handle editing an existing expense
   const handleEditExpense = (expenseId) => {
     setSelectedExpenseId(expenseId);
     setShowEditForm(true);
   };
 
+  // Close the edit form
   const handleCloseEditForm = () => {
     setShowEditForm(false);
     setSelectedExpenseId(null);
