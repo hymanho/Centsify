@@ -23,3 +23,8 @@ firebaseAdminKey.json
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+rasa_env/
+*.pyd
+*.dll
+
