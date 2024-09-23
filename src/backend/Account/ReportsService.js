@@ -1,3 +1,9 @@
+/*
+
+Fetches report data in order to display it on the reports screen using the Axios module. 
+
+*/
+
 import axios from 'axios';
 
 export const fetchReportData = async (reportType, start, end) => {

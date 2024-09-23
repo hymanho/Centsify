@@ -1,3 +1,11 @@
+/*
+
+Logoff component, used to log a user off of their account.
+Implements firebase/auth functions to acheive this. 
+
+*/
+
+
 import { auth } from '../../firebase';
 import {signOut} from 'firebase/auth';
 

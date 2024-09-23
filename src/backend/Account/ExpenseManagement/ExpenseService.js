@@ -1,21 +1,34 @@
-import { firestore } from '../../../firebase';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
-import ExpenseContainer from '../../../models/ExpenseContainer';
+/*
 
-// Function to add a new expense
+Firestore integration for managing expenses. This file includes functions to add, edit, delete, and fetch expenses from the Firestore database. 
+It also provides additional functionality for budget recommendations, anomaly detection, and analyzing spending patterns. 
+
+Uses Firestore operations (`doc`, `getDoc`, `setDoc`) and an `ExpenseContainer` model to manage expenses within a user's account.
+
+*/
+
+import { firestore } from '../../../firebase';  // Import Firestore from the Firebase configuration
+import { doc, getDoc, setDoc } from 'firebase/firestore';  // Import necessary Firestore methods
+import ExpenseContainer from '../../../models/ExpenseContainer';  // Import the ExpenseContainer model
+
+// Function to add a new expense to a user's account in Firestore
 const addExpense = async (userEmail, expenseData) => {
   try {
+    // Get a reference to the user's expense container document in Firestore
     const containerRef = doc(firestore, 'Accounts', userEmail, 'expenses', 'expenseContainer');
     const containerDoc = await getDoc(containerRef);
 
     let expenseContainer;
 
+    // If the document exists, create an ExpenseContainer object using the existing data
     if (containerDoc.exists()) {
       expenseContainer = new ExpenseContainer(containerDoc.data().expenses || []);
     } else {
+      // If no document exists, initialize a new ExpenseContainer
       expenseContainer = new ExpenseContainer();
     }
 
+    // Check if the new expense already exists in the container
     const existingExpense = expenseContainer.getExpenses().find(expense => 
       expense.title === expenseData.title &&
       expense.amount === expenseData.amount &&
@@ -23,13 +36,15 @@ const addExpense = async (userEmail, expenseData) => {
       expense.category === expenseData.category
     );
 
+    // If the expense already exists, log a message and return the expense ID
     if (existingExpense) {
       console.log('Expense already exists:', existingExpense);
       return existingExpense.id;
     }
 
+    // Create a new expense object with a unique ID and the provided data
     const expense = {
-      id: Date.now().toString(),
+      id: Date.now().toString(),  // Generate a unique ID using the current timestamp
       title: expenseData.title,
       amount: expenseData.amount,
       date: expenseData.date,
@@ -37,18 +52,20 @@ const addExpense = async (userEmail, expenseData) => {
       description: expenseData.description,
     };
 
-    // Budget recommendation logic
+    // Calculate a recommended budget for the expense's category
     const recommendedBudget = recommendBudget(expenseContainer.getExpenses(), expense.category);
     console.log(`Recommended budget for ${expense.category}: ${recommendedBudget}`);
 
-    // Anomaly detection logic
+    // Detect anomalies in the new expense
     const isAnomaly = detectAnomalies(expenseContainer.getExpenses(), expense);
     if (isAnomaly) {
       console.log('Anomaly detected in the expense:', expense);
     }
 
+    // Add the new expense to the container
     expenseContainer.addExpense(expense);
 
+    // Save the updated expense container back to Firestore
     await setDoc(containerRef, {
       expenses: expenseContainer.toPlainArray()
     });
@@ -60,7 +77,7 @@ const addExpense = async (userEmail, expenseData) => {
   }
 };
 
-// Function to edit an existing expense
+// Function to edit an existing expense in a user's account
 const editExpense = async (userEmail, expenseId, updatedFields) => {
   try {
     const containerRef = doc(firestore, 'Accounts', userEmail, 'expenses', 'expenseContainer');
@@ -73,6 +90,7 @@ const editExpense = async (userEmail, expenseId, updatedFields) => {
 
     const expenseContainer = new ExpenseContainer(containerDoc.data().expenses);
 
+    // Edit the existing expense in the container
     const updatedExpense = expenseContainer.editExpense(expenseId, updatedFields);
 
     if (!updatedExpense) {
@@ -80,6 +98,7 @@ const editExpense = async (userEmail, expenseId, updatedFields) => {
       return;
     }
 
+    // Save the updated expense container to Firestore
     await setDoc(containerRef, {
       expenses: expenseContainer.toPlainArray()
     });
@@ -90,7 +109,7 @@ const editExpense = async (userEmail, expenseId, updatedFields) => {
   }
 };
 
-// Function to delete an expense
+// Function to delete an expense from a user's account
 const deleteExpense = async (userEmail, expenseId) => {
   try {
     const containerRef = doc(firestore, 'Accounts', userEmail, 'expenses', 'expenseContainer');
@@ -103,6 +122,7 @@ const deleteExpense = async (userEmail, expenseId) => {
 
     const expenseContainer = new ExpenseContainer(containerDoc.data().expenses);
 
+    // Delete the expense from the container
     const deleted = expenseContainer.deleteExpense(expenseId);
 
     if (!deleted) {
@@ -110,6 +130,7 @@ const deleteExpense = async (userEmail, expenseId) => {
       return;
     }
 
+    // Save the updated container after deletion
     await setDoc(containerRef, {
       expenses: expenseContainer.toPlainArray()
     });
@@ -120,7 +141,7 @@ const deleteExpense = async (userEmail, expenseId) => {
   }
 };
 
-// Function to get all expenses
+// Function to fetch all expenses for a user from Firestore
 const getExpenses = async (userEmail) => {
   try {
     const containerRef = doc(firestore, 'Accounts', userEmail, 'expenses', 'expenseContainer');
@@ -131,6 +152,7 @@ const getExpenses = async (userEmail) => {
       return [];
     }
 
+    // Return the list of expenses
     const expenseContainer = new ExpenseContainer(containerDoc.data().expenses);
     return expenseContainer.getExpenses();
   } catch (error) {
@@ -139,13 +161,14 @@ const getExpenses = async (userEmail) => {
   }
 };
 
-// Function to get the expense container for a user
+// Function to get the expense container for a user (retrieves all expense data for that user)
 const getExpenseContainer = async (userEmail) => {
   const expenseContainerRef = doc(firestore, 'Accounts', userEmail, 'expenses', 'expenseContainer');
   const expenseContainerDoc = await getDoc(expenseContainerRef);
   return expenseContainerDoc.exists() ? expenseContainerDoc.data() : null;
 };
 
+// Function to fetch a specific expense by its ID
 const getExpense = async (userEmail, expenseId) => {
   try {
     const containerRef = doc(firestore, 'Accounts', userEmail, 'expenses', 'expenseContainer');
@@ -158,6 +181,7 @@ const getExpense = async (userEmail, expenseId) => {
 
     const expenseContainer = new ExpenseContainer(containerDoc.data().expenses);
 
+    // Find the expense by ID
     const expense = expenseContainer.getExpenses().find(exp => exp.id === expenseId);
 
     if (!expense) {
@@ -172,21 +196,21 @@ const getExpense = async (userEmail, expenseId) => {
   }
 };
 
-// Budget recommendation function
+// Function to recommend a budget based on previous expenses in a specific category
 const recommendBudget = (expenses, category) => {
   const categoryExpenses = expenses.filter(exp => exp.category === category);
   const total = categoryExpenses.reduce((sum, exp) => sum + exp.amount, 0);
-  return total / categoryExpenses.length || 100; // Default budget if no previous data
+  return total / categoryExpenses.length || 100; // Default budget if no previous data exists
 };
 
-// Anomaly detection function
+// Function to detect anomalies in a new expense (based on amount compared to the average)
 const detectAnomalies = (expenses, newExpense) => {
   const average = expenses.reduce((sum, exp) => sum + exp.amount, 0) / expenses.length;
-  const threshold = 1.5 * average;
+  const threshold = 1.5 * average;  // Anomaly threshold set to 1.5 times the average amount
   return newExpense.amount > threshold;
 };
 
-// Function to analyze spending patterns
+// Function to analyze spending patterns by calculating the average spend per category
 const analyzeSpendingPatterns = (expenses) => {
   const patternAnalysis = {}; 
   expenses.forEach(expense => {
@@ -209,3 +233,4 @@ const analyzeSpendingPatterns = (expenses) => {
 };
 
 export { addExpense, editExpense, deleteExpense, getExpenses, getExpenseContainer, getExpense, analyzeSpendingPatterns, detectAnomalies };
+

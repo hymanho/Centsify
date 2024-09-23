@@ -1,8 +1,6 @@
-// src/backend/createAccount.js
-
 /*
 
-creates an account upon signup and stores it into firestore
+Creates an account from the AccountDataModel, and stores it in Firestore with default parameter values upon signup. 
 
 */
 
@@ -39,7 +37,7 @@ const storeAccount = async (account) => {
 // Function to retrieve an Account object from Firestore
 const getAccount = async (email) => {
   try {
-    const doc = await firestore.collection('Accounts').doc(email).get();
+    const doc = await firestore.collection('Accounts').doc(email).get(); // Access the collection on Firestore
     if (doc.exists) {
       const data = doc.data();
       return new Account(
@@ -56,7 +54,7 @@ const getAccount = async (email) => {
         
       );
     } else {
-      console.log('No such document!');
+      console.log('No such document!'); 
       return null;
     }
   } catch (error) {
