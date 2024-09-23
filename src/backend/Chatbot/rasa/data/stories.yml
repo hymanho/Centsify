@@ -13,13 +13,6 @@ stories:
       - intent: check_expenses
       - action: action_check_expenses
 
-  - story: greet and check expenses
-    steps:
-      - intent: greet
-      - action: utter_greet
-      - intent: check_expenses
-      - action: action_check_expenses
-
   - story: ask for most expensive expense
     steps:
       - intent: most_expensive_expense
@@ -34,11 +27,6 @@ stories:
     steps:
       - intent: total_expenditure
       - action: action_total_expenditure
-
-  - story: compute expense data
-    steps:
-      - intent: compute_expense_data
-      - action: action_compute_expense_data
 
   - story: out of scope response
     steps:

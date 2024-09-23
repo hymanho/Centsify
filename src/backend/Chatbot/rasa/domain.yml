@@ -7,7 +7,6 @@ intents:
   - most_expensive_expense
   - least_expensive_expense
   - total_expenditure
-  - compute_expense_data
   - out_of_scope
 
 actions:
@@ -15,7 +14,7 @@ actions:
   - action_most_expensive_expense
   - action_least_expensive_expense
   - action_total_expenditure
-  - action_compute_expense_data
+
 
 responses:
   utter_greet:

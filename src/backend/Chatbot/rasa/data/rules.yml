@@ -35,8 +35,3 @@ rules:
     steps:
       - intent: total_expenditure
       - action: action_total_expenditure
-
-  - rule: Handle compute expense data
-    steps:
-      - intent: compute_expense_data
-      - action: action_compute_expense_data

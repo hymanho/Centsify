@@ -22,10 +22,12 @@ nlu:
 
   - intent: check_expenses
     examples: |
-      - How much have I spent?
       - Show me my expenses
       - What are my expenses?
       - Can you list my expenses?
+      - Show me my expense statistics
+      - Calculate my expense data
+      - Give me an overview of my expenses
 
   - intent: most_expensive_expense
     examples: |
@@ -45,15 +47,8 @@ nlu:
       - What’s my total expenditure?
       - Calculate my total spending
 
-  - intent: compute_expense_data
-    examples: |
-      - Show me my expense statistics
-      - Calculate my expense data
-      - Give me an overview of my expenses
-
   - intent: out_of_scope
     examples: |
-      - Have a good day
       - What’s the weather like today?
       - Can you tell me a joke?
       - I don’t need anything else

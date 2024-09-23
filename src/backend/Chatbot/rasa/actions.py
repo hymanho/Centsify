@@ -8,20 +8,19 @@ from collections import Counter
 from FetchData import get_current_user_expenses, fetch_token, get_email_from_UID, get_UID_from_token, initialize_firebase
 
 initialize_firebase()
-token = fetch_token()
-userID = get_email_from_UID(get_UID_from_token(token))
 
-print(userID)
-
-class ActionCheckExpenses(Action):
+class ActionTotalExpenditure(Action):
     def name(self) -> str:
-        return "action_check_expenses"
+        return "action_total_expenditure"
 
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-        expenses = get_current_user_expenses(userID)  # Fetch expenses from Firestore
+        token = fetch_token()
+        userID = get_email_from_UID(get_UID_from_token(token))
+
+        expenses = get_current_user_expenses(userID)
 
         if not expenses:
             dispatcher.utter_message(text="No expenses found for this user.")
@@ -34,13 +33,16 @@ class ActionCheckExpenses(Action):
 
 class ActionComputeExpenseData(Action):
     def name(self) -> str:
-        return "action_compute_expense_data"
+        return "action_check_expenses"
 
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-        expenses = get_current_user_expenses(userID)  # Fetch expenses from Firestore
+        token = fetch_token()
+        userID = get_email_from_UID(get_UID_from_token(token))
+
+        expenses = get_current_user_expenses(userID)
 
         if not expenses:
             dispatcher.utter_message(text="No expenses found for this user.")
@@ -71,15 +73,15 @@ class ActionComputeExpenseData(Action):
 
 
 class ActionMostExpensiveExpense(Action):
-
-    print(userID)
-
     def name(self) -> str:
         return "action_most_expensive_expense"
 
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        token = fetch_token()
+        userID = get_email_from_UID(get_UID_from_token(token))
 
         expenses = get_current_user_expenses(userID)
 
@@ -101,6 +103,9 @@ class ActionLeastExpensiveExpense(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        token = fetch_token()
+        userID = get_email_from_UID(get_UID_from_token(token))
 
         expenses = get_current_user_expenses(userID)
 

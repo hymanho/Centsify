@@ -1,80 +1,56 @@
 import React, { useState, useRef, useEffect } from 'react';
-import axios from 'axios';
-import '../../../styles/Chatbot.css';
+import '../../../styles/Chatbot.css'; // Import the CSS file
 
 const Chatbot = () => {
-    const [message, setMessage] = useState('');
-    const [responses, setResponses] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
-    const messagesEndRef = useRef(null);
-    const chatHistoryRef = useRef(null);
+    const [inputMessage, setInputMessage] = useState('');
+    const [messages, setMessages] = useState([]); // Track messages
 
     const handleSend = async () => {
-        if (!message.trim()) return;
-    
-        setIsLoading(true);
+        if (!inputMessage.trim()) return; // Prevent sending empty messages
+
+        const userMessage = { sender: 'test_user', message: inputMessage };
+        setMessages((prev) => [...prev, { text: inputMessage, from: 'user' }]); // Add user message to history
+
         try {
-            console.log('Sending message:', message);
-            setResponses(prevResponses => [...prevResponses, { type: 'user', content: message }]);
-            
-            const result = await axios.post('http://localhost:5000/chat', {
-                message: message,
-                data: {}
+            const response = await fetch('http://localhost:5005/webhooks/rest/webhook', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(userMessage),
             });
-    
-            console.log('Backend response:', result.data);
-    
-            setResponses(prevResponses => [
-                ...prevResponses,
-                { type: 'bot', content: result.data.response || 'No response from bot.' }
-            ]);
-    
-            setMessage('');
+
+            const data = await response.json();
+            if (data.length > 0 && data[0]?.text) {
+                setMessages((prev) => [...prev, { text: data[0].text, from: 'bot' }]); // Add bot response
+            }
         } catch (error) {
-            console.error('Error sending message:', error);
-            setResponses(prevResponses => [
-                ...prevResponses,
-                { type: 'bot', content: 'Error sending message. Please try again.' }
-            ]);
-        } finally {
-            setIsLoading(false);
+            console.error('Fetch error:', error);
         }
+
+        // Clear input field
+        setInputMessage('');
     };
-    
-    useEffect(() => {
-        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }, [responses]);
 
     return (
         <div className="chatbot-container">
-            <div className="chat-history" ref={chatHistoryRef}>
-                {responses.map((msg, index) => (
-                    <div key={index} className={`message-bubble ${msg.type}`}>
-                        {msg.content}
+            <div className="chatbot-response">
+                {messages.map((msg, index) => (
+                    <div key={index} className={msg.from === 'user' ? 'user-message' : 'bot-message'}>
+                        {msg.text}
                     </div>
                 ))}
-                {isLoading && <div className="loading-message">Typing</div>}
-                <div ref={messagesEndRef} />
             </div>
-            <div className="message-input-area">
+            <div style={{ display: 'flex', alignItems: 'center' }}>
                 <textarea
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    onKeyPress={(e) => {
-                        if (e.key === 'Enter' && !e.shiftKey) {
-                            e.preventDefault();
+                    value={inputMessage}
+                    onChange={(e) => setInputMessage(e.target.value)}
+                    onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
                             handleSend();
                         }
                     }}
-                    placeholder="Type your message here..."
-                    rows="1"
+                    placeholder="Type your message..."
                 />
-                <button onClick={handleSend} disabled={isLoading}>
-                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                        <line x1="22" y1="2" x2="11" y2="13"></line>
-                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                    </svg>
-                </button>
+                <button onClick={handleSend} className="send-button">➤</button>
             </div>
         </div>
     );
