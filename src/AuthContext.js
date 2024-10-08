@@ -1,3 +1,11 @@
+/* 
+
+This component provides an authentication context using React Context API.
+It allows other components to access the current user's authentication state
+and loading status.
+
+*/
+
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { auth } from './firebase'; // Adjust path as necessary
 
