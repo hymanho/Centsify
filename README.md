@@ -53,17 +53,6 @@ Centsible is a React-based expense tracker application that allows users to mana
 3. **Data Visualization**: View expense charts showing spending trends over time.
 4. **Chatbot Assistance**: Use the Rasa-integrated chatbot to ask for expense reports, insights, and more.
 
-## Screenshots
-
-### Dashboard
-![Dashboard](path-to-your-screenshot.png)
-
-### Add Expense
-![Add Expense](path-to-your-screenshot.png)
-
-### Chatbot Interaction
-![Chatbot](path-to-your-screenshot.png)
-
 ## Technologies Used
 
 - **Frontend**: React, React Router, CSS
