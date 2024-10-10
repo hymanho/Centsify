@@ -1,70 +1,96 @@
-# Getting Started with Create React App
+# Centsible - Expense Tracker Application
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Centsible is a React-based expense tracker application that allows users to manage their personal finances by tracking daily expenses. This app uses Firebase for authentication and Firestore for storing expense data, along with AI-driven insights to help users understand their spending patterns and detect anomalies. 
 
-## Available Scripts
+## Table of Contents
 
-In the project directory, you can run:
+- Features
+- Installation
+- Usage
+- Screenshots
+- Technologies Used
+- Contributing
+- License
 
-### `npm start`
+## Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **User Authentication**: Secure login and registration using Firebase Authentication.
+- **Expense Management**: Add, edit, and delete expense entries in real-time using Firestore.
+- **Expense Categories**: Organize expenses by customizable categories (e.g., groceries, entertainment, etc.).
+- **Data Visualization**: Graphical representation of spending patterns over time.
+- **AI-Driven Insights**: Personalized expense analysis using AI to detect anomalies, find most frequent categories, and provide average/median cost insights.
+- **Responsive UI**: A mobile-friendly, user-friendly design that adapts to different screen sizes.
+- **Rasa Chatbot**: Integrated chatbot to assist users in managing their expenses and answering financial queries.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Installation
 
-### `npm test`
+1. Clone the repository:
+    ```
+    git clone https://github.com/yourusername/centsible.git
+    ```
+2. Navigate to the project directory:
+    ```
+    cd centsible
+    ```
+3. Install dependencies:
+    ```
+    npm install
+    ```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+4. Set up Firebase:
+   - Create a Firebase project in [Firebase Console](https://console.firebase.google.com/).
+   - Copy your Firebase configuration and replace the placeholder in `firebase.js`.
 
-### `npm run build`
+5. Run the application:
+    ```
+    npm start
+    ```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Usage
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. **Login/Register**: Use Firebase authentication to log in or register for an account.
+2. **Track Expenses**: Add new expenses, categorize them, and view them in the expense list.
+3. **Data Visualization**: View expense charts showing spending trends over time.
+4. **Chatbot Assistance**: Use the Rasa-integrated chatbot to ask for expense reports, insights, and more.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Screenshots
 
-### `npm run eject`
+### Dashboard
+![Dashboard](path-to-your-screenshot.png)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Add Expense
+![Add Expense](path-to-your-screenshot.png)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Chatbot Interaction
+![Chatbot](path-to-your-screenshot.png)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Technologies Used
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- **Frontend**: React, React Router, CSS
+- **Backend**: Firebase Authentication, Firestore
+- **AI**: Rasa Chatbot, Expense Analysis (RandomForest Classifier)
+- **Data Visualization**: Chart.js
+- **Deployment**: Firebase Hosting
 
-## Learn More
+## Contributing
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Contributions are welcome! To contribute:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+1. Fork the repository.
+2. Create a new branch:
+    ```
+    git checkout -b feature/your-feature-name
+    ```
+3. Commit your changes:
+    ```
+    git commit -m 'Add some feature'
+    ```
+4. Push to the branch:
+    ```
+    git push origin feature/your-feature-name
+    ```
+5. Open a pull request.
 
-### Code Splitting
+## License
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This project is licensed under the MIT License - see the LICENSE file for details.
