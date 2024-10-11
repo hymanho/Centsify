@@ -15,7 +15,7 @@ import {
   deleteExpense,
   getExpense,
 } from '../../../backend/Account/ExpenseManagement/ExpenseService';
-import '../../../styles/EditExpenseForm.css';
+import '../../../styles/Account/Expenses/EditExpenseForm.css';
 
 const EditExpenseForm = ({ expenseId, onClose, userEmail }) => {
   const [expense, setExpense] = useState(null);

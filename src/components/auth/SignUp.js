@@ -6,7 +6,7 @@ import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../firebase';
 import { storeAccount } from '../../backend/Account/AccountServices';
 import Account from '../../models/AccountDataModel';
-import '../../styles/AuthForms.css';
+import '../../styles/auth/AuthForms.css';
 import { getCurrentUserToken } from '../../backend/auth/login';
 
 const SignUp = () => {

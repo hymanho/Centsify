@@ -12,7 +12,7 @@ import { auth } from '../../../firebase';
 import ExpenseLineChart from './ExpenseLineChart';
 import CategoryPieChart from './CategoryPieChart';
 import ExpenseBarChart from './ExpenseBarChart';
-import '../../../styles/Charts.css';
+import '../../../styles/Account/Expenses/Charts.css';
 
 const Reports = () => {
   const [data, setData] = useState([]);

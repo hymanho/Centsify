@@ -16,7 +16,7 @@ import { addExpense } from '../../../backend/Account/ExpenseManagement/ExpenseSe
 import Expense from '../../../models/ExpensesDataModel';
 import * as tf from '@tensorflow/tfjs';
 import * as use from '@tensorflow-models/universal-sentence-encoder';
-import '../../../styles/AddExpenseForm.css';
+import '../../../styles/Account/Expenses/AddExpenseForm.css';
 
 const AddExpenseForm = ({ onAddExpense }) => {
   const [title, setTitle] = useState('');

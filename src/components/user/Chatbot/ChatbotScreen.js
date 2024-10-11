@@ -10,7 +10,7 @@ It includes features such as:
 */
 
 import React, { useState, useRef, useEffect } from 'react';
-import '../../../styles/Chatbot.css'; // Import the updated CSS file for chatbot styling
+import '../../../styles/Account/Chatbot/Chatbot.css'; // Import the updated CSS file for chatbot styling
 
 const Chatbot = () => {
     const [inputMessage, setInputMessage] = useState(''); // State to track the input message

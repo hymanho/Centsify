@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { logIn, getCurrentUserToken } from '../../backend/auth/login';
-import '../../styles/AuthForms.css';
+import '../../styles/auth/AuthForms.css';
 
 const Login = () => {
   const [email, setEmail] = useState('');

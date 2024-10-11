@@ -14,7 +14,7 @@ import Reports from '../components/user/ExpenseReports/Reports';
 import Chatbot from '../components/user/Chatbot/ChatbotScreen';
 import About from '../components/user/AboutDisplay/AboutScreen';
 import LogOff from '../components/auth/LogOff';
-import '../styles/AccountPage.css';
+import '../styles/Account/AccountPage.css';
 
 const AccountPage = () => {
   const [user] = useAuthState(auth);

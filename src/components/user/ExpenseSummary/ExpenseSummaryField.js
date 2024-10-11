@@ -14,7 +14,7 @@ import AddExpenseForm from './AddExpenseForm';
 import EditExpenseForm from './EditExpenseForm';
 import { getExpenseContainer, addExpense, analyzeSpendingPatterns, detectAnomalies } from '../../../backend/Account/ExpenseManagement/ExpenseService';
 import { auth } from '../../../firebase';
-import '../../../styles/ExpenseSummaryField.css';
+import '../../../styles/Account/Expenses/ExpenseSummaryField.css';
 import { FaExclamationTriangle } from 'react-icons/fa';
 
 const ExpenseSummaryField = () => {
