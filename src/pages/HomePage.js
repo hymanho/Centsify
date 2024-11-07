@@ -16,15 +16,15 @@ const HomePage = () => {
     <div className="home-page">
       {/* Header section with logo and title */}
       <header className="page-header">
-        <img src={logo} alt="Centsible Logo" className="logo" />
-        <h1>Centsible</h1>
+        <img src={logo} alt="Centsify Logo" className="logo" />
+        <h1>Centsify</h1>
       </header>
 
       {/* Hero section with a brief description of the app's purpose */}
       <section className="hero-section">
         <h2>Take Control of Your Finances</h2>
         <p>
-          Track your expenses, manage your budget, and achieve your financial goals with Centsible!
+          Track your expenses, manage your budget, and achieve your financial goals with Centsify!
         </p>
       </section>
 
