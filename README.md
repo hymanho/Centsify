@@ -1,6 +1,6 @@
-# Centsible - Expense Tracker Application
+# Centsify - Expense Tracker Application
 
-Centsible is a React-based expense tracker application that allows users to manage their personal finances by tracking daily expenses. This app uses Firebase for authentication and Firestore for storing expense data, along with AI-driven insights to help users understand their spending patterns and detect anomalies. 
+Centsify is a React-based expense tracker application that allows users to manage their personal finances by tracking daily expenses. This app uses Firebase for authentication and Firestore for storing expense data, along with AI-driven insights to help users understand their spending patterns and detect anomalies. 
 
 ## Table of Contents
 
@@ -26,11 +26,11 @@ Centsible is a React-based expense tracker application that allows users to mana
 
 1. Clone the repository:
     ```
-    git clone https://github.com/yourusername/centsible.git
+    git clone https://github.com/yourusername/centsify.git
     ```
 2. Navigate to the project directory:
     ```
-    cd centsible
+    cd centsify
     ```
 3. Install dependencies:
     ```
