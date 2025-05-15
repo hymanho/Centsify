@@ -22,7 +22,7 @@ const ExpenseSummaryField = () => {
   const [showAddForm, setShowAddForm] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
   const [selectedExpenseId, setSelectedExpenseId] = useState(null);
-  const [userEmail, setUserEmail] = useState(null);
+  const [userID, setUserID] = useState(null);
   const [spendingAnalysis, setSpendingAnalysis] = useState({});
   const [anomalyDetected, setAnomalyDetected] = useState(false);
 
@@ -31,9 +31,9 @@ const ExpenseSummaryField = () => {
     const fetchExpenses = async () => {
       const user = auth.currentUser;
       if (user) {
-        const email = user.email;
-        setUserEmail(email);
-        const expenseContainer = await getExpenseContainer(email);
+        const uid = user.uid;
+        setUserID(uid);
+        const expenseContainer = await getExpenseContainer(uid);
         if (expenseContainer) {
           const expensesList = expenseContainer.expenses || [];
           setExpenses(expensesList);
@@ -50,13 +50,13 @@ const ExpenseSummaryField = () => {
     };
 
     fetchExpenses();
-  }, [userEmail]);
+  }, [userID]);
 
   // Handle adding a new expense
   const handleAddExpense = async (newExpense) => {
-    if (userEmail) {
-      await addExpense(userEmail, newExpense);
-      const updatedExpenses = await getExpenseContainer(userEmail);
+    if (userID) {
+      await addExpense(userID, newExpense);
+      const updatedExpenses = await getExpenseContainer(userID);
       setExpenses(updatedExpenses.expenses || []);
       setShowAddForm(false);
 
@@ -92,7 +92,7 @@ const ExpenseSummaryField = () => {
         <EditExpenseForm 
           expenseId={selectedExpenseId} 
           onClose={handleCloseEditForm} 
-          userEmail={userEmail}
+          userID={userID}
         />
       }
       <div className="expense-list">

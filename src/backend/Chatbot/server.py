@@ -25,6 +25,7 @@ def store_token():
         return jsonify({"error": "No token provided"}), 400
     return jsonify({"message": "Token received successfully"}), 200
 
+
 # Route to clear the token; used upon user logoff
 @app.route('/clear-token', methods=['POST'])
 def clear_token():

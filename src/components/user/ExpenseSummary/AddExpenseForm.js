@@ -90,7 +90,7 @@ const AddExpenseForm = ({ onAddExpense }) => {
 
     console.log('Submitting new expense:', newExpense);
 
-    const expenseId = await addExpense(user.email, newExpense);
+    const expenseId = await addExpense(user.uid, newExpense);
 
     onAddExpense({ ...newExpense, id: expenseId });
 

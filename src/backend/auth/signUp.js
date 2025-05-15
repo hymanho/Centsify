@@ -9,6 +9,7 @@ export const signUp = async (email, password) => {
 
     // Create Firestore document for this user
     await setDoc(doc(firestore, 'Accounts', user.uid), {
+      uid: user.uid,
       email: user.email,
       createdAt: new Date(),
       // add other fields as needed

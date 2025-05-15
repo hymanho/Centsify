@@ -17,6 +17,7 @@ export const addUser = async (userData) => {
 
     // Set the document with the account data
     await setDoc(docRef, {
+      uid: userData.uid,
       username: userData.username,
       email: userData.email,
       displayName: userData.displayName,

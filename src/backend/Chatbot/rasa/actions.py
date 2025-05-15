@@ -5,7 +5,7 @@ import statistics
 from collections import Counter
 
 # Import your predeveloped methods to pull the UID and fetch data
-from FetchData import get_current_user_expenses, fetch_token, get_email_from_UID, get_UID_from_token, initialize_firebase
+from FetchData import get_current_user_expenses, fetch_token, get_UID_from_token, initialize_firebase
 
 initialize_firebase()
 
@@ -18,7 +18,7 @@ class ActionTotalExpenditure(Action):
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
         token = fetch_token()
-        userID = get_email_from_UID(get_UID_from_token(token))
+        userID = get_UID_from_token(token)
 
         expenses = get_current_user_expenses(userID)
 
@@ -40,7 +40,7 @@ class ActionComputeExpenseData(Action):
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
         token = fetch_token()
-        userID = get_email_from_UID(get_UID_from_token(token))
+        userID = get_UID_from_token(token)
 
         expenses = get_current_user_expenses(userID)
 
@@ -81,7 +81,7 @@ class ActionMostExpensiveExpense(Action):
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
         token = fetch_token()
-        userID = get_email_from_UID(get_UID_from_token(token))
+        userID = get_UID_from_token(token)
 
         expenses = get_current_user_expenses(userID)
 
@@ -105,7 +105,7 @@ class ActionLeastExpensiveExpense(Action):
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
         token = fetch_token()
-        userID = get_email_from_UID(get_UID_from_token(token))
+        userID = get_UID_from_token(token)
 
         expenses = get_current_user_expenses(userID)
 

@@ -12,10 +12,10 @@ import { doc, getDoc, setDoc } from 'firebase/firestore';  // Import necessary F
 import ExpenseContainer from '../../../models/ExpenseContainer';  // Import the ExpenseContainer model
 
 // Function to add a new expense to a user's account in Firestore
-const addExpense = async (userEmail, expenseData) => {
+const addExpense = async (userID, expenseData) => {
   try {
     // Get a reference to the user's expense container document in Firestore
-    const containerRef = doc(firestore, 'Accounts', userEmail, 'expenses', 'expenseContainer');
+    const containerRef = doc(firestore, 'Accounts', userID, 'expenses', 'expenseContainer');
     const containerDoc = await getDoc(containerRef);
 
     let expenseContainer;
@@ -78,9 +78,9 @@ const addExpense = async (userEmail, expenseData) => {
 };
 
 // Function to edit an existing expense in a user's account
-const editExpense = async (userEmail, expenseId, updatedFields) => {
+const editExpense = async (userID, expenseId, updatedFields) => {
   try {
-    const containerRef = doc(firestore, 'Accounts', userEmail, 'expenses', 'expenseContainer');
+    const containerRef = doc(firestore, 'Accounts', userID, 'expenses', 'expenseContainer');
     const containerDoc = await getDoc(containerRef);
 
     if (!containerDoc.exists()) {
@@ -110,9 +110,9 @@ const editExpense = async (userEmail, expenseId, updatedFields) => {
 };
 
 // Function to delete an expense from a user's account
-const deleteExpense = async (userEmail, expenseId) => {
+const deleteExpense = async (userID, expenseId) => {
   try {
-    const containerRef = doc(firestore, 'Accounts', userEmail, 'expenses', 'expenseContainer');
+    const containerRef = doc(firestore, 'Accounts', userID, 'expenses', 'expenseContainer');
     const containerDoc = await getDoc(containerRef);
 
     if (!containerDoc.exists()) {
@@ -142,9 +142,9 @@ const deleteExpense = async (userEmail, expenseId) => {
 };
 
 // Function to fetch all expenses for a user from Firestore
-const getExpenses = async (userEmail) => {
+const getExpenses = async (userID) => {
   try {
-    const containerRef = doc(firestore, 'Accounts', userEmail, 'expenses', 'expenseContainer');
+    const containerRef = doc(firestore, 'Accounts', userID, 'expenses', 'expenseContainer');
     const containerDoc = await getDoc(containerRef);
 
     if (!containerDoc.exists()) {
@@ -162,16 +162,16 @@ const getExpenses = async (userEmail) => {
 };
 
 // Function to get the expense container for a user (retrieves all expense data for that user)
-const getExpenseContainer = async (userEmail) => {
-  const expenseContainerRef = doc(firestore, 'Accounts', userEmail, 'expenses', 'expenseContainer');
+const getExpenseContainer = async (userID) => {
+  const expenseContainerRef = doc(firestore, 'Accounts', userID, 'expenses', 'expenseContainer');
   const expenseContainerDoc = await getDoc(expenseContainerRef);
   return expenseContainerDoc.exists() ? expenseContainerDoc.data() : null;
 };
 
 // Function to fetch a specific expense by its ID
-const getExpense = async (userEmail, expenseId) => {
+const getExpense = async (userID, expenseId) => {
   try {
-    const containerRef = doc(firestore, 'Accounts', userEmail, 'expenses', 'expenseContainer');
+    const containerRef = doc(firestore, 'Accounts', userID, 'expenses', 'expenseContainer');
     const containerDoc = await getDoc(containerRef);
 
     if (!containerDoc.exists()) {

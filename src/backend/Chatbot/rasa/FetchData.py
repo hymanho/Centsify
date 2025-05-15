@@ -38,7 +38,7 @@ def fetch_token():
         data = response.json()
         token = data.get('token')
         if token:
-            
+            print(token)
             return token
         else:
             print("No token found.")
@@ -47,6 +47,8 @@ def fetch_token():
         print(f"Error fetching token: {e}")
         return None
     
+    
+
 # Get current user ID using a token
 def verify_token(token):
     try:
@@ -62,7 +64,7 @@ def get_UID_from_token(token):
     if decoded_token:
         return decoded_token.get('uid')
     return None
-    
+
 # Convert Firestore types to JSON serializable types
 def convert_firestore_types(data):
     if isinstance(data, dict):
@@ -100,14 +102,6 @@ def fetch_expenses_data(doc_id, collection_name):
     except Exception as e:
         print(f"An error occurred while fetching data for account ID {doc_id}: {e}")
         return {}
-    
-def get_email_from_UID(uid):
-    try:
-        user = auth.get_user(uid)
-        return user.email
-    except Exception as e:
-        print(f"Error fetching user: {e}")
-        return None
     
 def get_current_user_expenses(userID) -> List[Dict[str, Any]]:
     

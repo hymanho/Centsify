@@ -3,7 +3,7 @@
 /*
 
 Defines the EditExpenseForm component, which allows users to edit or delete an existing expense.
-It retrieves the expense data based on the provided expenseId and userEmail. The form includes
+It retrieves the expense data based on the provided expenseId and userID. The form includes
 fields for title, amount, date, category, and description. After editing or deleting the expense,
 the form is closed upon saving or deletion.
 
@@ -17,7 +17,7 @@ import {
 } from '../../../backend/Account/ExpenseManagement/ExpenseService';
 import '../../../styles/Account/Expenses/EditExpenseForm.css';
 
-const EditExpenseForm = ({ expenseId, onClose, userEmail }) => {
+const EditExpenseForm = ({ expenseId, onClose, userID }) => {
   const [expense, setExpense] = useState(null);
   const [formData, setFormData] = useState({
     title: '',
@@ -30,7 +30,7 @@ const EditExpenseForm = ({ expenseId, onClose, userEmail }) => {
   // Fetch the expense data when the component mounts
   useEffect(() => {
     const fetchExpense = async () => {
-      const fetchedExpense = await getExpense(userEmail, expenseId);
+      const fetchedExpense = await getExpense(userID, expenseId);
       if (fetchedExpense) {
         setExpense(fetchedExpense);
         setFormData({
@@ -43,7 +43,7 @@ const EditExpenseForm = ({ expenseId, onClose, userEmail }) => {
       }
     };
     fetchExpense();
-  }, [expenseId, userEmail]);
+  }, [expenseId, userID]);
 
   // Handle changes in the form fields
   const handleChange = (e) => {
@@ -53,13 +53,13 @@ const EditExpenseForm = ({ expenseId, onClose, userEmail }) => {
 
   // Handle saving the edited expense
   const handleSave = async () => {
-    await editExpense(userEmail, expenseId, formData);
+    await editExpense(userID, expenseId, formData);
     onClose(); // Close the form after saving
   };
 
   // Handle deleting the expense
   const handleDelete = async () => {
-    await deleteExpense(userEmail, expenseId);
+    await deleteExpense(userID, expenseId);
     onClose(); // Close the form after deletion
   };
 
