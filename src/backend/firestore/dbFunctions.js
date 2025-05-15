@@ -6,19 +6,30 @@ Uses Firestore's `collection` and `addDoc` methods to handle the addition of use
 
 */
 
-import { collection, addDoc } from 'firebase/firestore';  // Import necessary Firestore methods
-import { firestore } from '../../firebase';  // Import Firestore instance from the Firebase configuration
+import { doc, setDoc } from 'firebase/firestore';
+import { firestore } from '../../firebase';
 
-// Function to add a new user to the 'Accounts' collection in Firestore
+// userData should include a 'uid' property (Firebase Auth UID)
 export const addUser = async (userData) => {
   try {
-    // Add the user document to the 'Accounts' collection and return the document reference
-    const docRef = await addDoc(collection(firestore, 'Accounts'), userData);
+    // Use the userId (Firebase UID) as the document ID
+    const docRef = doc(firestore, 'Accounts', userData.uid); // assuming userId field contains UID
 
-    // Log the ID of the newly added document
-    console.log("Document written with ID: ", docRef.id);
+    // Set the document with the account data
+    await setDoc(docRef, {
+      username: userData.username,
+      email: userData.email,
+      displayName: userData.displayName,
+      balance: userData.balance,
+      currency: userData.currency,
+      preferences: userData.preferences,
+      alerts: userData.alerts,
+      settings: userData.settings,
+      reports: userData.reports,
+    });
+
+    console.log('Account stored with UID as document ID:', userData.uid);
   } catch (error) {
-    // Catch and log any errors that occur during the addition of the document
-    console.error("Error adding document: ", error);
+    console.error('Error storing account:', error);
   }
 };

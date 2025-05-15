@@ -7,8 +7,9 @@ Defines the Account class which handles user account data, including balance, cu
 import ExpenseContainer from './ExpenseContainer';
 
 class Account {
-  constructor(name, email, username, balance = 0, currency = 'USD', preferences = {}, alerts = {}, settings = {}, reports = {}) {
+  constructor(uid, name, email, username, balance = 0, currency = 'USD', preferences = {}, alerts = {}, settings = {}, reports = {}) {
     // Initializes the account with provided user details and an empty ExpenseContainer.
+    this.uid = uid; 
     this.name = name;
     this.email = email;
     this.username = username;

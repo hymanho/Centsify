@@ -30,7 +30,7 @@ const Chatbot = () => {
 
             try {
                 // Send the user's message to the chatbot API
-                const response = await fetch('http://localhost:5005/webhooks/rest/webhook', {
+                const response = await fetch('https://localhost:5005/webhooks/rest/webhook', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ sender: 'test_user', message: inputMessage }), // Send message data in the request body

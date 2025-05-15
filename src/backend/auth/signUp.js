@@ -1,19 +1,22 @@
-/*
-
-Sign up component, used to register a user onto the Firestore Database. 
-Implements firebase/auth functions to acheive this. 
-
-*/
-
-import { auth } from '../../firebase';
+import { auth, firestore } from '../../firebase';  // Make sure firestore is imported
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore';
 
 export const signUp = async (email, password) => {
-    try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      return userCredential.user;
-    } catch (error) {
-      console.error('Error signing up:', error);
-      throw error;
-    }
-  };
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+
+    // Create Firestore document for this user
+    await setDoc(doc(firestore, 'Accounts', user.uid), {
+      email: user.email,
+      createdAt: new Date(),
+      // add other fields as needed
+    });
+
+    return user;
+  } catch (error) {
+    console.error('Error signing up:', error);
+    throw error;
+  }
+};

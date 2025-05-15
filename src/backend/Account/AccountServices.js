@@ -13,6 +13,7 @@ const storeAccount = async (account) => {
   try {
     // Convert the Account object to a plain object for Firestore
     const accountData = {
+      uid: account.uid,
       name: account.name,
       email: account.email,
       username: account.username,
@@ -26,7 +27,7 @@ const storeAccount = async (account) => {
     };
 
     // Store the Account object in Firestore using the email as the document ID
-    const accountRef = doc(firestore, 'Accounts', account.email);
+    const accountRef = doc(firestore, 'Accounts', account.uid);
     await setDoc(accountRef, accountData);
     console.log('Account stored successfully');
   } catch (error) {
@@ -35,12 +36,13 @@ const storeAccount = async (account) => {
 };
 
 // Function to retrieve an Account object from Firestore
-const getAccount = async (email) => {
+const getAccount = async (uid) => {
   try {
-    const doc = await firestore.collection('Accounts').doc(email).get(); // Access the collection on Firestore
+    const doc = await firestore.collection('Accounts').doc(uid).get(); // Access the collection on Firestore
     if (doc.exists) {
       const data = doc.data();
       return new Account(
+        data.uid,
         data.name,
         data.email,
         data.username,

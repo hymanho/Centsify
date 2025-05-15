@@ -17,43 +17,49 @@ const SignUp = () => {
   const navigate = useNavigate();
 
   const handleSignUp = async (e) => {
-    e.preventDefault();
-    try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
+  e.preventDefault();
+  try {
+    // Create user with email and password
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user; // Firebase user object
 
-      const account = new Account(
-        username,
-        email,
-        username,
-        0, // Default balance
-        'USD', // Default currency
-        {}, // Default preferences
-        {}, // Default alerts
-        {}, // Default settings
-        {}, // Default reports
-      );
+    // Build Account object with Firebase UID as primary key
+    const account = new Account(
+      user.uid,     // UID used as PK
+      username,
+      email,
+      username,     // displayName (can be same as username)
+      0,            // Default balance
+      'USD',        // Default currency
+      {},           // Default preferences
+      {},           // Default alerts
+      {},           // Default settings
+      {}            // Default reports
+    );
 
-      await storeAccount(account);
+    // Store account in Firestore using UID as doc ID
+    await storeAccount(account);
 
-      console.log('Account successfully created:', user);
+    console.log('Account successfully created:', user);
 
-      const userToken = await getCurrentUserToken();
-      console.log('User token:', userToken);
-  
-      await fetch('http://localhost:5000/store-token', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ token: userToken }), // Pass token to server
-      });
+    // Optionally get user token for backend or chatbot use
+    const userToken = await getCurrentUserToken();
+    console.log('User token:', userToken);
 
-      navigate('/account');
-    } catch (error) {
-      setError(error.message);
-    }
-  };
+    // Send token to backend API for session management
+    await fetch('http://localhost:5000/store-token', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token: userToken }),
+    });
+
+    // Redirect to account page after successful signup
+    navigate('/account');
+  } catch (error) {
+    setError(error.message);
+  }
+};
+
 
   return (
     <div className="card">
